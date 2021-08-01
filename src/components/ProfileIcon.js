@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/profileIcon.scss";
 
 const ProfileIcon = props => {
-	const { image, iconSize, storyBorder } = props;
+	const { image, iconSize, storyBorder, profileActive } = props;
 
 	const getRandomInt = (min, max) => {
 		min = Math.ceil(min);
@@ -17,12 +17,13 @@ const ProfileIcon = props => {
 		: `https://i.pravatar.cc/150?img=${randomId}`;
 
 	return (
-		<div className={storyBorder ? "storyBorder" : ""}>
+		<div className={`${storyBorder ? "storyBorder" : ""} iconContainer`}>
 			<img
 				className={`profileIcon ${iconSize}`}
 				src={profileImage}
 				alt='profile'
 			/>
+			{profileActive && <div className='profileActive'></div>}
 		</div>
 	);
 };

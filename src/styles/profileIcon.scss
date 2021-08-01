@@ -1,5 +1,7 @@
 @import "./properties";
-
+.iconContainer {
+	position: relative;
+}
 .storyBorder {
 	padding: 2px;
 	background: linear-gradient(
@@ -15,15 +17,16 @@
 .profileIcon {
 	border-radius: 50%;
 	border: 2px solid $background-white;
-	display: block;
+	display: flex;
 
 	&:hover {
 		cursor: pointer;
 	}
 
 	&.small {
-		width: 25px;
-		height: 25px;
+		border: none;
+		width: 22px;
+		height: 22px;
 	}
 	&.medium {
 		width: 35px;
@@ -33,4 +36,14 @@
 		width: 60px;
 		height: 60px;
 	}
+}
+.profileActive {
+	border: 1px solid #262626;
+	border-radius: 50%;
+	height: 28px;
+	width: 28px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }

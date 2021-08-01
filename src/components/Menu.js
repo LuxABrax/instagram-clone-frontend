@@ -25,45 +25,34 @@ const Navigation = () => {
 
 	return (
 		<div className='menu'>
-			<div className='navLink'>
-				<Link to='/'>
-					{activePage === "home" ? (
-						<HomeActive className='icon' />
-					) : (
-						<Home className='icon' onClick={() => dispatch(goHome())} />
-					)}
-				</Link>
-			</div>
-			<div className='navLink'>
-				<Link to='/'>
-					{activePage === "direct" ? (
-						<DirectActive className='icon' />
-					) : (
-						<Direct
-							className='icon'
-							onClick={() => dispatch(changePage("direct"))}
-						/>
-					)}
-				</Link>
-			</div>
-			<div className='navLink'>
-				<Link to='/'>
-					{activePage === "explore" ? (
-						<ExploreActive className='icon' />
-					) : (
-						<Explore
-							className='icon'
-							onClick={() => dispatch(changePage("explore"))}
-						/>
-					)}
-				</Link>
-			</div>
-			<div
-				className='navLink'
-				onClick={() => {
-					push("/counter");
-				}}
-			>
+			<Link to='/' className='link'>
+				{activePage === "home" ? (
+					<HomeActive className='icon' />
+				) : (
+					<Home className='icon' onClick={() => dispatch(goHome())} />
+				)}
+			</Link>
+			<Link to='/' className='link'>
+				{activePage === "direct" ? (
+					<DirectActive className='icon' />
+				) : (
+					<Direct
+						className='icon'
+						onClick={() => dispatch(changePage("direct"))}
+					/>
+				)}
+			</Link>
+			<Link to='/' className='link'>
+				{activePage === "explore" ? (
+					<ExploreActive className='icon' />
+				) : (
+					<Explore
+						className='icon'
+						onClick={() => dispatch(changePage("explore"))}
+					/>
+				)}
+			</Link>
+			<div className='link'>
 				{activePage === "notifications" ? (
 					<NotificationsActive className='icon' />
 				) : (
@@ -73,11 +62,19 @@ const Navigation = () => {
 					/>
 				)}
 			</div>
-			<div className='navLink'>
-				<Link to='/profile'>
-					<ProfileIcon image={luka} iconSize='small' />
-				</Link>
-			</div>
+			<Link
+				to='/profile'
+				className='link'
+				onClick={() => {
+					dispatch(changePage("profile"));
+				}}
+			>
+				<ProfileIcon
+					image={luka}
+					iconSize='small'
+					profileActive={activePage === "profile"}
+				/>
+			</Link>
 		</div>
 	);
 };

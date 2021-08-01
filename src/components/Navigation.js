@@ -13,15 +13,19 @@ const Navigation = () => {
 	return (
 		<div className='navigation'>
 			<div className='container'>
-				<img
-					className='logo'
-					src='/images/instagram-logo.png'
-					alt='instagram logo'
+				<div
+					className='logoContainer'
 					onClick={() => {
 						push("/home");
 						dispatch(goHome());
 					}}
-				/>
+				>
+					<img
+						className='logo'
+						src='/images/instagram-logo.png'
+						alt='instagram logo'
+					/>
+				</div>
 				<div className='search'>
 					<img
 						className='searchIcon'
@@ -30,7 +34,9 @@ const Navigation = () => {
 					/>
 					<span className='searchText'>Search</span>
 				</div>
-				<Menu />
+				<div className='menuContainer'>
+					<Menu />
+				</div>
 			</div>
 		</div>
 	);

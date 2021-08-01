@@ -1,14 +1,21 @@
 .menu {
+	margin-left: 24px;
 	display: flex;
-	padding-right: 1.5em;
 
 	.icon {
-		margin-right: 1.5em;
-		width: 23px;
-		height: 23px;
-
+		width: 22px;
+		height: 22px;
 		&:hover {
 			cursor: pointer;
+		}
+	}
+	.link {
+		display: flex;
+		align-items: center;
+		margin-left: 22px;
+
+		&:first-child {
+			margin-left: 0;
 		}
 	}
 }

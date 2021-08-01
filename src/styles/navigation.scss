@@ -5,20 +5,35 @@
 	top: 0;
 	z-index: 2;
 	background-color: $background-white;
+	height: 54px;
 	width: 100%;
 	border-bottom: 1px solid $border-color-grey;
+	display: flex;
+	justify-content: center;
 
 	.container {
-		padding: 1em 0 0.9em 0;
+		flex: 1;
+		height: 54px;
+		max-width: 975px;
+		padding: 0 20px 0 20px;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		max-width: 1000px;
-		margin: 0 auto;
+		justify-content: space-evenly;
 
+		.logoContainer {
+			height: 36px;
+			flex: 1 9999 0%;
+			display: flex;
+			align-items: flex-end;
+			justify-content: flex-start;
+		}
+		.menuContainer {
+			flex: 1 9999 0%;
+			display: flex;
+			justify-content: flex-end;
+		}
 		.logo {
-			padding: 0 1em;
-			width: 100px;
+			width: 103px;
 
 			&:hover {
 				cursor: pointer;
@@ -30,7 +45,9 @@
 			border: 1px solid $border-color-grey;
 			border-radius: 3px;
 			background-color: $background-grey;
-			min-width: 225px;
+			min-width: 125px;
+			width: 215px;
+			height: 28px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
