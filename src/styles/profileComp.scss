@@ -1,0 +1,43 @@
+@import "./properties";
+
+.profileComp {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	font-size: 0.8em;
+	margin-bottom: 0.85em;
+
+	.pIconContainer {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 60px;
+	}
+	.textContainer {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-left: 1em;
+		min-width: 170px;
+
+		.accountName {
+			font-weight: 600;
+			margin-bottom: 5px;
+
+			&:hover {
+				cursor: pointer;
+				text-decoration: underline;
+			}
+		}
+		.caption {
+			color: $font-color-secondary;
+
+			&.small {
+				font-size: 0.8em;
+			}
+		}
+	}
+	a {
+		width: 100%;
+	}
+}
