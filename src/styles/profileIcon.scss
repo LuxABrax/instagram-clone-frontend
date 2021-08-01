@@ -13,8 +13,8 @@
 		$gradient-four 100%
 	);
 	border-radius: 50%;
-	height: 62px;
-	width: 62px;
+	height: 64px;
+	width: 64px;
 	z-index: -1;
 	&.seen {
 		background: $border-color-grey;
@@ -29,6 +29,7 @@
 	border-radius: 50%;
 	border: 2px solid $background-white;
 	display: flex;
+	box-sizing: content-box;
 
 	&:hover {
 		cursor: pointer;
@@ -44,8 +45,8 @@
 		height: 35px;
 	}
 	&.big {
-		width: 58px;
-		height: 58px;
+		width: 56px;
+		height: 56px;
 	}
 }
 

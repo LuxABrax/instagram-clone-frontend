@@ -9,7 +9,7 @@ import useWindowDimensions from "../utils/windowHook";
 const Sidebar = () => {
 	const { height, width } = useWindowDimensions();
 	console.log(width);
-	let leftOffset = (width - 935) / 2 + 614 + 28;
+	let leftOffset = Math.floor((width - 935) / 2 + 604 + 28);
 	console.log(leftOffset);
 	return (
 		<div className='sidebar' style={{ left: leftOffset + "px" }}>

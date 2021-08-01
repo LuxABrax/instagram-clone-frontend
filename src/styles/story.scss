@@ -4,12 +4,12 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 0 0.4em;
-	margin-top: 4px;
-	max-width: 70px;
+	padding: 0 0.45em;
+	margin-top: 2px;
+	width: 80px;
 
 	&:first-child {
-		margin-left: 1em;
+		margin-left: 0.725em;
 	}
 	&:last-child {
 		margin-right: 1em;
@@ -17,7 +17,7 @@
 
 	.accountName {
 		font-size: 0.75em;
-		margin: 0.4em auto;
+		margin: 0.2em auto;
 		&.seen {
 			color: $font-color-secondary;
 		}
