@@ -37,6 +37,13 @@ const Suggestions = () => {
 				captionSize='small'
 				storyBorder={true}
 			/>
+			<ProfileComp
+				caption='Followed by ivan_ivic + 13 more'
+				urlText='Follow'
+				iconSize='medium'
+				captionSize='small'
+				storyBorder={false}
+			/>
 		</div>
 	);
 };

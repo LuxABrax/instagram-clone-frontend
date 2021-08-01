@@ -19,7 +19,7 @@ const ProfileComp = props => {
 		: users[Math.floor(Math.random() * users.length)].username;
 
 	return (
-		<div className='profileComp'>
+		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
 			<div className='pIconContainer'>
 				<ProfileIcon
 					iconSize={iconSize}

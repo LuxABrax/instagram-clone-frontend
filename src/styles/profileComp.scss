@@ -8,12 +8,17 @@
 	align-items: center;
 	font-size: 0.8em;
 	// margin-bottom: 0.85em;
-
 	.pIconContainer {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		min-width: 60px;
+	}
+	&.small {
+		min-height: 50px;
+		.pIconContainer {
+			min-width: 50px;
+		}
 	}
 	.textContainer {
 		display: flex;
@@ -39,7 +44,8 @@
 			color: $font-color-secondary;
 			text-align: left;
 			&.small {
-				font-size: 0.9em;
+				font-size: 0.85em;
+				letter-spacing: 0.1px;
 			}
 		}
 	}
