@@ -17,12 +17,13 @@ const ProfileIcon = props => {
 		: `https://i.pravatar.cc/150?img=${randomId}`;
 
 	return (
-		<div className={`${storyBorder ? "storyBorder" : ""} iconContainer`}>
+		<div className='iconContainer'>
 			<img
 				className={`profileIcon ${iconSize}`}
 				src={profileImage}
 				alt='profile'
 			/>
+			{storyBorder && <div className='storyBorder'></div>}
 			{profileActive && <div className='profileActive'></div>}
 		</div>
 	);

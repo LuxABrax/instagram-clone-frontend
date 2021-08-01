@@ -1,6 +1,7 @@
 @import "./properties";
 .iconContainer {
 	position: relative;
+	min-width: 22px;
 }
 .storyBorder {
 	padding: 2px;
@@ -12,9 +13,16 @@
 		$gradient-four 100%
 	);
 	border-radius: 50%;
+	height: 62px;
+	width: 62px;
+	z-index: -1;
 }
-
 .profileIcon {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 3;
 	border-radius: 50%;
 	border: 2px solid $background-white;
 	display: flex;
@@ -33,10 +41,11 @@
 		height: 35px;
 	}
 	&.big {
-		width: 56px;
-		height: 56px;
+		width: 58px;
+		height: 58px;
 	}
 }
+
 .profileActive {
 	border: 1px solid #262626;
 	border-radius: 50%;
