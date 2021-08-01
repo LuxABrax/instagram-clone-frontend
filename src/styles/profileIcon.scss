@@ -16,6 +16,9 @@
 	height: 62px;
 	width: 62px;
 	z-index: -1;
+	&.seen {
+		background: $border-color-grey;
+	}
 }
 .profileIcon {
 	position: absolute;

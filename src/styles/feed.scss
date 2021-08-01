@@ -3,6 +3,11 @@
 	height: 100%;
 }
 
+@media only screen and (max-width: 1024px) {
+	.feed {
+		width: 600px;
+	}
+}
 @media only screen and (max-width: 640px) {
 	.feed {
 		width: 100vw;
