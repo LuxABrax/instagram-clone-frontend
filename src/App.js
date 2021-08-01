@@ -17,18 +17,20 @@ function App() {
 		<div className='App'>
 			<Router>
 				<Navigation />
-				<Switch>
-					<Route path='/' exact>
-						<Home />
-					</Route>
-					<Route path='/counter' exact>
-						<CounterPage />
-					</Route>
-					<Route path='/profile' exact>
-						<Profile />
-					</Route>
-					<Redirect to='/' />
-				</Switch>
+				<main>
+					<Switch>
+						<Route path='/' exact>
+							<Home />
+						</Route>
+						<Route path='/counter' exact>
+							<CounterPage />
+						</Route>
+						<Route path='/profile' exact>
+							<Profile />
+						</Route>
+						<Redirect to='/' />
+					</Switch>
+				</main>
 			</Router>
 		</div>
 	);

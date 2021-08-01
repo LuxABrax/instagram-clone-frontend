@@ -1,0 +1,10 @@
+.feed {
+	width: 614px;
+	height: 100%;
+}
+
+@media only screen and (max-width: 640px) {
+	.feed {
+		width: 100vw;
+	}
+}
