@@ -16,8 +16,17 @@
 	height: 64px;
 	width: 64px;
 	z-index: -1;
+
 	&.seen {
 		background: $border-color-grey;
+	}
+	&.small {
+		height: 26px;
+		width: 26px;
+	}
+	&.medium {
+		height: 42px;
+		width: 42px;
 	}
 }
 .profileIcon {

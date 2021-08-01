@@ -28,7 +28,7 @@ const ProfileComp = props => {
 				/>
 			</div>
 			{(accountName || caption) && !hideAccountName && (
-				<div className='textContainer'>
+				<div className={`textContainer ${captionSize}`}>
 					<span className='accountName'>{accountName}</span>
 					<span className={`caption ${captionSize}`}>{caption}</span>
 				</div>

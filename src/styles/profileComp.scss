@@ -7,7 +7,7 @@
 	display: flex;
 	align-items: center;
 	font-size: 0.8em;
-	margin-bottom: 0.85em;
+	// margin-bottom: 0.85em;
 
 	.pIconContainer {
 		display: flex;
@@ -22,6 +22,10 @@
 		margin-left: 1.2em;
 		min-width: 170px;
 
+		&.small {
+			margin-left: 0.25em;
+		}
+
 		.accountName {
 			font-weight: 600;
 			margin-bottom: 5px;
@@ -33,9 +37,9 @@
 		}
 		.caption {
 			color: $font-color-secondary;
-
+			text-align: left;
 			&.small {
-				font-size: 0.8em;
+				font-size: 0.9em;
 			}
 		}
 	}

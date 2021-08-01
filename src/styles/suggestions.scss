@@ -1,0 +1,24 @@
+@import "./properties";
+
+.suggestions {
+	margin-top: 1.25em;
+
+	.titleContainer {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.8em;
+		font-weight: 600;
+		color: $font-color-secondary;
+		margin-bottom: 0.25em;
+		padding: 4px 0.5em;
+		.title {
+			min-width: 200px;
+			text-align: left;
+		}
+		a {
+			width: 100%;
+			text-align: right;
+			color: black;
+		}
+	}
+}

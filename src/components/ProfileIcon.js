@@ -23,7 +23,9 @@ const ProfileIcon = props => {
 				src={profileImage}
 				alt='profile'
 			/>
-			{storyBorder && <div className={`storyBorder ${seen && "seen"}`}></div>}
+			{storyBorder && (
+				<div className={`storyBorder ${iconSize} ${seen && "seen"}`}></div>
+			)}
 			{profileActive && <div className='profileActive'></div>}
 		</div>
 	);
