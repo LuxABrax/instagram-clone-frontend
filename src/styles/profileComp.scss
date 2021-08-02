@@ -1,7 +1,6 @@
 @import "./properties";
 
 .profileComp {
-	width: 100%;
 	min-height: 60px;
 
 	display: flex;
@@ -51,5 +50,6 @@
 	}
 	a {
 		width: 100%;
+		text-align: right;
 	}
 }

@@ -14,7 +14,7 @@ const Sidebar = () => {
 	return (
 		<div className='sidebar' style={{ left: leftOffset + "px" }}>
 			<ProfileComp
-				username='luxabrax'
+				username='lux_abrax'
 				caption='Lux Abrax'
 				urlText='Switch'
 				iconSize='big'

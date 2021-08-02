@@ -7,10 +7,12 @@
 @media only screen and (max-width: 1024px) {
 	.feed {
 		width: 600px;
+		margin-right: 0;
 	}
 }
 @media only screen and (max-width: 640px) {
 	.feed {
-		width: 100vw;
+		width: 97vw;
+		margin: 0 auto;
 	}
 }

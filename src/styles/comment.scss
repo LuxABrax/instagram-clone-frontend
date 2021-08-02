@@ -1,0 +1,15 @@
+@import "./properties";
+
+.commentContainer {
+	display: flex;
+	font-size: 0.75em;
+	margin-bottom: 0.4em;
+
+	.accountName {
+		font-weight: 600;
+	}
+
+	.comment {
+		margin-left: 0.25em;
+	}
+}
