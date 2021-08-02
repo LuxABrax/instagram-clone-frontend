@@ -7,7 +7,7 @@ import luka from "../../icons/luka.jpg";
 import useWindowDimensions from "../../utils/windowHook";
 
 const Sidebar = () => {
-	const { height, width } = useWindowDimensions();
+	const { width } = useWindowDimensions();
 	console.log(width);
 	let leftOffset = Math.floor((width - 935) / 2 + 604 + 28);
 	console.log(leftOffset);

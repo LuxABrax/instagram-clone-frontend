@@ -1,0 +1,21 @@
+@import "./properties";
+
+.followInfoComp {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	border-top: 1px solid $border-color-grey;
+	border-bottom: 1px solid $border-color-grey;
+	padding: 12px 0;
+	li {
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+	}
+	.infoName {
+		color: $font-color-secondary;
+	}
+	.info {
+		font-weight: 600;
+	}
+}

@@ -1,0 +1,27 @@
+@import "./properties";
+
+.profileMenu {
+	margin-top: 8px;
+	margin-left: 12px;
+	margin-right: -4px;
+	display: flex;
+
+	// justify-content: space-between;
+	button {
+		background-color: transparent;
+		color: #262626;
+		border-radius: 3px;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: 18px;
+		height: 1.8rem;
+		border: 1px solid $border-color-grey;
+		padding: 0 0.5rem;
+		margin-left: 0.5rem;
+		cursor: pointer;
+	}
+	.arr {
+		transform: rotate(180deg);
+		margin-top: 4px;
+	}
+}

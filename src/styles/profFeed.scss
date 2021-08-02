@@ -1,0 +1,20 @@
+.profFeed {
+	max-width: 935px;
+	height: 100%;
+	margin: 0 auto;
+	padding-top: 30px;
+	width: calc(100% - 40px);
+}
+
+// @media only screen and (max-width: 1024px) {
+// 	.feed {
+// 		// width: 600px;
+// 	}
+// }
+@media only screen and (max-width: 735px) {
+	.profFeed {
+		width: 97vw;
+		padding-top: 0;
+		// margin: 0 auto;
+	}
+}

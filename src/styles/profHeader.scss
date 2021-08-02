@@ -1,0 +1,78 @@
+.profHeader {
+	display: flex;
+	flex-direction: column;
+	header {
+		display: flex;
+		justify-content: space-around;
+		h2 {
+			font-size: 28px;
+			font-weight: 100;
+			margin-top: 8px;
+		}
+		.profIcon {
+			.profileIcon {
+				position: static;
+				transform: none;
+			}
+			margin-right: 28px;
+			// flex-grow: 1;
+		}
+		// .profInfo {
+		// 	// flex-grow: 2;
+		// }
+		.title {
+			display: flex;
+			margin-bottom: 20px;
+		}
+		.menuBtns {
+			display: flex;
+		}
+		.moreIcon {
+			width: 40px;
+			height: 40px;
+			padding: 8px;
+			margin-left: 5px;
+		}
+		.followInfo {
+			margin-bottom: 20px;
+			display: flex;
+			span {
+				margin-right: 40px;
+			}
+		}
+	}
+}
+@media screen and (min-width: 736px) {
+	.profHeader {
+		header {
+			margin-bottom: 44px;
+		}
+		.profIcon {
+			flex-basis: 0;
+			flex-grow: 1;
+		}
+		.profInfo {
+			flex-basis: 30px;
+			flex-grow: 2;
+		}
+	}
+}
+@media (max-width: 735px) {
+	.profHeader {
+		header {
+			margin: 1rem;
+			margin-bottom: 1.5ren;
+		}
+		.profInfo {
+			flex-basis: 0;
+			flex-grow: 1;
+		}
+		.desc {
+			padding: 0 16px 21px;
+			text-overflow: ellipsis;
+			.fullName {
+				margin-bottom: 4px;
+			}
+		}
+	}
+}

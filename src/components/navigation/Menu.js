@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
 	goHome,
@@ -21,7 +21,7 @@ import "../../styles/menu.scss";
 const Navigation = () => {
 	const activePage = useSelector(selectPage);
 	const dispatch = useDispatch();
-	const { push } = useHistory();
+	// const { push } = useHistory();
 
 	return (
 		<div className='menu'>
