@@ -1,6 +1,6 @@
 import React from "react";
-import "../styles/suggestions.scss";
-import ProfileComp from "./ProfileComp";
+import "../../styles/suggestions.scss";
+import ProfileComp from "../ProfileComp";
 
 const Suggestions = () => {
 	return (

@@ -1,6 +1,6 @@
 import React from "react";
 import Story from "./Story";
-import "../styles/stories.scss";
+import "../../styles/stories.scss";
 const Stories = () => {
 	return (
 		<div className='stories'>

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import "./styles/App.scss";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/navigation/Navigation";
 import CounterPage from "./pages/CounterPage";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";

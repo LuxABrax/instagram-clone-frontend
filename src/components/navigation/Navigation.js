@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { goHome } from "../features/navigation/navigationSlice";
+import { goHome } from "../../features/navigation/navigationSlice";
 
-import "../styles/navigation.scss";
+import "../../styles/navigation.scss";
 import Menu from "./Menu";
 
 const Navigation = () => {

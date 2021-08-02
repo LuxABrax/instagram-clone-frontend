@@ -1,6 +1,6 @@
 import React from "react";
-import Feed from "../components/Feed";
-import Sidebar from "../components/Sidebar";
+import Feed from "../components/feed/Feed";
+import Sidebar from "../components/sidebar/Sidebar";
 import "../styles/home.scss";
 
 const Home = () => {

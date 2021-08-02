@@ -1,7 +1,7 @@
 import React from "react";
-import "../styles/story.scss";
-import ProfileIcon from "./ProfileIcon";
-import users from "../data/users.js";
+import "../../styles/story.scss";
+import ProfileIcon from "../ProfileIcon";
+import users from "../../data/users.js";
 
 const Story = props => {
 	let { storyBorder, seen } = props;

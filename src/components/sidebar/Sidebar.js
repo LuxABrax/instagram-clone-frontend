@@ -1,10 +1,10 @@
 import React from "react";
-import "../styles/sidebar.scss";
-import ProfileComp from "./ProfileComp";
+import "../../styles/sidebar.scss";
+import ProfileComp from "../ProfileComp";
 import Suggestions from "./Suggestions";
 import Footer from "./Footer";
-import luka from "../icons/luka.jpg";
-import useWindowDimensions from "../utils/windowHook";
+import luka from "../../icons/luka.jpg";
+import useWindowDimensions from "../../utils/windowHook";
 
 const Sidebar = () => {
 	const { height, width } = useWindowDimensions();

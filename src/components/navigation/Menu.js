@@ -5,19 +5,19 @@ import {
 	goHome,
 	changePage,
 	selectPage,
-} from "../features/navigation/navigationSlice";
+} from "../../features/navigation/navigationSlice";
 
-import { ReactComponent as Home } from "../icons/home.svg";
-import { ReactComponent as HomeActive } from "../icons/homeActive.svg";
-import { ReactComponent as Explore } from "../icons/explore.svg";
-import { ReactComponent as ExploreActive } from "../icons/exploreActive.svg";
-import { ReactComponent as Direct } from "../icons/direct.svg";
-import { ReactComponent as DirectActive } from "../icons/directActive.svg";
-import { ReactComponent as Notifications } from "../icons/notifications.svg";
-import { ReactComponent as NotificationsActive } from "../icons/notificationsActive.svg";
-import ProfileIcon from "./ProfileIcon.js";
-import luka from "../icons/luka.jpg";
-import "../styles/menu.scss";
+import { ReactComponent as Home } from "../../icons/home.svg";
+import { ReactComponent as HomeActive } from "../../icons/homeActive.svg";
+import { ReactComponent as Explore } from "../../icons/explore.svg";
+import { ReactComponent as ExploreActive } from "../../icons/exploreActive.svg";
+import { ReactComponent as Direct } from "../../icons/direct.svg";
+import { ReactComponent as DirectActive } from "../../icons/directActive.svg";
+import { ReactComponent as Notifications } from "../../icons/notifications.svg";
+import { ReactComponent as NotificationsActive } from "../../icons/notificationsActive.svg";
+import ProfileIcon from "../ProfileIcon.js";
+import luka from "../../icons/luka.jpg";
+import "../../styles/menu.scss";
 const Navigation = () => {
 	const activePage = useSelector(selectPage);
 	const dispatch = useDispatch();

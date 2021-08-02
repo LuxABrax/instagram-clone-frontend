@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/comment.scss";
+import "../../styles/comment.scss";
 
 const Comment = props => {
 	const { accountName, comment } = props;

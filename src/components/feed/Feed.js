@@ -1,8 +1,8 @@
 import React from "react";
-import "../styles/feed.scss";
+import "../../styles/feed.scss";
 import Stories from "./Stories";
-import Post from "./Post";
-import comments from "../data/comments.js";
+import Post from "../post/Post";
+import comments from "../../data/comments.js";
 
 const Feed = () => {
 	return (
