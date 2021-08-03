@@ -63,7 +63,7 @@ const Navigation = () => {
 				)}
 			</div>
 			<Link
-				to='/profile'
+				to='/profile/lux_abrax'
 				className='link'
 				onClick={() => {
 					dispatch(changePage("profile"));

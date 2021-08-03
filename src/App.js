@@ -25,7 +25,10 @@ function App() {
 						<Route path='/counter' exact>
 							<CounterPage />
 						</Route>
-						<Route path='/profile' exact>
+						<Route path='/profile/:pName' exact>
+							<Profile />
+						</Route>
+						<Route path='/profile/:pName/p/:pId' exact>
 							<Profile />
 						</Route>
 						<Redirect to='/' />

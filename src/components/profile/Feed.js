@@ -6,8 +6,14 @@ import comments from "../../data/comments.js";
 import luka from "../../icons/luka.jpg";
 import "../../styles/profFeed.scss";
 import FeedMenu from "./FeedMenu";
+import { useHistory } from "react-router";
 
-const Feed = () => {
+const Feed = props => {
+	const { push } = useHistory();
+	// function openModal() {
+	// 	toggleModal();
+	// 	push(`/profile/${accountName}/p/${postId}`);
+	// }
 	return (
 		<div className='profFeed'>
 			<Header
