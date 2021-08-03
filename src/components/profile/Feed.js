@@ -5,6 +5,7 @@ import comments from "../../data/comments.js";
 
 import luka from "../../icons/luka.jpg";
 import "../../styles/profFeed.scss";
+import FeedMenu from "./FeedMenu";
 
 const Feed = () => {
 	return (
@@ -18,6 +19,7 @@ const Feed = () => {
 				followers={79}
 				following={79}
 			/>
+			<FeedMenu />
 			<Post
 				accountName='luxabrax'
 				storyBorder={true}

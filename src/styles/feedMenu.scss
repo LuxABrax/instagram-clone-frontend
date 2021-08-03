@@ -1,0 +1,40 @@
+@import "./properties";
+.feedMenu {
+	display: flex;
+	justify-content: center;
+	border-top: 1px solid $border-color-grey;
+
+	.tab {
+		position: relative;
+		cursor: pointer;
+		font-size: 12px;
+		letter-spacing: 1px;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		height: 52px;
+		margin-right: 60px;
+		color: $font-color-secondary;
+		&:last-child {
+			margin-right: 0;
+		}
+		&:active {
+			color: $font-color-footer;
+			.icon {
+				fill: $font-color-footer;
+			}
+		}
+		&.active {
+			color: $font-color-primary;
+			border-top: 1px solid $font-color-primary;
+			margin-top: -1px;
+			padding-top: 1px;
+			.icon {
+				fill: $font-color-primary;
+			}
+		}
+		p {
+			margin-left: 6px;
+		}
+	}
+}
