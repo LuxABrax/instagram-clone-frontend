@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/post.scss";
 import { ReactComponent as More } from "../../icons/more.svg";
 import { ReactComponent as Emoji } from "../../icons/emoji.svg";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../styles/postMenu.scss";
 import { ReactComponent as Share } from "../../icons/directShare.svg";
 import { ReactComponent as Comment } from "../../icons/comment.svg";

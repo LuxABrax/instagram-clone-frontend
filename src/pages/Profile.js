@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import Feed from "../components/profile/Feed";
 import PostModal from "../components/profile/PostModal";

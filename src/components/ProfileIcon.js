@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/profileIcon.scss";
 
 const ProfileIcon = props => {

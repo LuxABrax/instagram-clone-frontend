@@ -1,4 +1,3 @@
-import React from "react";
 import useWindowDimensions from "../../utils/windowHook";
 
 import "../../styles/profHeader.scss";

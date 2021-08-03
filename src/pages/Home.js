@@ -1,4 +1,3 @@
-import React from "react";
 import Feed from "../components/feed/Feed";
 import Sidebar from "../components/sidebar/Sidebar";
 import "../styles/home.scss";

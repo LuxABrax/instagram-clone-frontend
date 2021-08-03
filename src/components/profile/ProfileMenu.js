@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/profMenu.scss";
 import { ReactComponent as ArrDown } from "../../icons/arrDown.svg";
 

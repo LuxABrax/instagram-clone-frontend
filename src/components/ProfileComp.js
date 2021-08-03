@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/profileComp.scss";
 import ProfileIcon from "./ProfileIcon";
 import users from "../data/users";

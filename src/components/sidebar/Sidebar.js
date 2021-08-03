@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/sidebar.scss";
 import ProfileComp from "../ProfileComp";
 import Suggestions from "./Suggestions";

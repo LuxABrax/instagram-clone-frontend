@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../styles/feedMenu.scss";
 
 import { ReactComponent as Posts } from "../../icons/profileFeedTab/posts.svg";

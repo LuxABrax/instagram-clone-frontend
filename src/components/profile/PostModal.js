@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import PostMenu from "../post/PostMenu";
 import ProfileComp from "../ProfileComp";
 import "../../styles/postModal.scss";

@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/feed.scss";
 import Stories from "./Stories";
 import Post from "../post/Post";

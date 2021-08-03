@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/followInfo.scss";
 const FollowInfo = props => {
 	const { posts, followers, following } = props;

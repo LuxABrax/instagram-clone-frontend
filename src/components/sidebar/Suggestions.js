@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/suggestions.scss";
 import ProfileComp from "../ProfileComp";
 

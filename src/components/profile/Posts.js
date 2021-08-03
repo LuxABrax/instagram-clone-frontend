@@ -1,5 +1,3 @@
-import React from "react";
-
 const Posts = props => {
 	const { accountName } = props;
 	return (
