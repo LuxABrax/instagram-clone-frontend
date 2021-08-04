@@ -9,25 +9,49 @@ import PostModal from "../components/profile/PostModal";
 import Header from "../components/profile/Header";
 import FeedMenu from "../components/profile/FeedMenu";
 import comments from "../data/comments.js";
-
-import Feed from "../components/profile/Feed";
-import Post from "../components/post/Post";
-
+import imagesPosts from "../data/posts";
 import luka from "../icons/luka.jpg";
 
 const Profile = () => {
+	const [arrSorted, setArrSorted] = useState(false);
+	const [sortedPosts, setSortedPosts] = useState([]);
+
 	let { pName, pId } = useParams();
-	console.log(pName);
-	if (pId !== undefined) console.log(pId);
-	console.log(useParams());
+	const { push } = useHistory();
+	const dispatch = useDispatch();
+
 	const activePage = useSelector(selectPage);
 	let modalActive = useSelector(selectModalActive);
-	const dispatch = useDispatch();
-	console.log(modalActive);
-	const { push } = useHistory();
+
+	const sPosts = [];
+	const sortPosts = () => {
+		let len = imagesPosts.length;
+		let rowNum = Math.ceil(len / 3);
+		let emptyNum = rowNum * 3 - len;
+		let totalNum = len + emptyNum;
+
+		let arr = [];
+		let j = 0;
+		for (let i = 0; i < totalNum; i++) {
+			if (i < len) {
+				arr.push(imagesPosts[i]);
+			} else {
+				arr.push({ id: `${i}empty`, image: "empty" });
+			}
+			j++;
+
+			if (j === 3) {
+				sPosts.push(arr);
+				arr = [];
+				j = 0;
+			}
+			if (i === totalNum) sPosts.push(arr);
+		}
+		setSortedPosts(sPosts);
+		setArrSorted(true);
+	};
 
 	function openModal(postId) {
-		console.log("opening modal");
 		dispatch(toggleModal());
 		push(`/profile/${pName}/p/${postId}`);
 	}
@@ -35,6 +59,7 @@ const Profile = () => {
 	useEffect(() => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
+		sortPosts();
 	}, []);
 
 	return (
@@ -62,66 +87,39 @@ const Profile = () => {
 				/>
 				<FeedMenu />
 
-				<div className='posts'>
-					<div className='row'>
-						<div className='postContainer'>
-							<img
-								src='https://picsum.photos/600'
-								alt=''
-								onClick={() => {
-									openModal(123);
-								}}
-							/>
-						</div>
-						<div className='postContainer'>
-							<img
-								src='https://picsum.photos/600'
-								alt=''
-								onClick={() => {
-									openModal(1234);
-								}}
-							/>
-						</div>
-						<div className='postContainer'>
-							<img
-								src='https://picsum.photos/600'
-								alt=''
-								onClick={() => {
-									openModal(1237);
-								}}
-							/>
-						</div>
+				{arrSorted ? (
+					<div className='posts'>
+						{sortedPosts.map((postRow, index) => {
+							console.log("mapping row");
+							console.log(postRow);
+							return (
+								<div className='row' key={index}>
+									{postRow.map((postI, idx) => {
+										if (postI.image === "empty") {
+											return (
+												<div className='postContainer' key={idx}>
+													<img src='' alt='empty' />
+												</div>
+											);
+										} else {
+											return (
+												<div
+													className='postContainer'
+													key={idx}
+													onClick={() => openModal(postI.id)}
+												>
+													<img src={postI.image} alt='' />
+												</div>
+											);
+										}
+									})}
+								</div>
+							);
+						})}
 					</div>
-					<div className='row'>
-						<div className='postContainer'>
-							<img
-								src='https://picsum.photos/600'
-								alt=''
-								onClick={() => {
-									openModal(1235);
-								}}
-							/>
-						</div>
-						<div className='postContainer'>
-							<img
-								src='https://picsum.photos/600'
-								alt=''
-								onClick={() => {
-									openModal(1523);
-								}}
-							/>
-						</div>
-						<div className='postContainer'>
-							<img
-								src='https://picsum.photos/600'
-								alt=''
-								onClick={() => {
-									openModal(1253);
-								}}
-							/>
-						</div>
-					</div>
-				</div>
+				) : (
+					<div>No posts</div>
+				)}
 			</div>
 		</div>
 	);
