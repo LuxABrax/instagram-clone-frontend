@@ -1,14 +1,77 @@
+@import "./properties";
 .postModal {
-	position: absolute;
-	bottom: 0;
+	position: fixed;
+	top: 0;
 	// transform: translateY(-100vh);
 	width: 100vw;
 	height: 100vh;
 	margin: 0 auto;
 	z-index: 10;
-	background-color: #26262684;
 	display: flex;
 	align-items: center;
+	.background {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+		background-color: #26262684;
+	}
+	.modalContent {
+		z-index: 11;
+
+		height: 88%;
+		max-width: 935px;
+		margin: 2rem auto;
+		// margin-top: 32px;
+		display: flex;
+		background-color: $background-white;
+
+		img {
+			flex: 1;
+		}
+		.postDesc {
+			flex: 1;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+		header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 1rem;
+			width: 335px;
+			height: 72px;
+			border-bottom: 1px solid $border-color-grey;
+
+			.profileContainer {
+				min-height: 0;
+			}
+			.pIconContainer {
+				min-width: 40px;
+			}
+		}
+		.postDescBody {
+			padding-left: 1rem;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			// justify-content: space-between;
+			.comments {
+				flex: 1;
+				padding-top: 2rem;
+			}
+		}
+		.moreBtn {
+			height: 30px;
+			width: 30px;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 	.post {
 		width: 90vw;
 		max-height: 90vh;

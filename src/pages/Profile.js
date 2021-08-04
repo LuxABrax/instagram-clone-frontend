@@ -1,16 +1,18 @@
+import "../styles/profFeed.scss";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
-import Feed from "../components/profile/Feed";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal, selectModalActive } from "../features/modalSlice";
+
 import PostModal from "../components/profile/PostModal";
 import Header from "../components/profile/Header";
 import FeedMenu from "../components/profile/FeedMenu";
-import Post from "../components/post/Post";
 import comments from "../data/comments.js";
 
+import Feed from "../components/profile/Feed";
+import Post from "../components/post/Post";
+
 import luka from "../icons/luka.jpg";
-import "../styles/profFeed.scss";
-import { toggleModal, selectModalActive } from "../features/modalSlice";
-import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
 	let { pName, pId } = useParams();
@@ -31,6 +33,7 @@ const Profile = () => {
 	useEffect(() => {
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 	}, []);
+
 	return (
 		<div className='profile'>
 			{pId !== undefined && modalActive && (

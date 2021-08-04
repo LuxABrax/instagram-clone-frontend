@@ -1,9 +1,9 @@
 import "../../styles/post.scss";
 import { ReactComponent as More } from "../../icons/more.svg";
-import { ReactComponent as Emoji } from "../../icons/emoji.svg";
 import ProfileComp from "../ProfileComp";
 import Comment from "./Comment";
 import PostMenu from "./PostMenu";
+import AddComment from "./AddComment";
 const Post = props => {
 	const { accountName, image, comments, likedByText, likedByNumber, hours } =
 		props;
@@ -36,11 +36,7 @@ const Post = props => {
 					})}
 				</div>
 				<div className='timePosted'>{hours} HOURS AGO</div>
-				<div className='addComment'>
-					<Emoji className='icon' />
-					<div className='commentText'>Add a comment...</div>
-					<div className='postText'>POST</div>
-				</div>
+				<AddComment />
 			</div>
 		</div>
 	);

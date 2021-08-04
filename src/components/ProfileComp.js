@@ -1,6 +1,9 @@
 import "../styles/profileComp.scss";
+import { useHistory } from "react-router";
+
 import ProfileIcon from "./ProfileIcon";
 import users from "../data/users";
+
 const ProfileComp = props => {
 	const {
 		username,
@@ -12,6 +15,8 @@ const ProfileComp = props => {
 		hideAccountName,
 		image,
 	} = props;
+
+	const { push } = useHistory();
 
 	let accountName = username
 		? username
@@ -28,7 +33,14 @@ const ProfileComp = props => {
 			</div>
 			{(accountName || caption) && !hideAccountName && (
 				<div className={`textContainer ${captionSize}`}>
-					<span className='accountName'>{accountName}</span>
+					<span
+						className='accountName'
+						onClick={() => {
+							push(`/profile/${accountName}`);
+						}}
+					>
+						{accountName}
+					</span>
 					<span className={`caption ${captionSize}`}>{caption}</span>
 				</div>
 			)}
