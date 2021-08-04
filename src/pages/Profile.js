@@ -2,6 +2,7 @@ import "../styles/profFeed.scss";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+import { changePage, selectPage } from "../features/navigation/navigationSlice";
 import { toggleModal, selectModalActive } from "../features/modalSlice";
 
 import PostModal from "../components/profile/PostModal";
@@ -19,6 +20,7 @@ const Profile = () => {
 	console.log(pName);
 	if (pId !== undefined) console.log(pId);
 	console.log(useParams());
+	const activePage = useSelector(selectPage);
 	let modalActive = useSelector(selectModalActive);
 	const dispatch = useDispatch();
 	console.log(modalActive);
@@ -31,6 +33,7 @@ const Profile = () => {
 	}
 
 	useEffect(() => {
+		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 	}, []);
 
