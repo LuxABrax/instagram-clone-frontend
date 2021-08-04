@@ -1,16 +1,20 @@
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { goHome } from "../../features/navigation/navigationSlice";
-
 import "../../styles/navigation.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+	goHome,
+	selectNavActive,
+} from "../../features/navigation/navigationSlice";
+
 import Menu from "./Menu";
 
 const Navigation = () => {
 	const dispatch = useDispatch();
 	const { push } = useHistory();
+	const navActive = useSelector(selectNavActive);
 
 	return (
-		<div className='navigation'>
+		<div className={`navigation ${!navActive && "hidden"}`}>
 			<div className='container'>
 				<div
 					className='logoContainer'

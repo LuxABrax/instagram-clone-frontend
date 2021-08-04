@@ -2,8 +2,10 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import counterReducer from "../features/counter/counterSlice";
 import navigationReducer from "../features/navigation/navigationSlice";
 import modalReducer from "../features/modalSlice";
+import authReducer from "../features/authSlice";
 
 const rootReducer = combineReducers({
+	auth: authReducer,
 	counter: counterReducer,
 	nav: navigationReducer,
 	modal: modalReducer,

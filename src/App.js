@@ -8,31 +8,50 @@ import {
 import "./styles/App.scss";
 import Navigation from "./components/navigation/Navigation";
 import CounterPage from "./pages/CounterPage";
+import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import { useSelector } from "react-redux";
+import { selectLoggedIn } from "./features/authSlice";
 
 function App() {
+	const loggedIn = useSelector(selectLoggedIn);
+	// if (!loggedIn) return <Login setLoggedIn={setLoggedIn} />;
+	let routes;
+	if (!loggedIn) {
+		routes = (
+			<Switch>
+				<Route path='/login' exact>
+					<Login />
+				</Route>
+				<Redirect to='/login' />
+			</Switch>
+		);
+	} else {
+		routes = (
+			<Switch>
+				<Route path='/' exact>
+					<Home />
+				</Route>
+				<Route path='/counter' exact>
+					<CounterPage />
+				</Route>
+				<Route path='/profile/:pName' exact>
+					<Profile />
+				</Route>
+				<Route path='/profile/:pName/p/:pId' exact>
+					<Profile />
+				</Route>
+				<Redirect to='/' />
+			</Switch>
+		);
+	}
+
 	return (
 		<div className='App'>
 			<Router>
 				<Navigation />
-				<main>
-					<Switch>
-						<Route path='/' exact>
-							<Home />
-						</Route>
-						<Route path='/counter' exact>
-							<CounterPage />
-						</Route>
-						<Route path='/profile/:pName' exact>
-							<Profile />
-						</Route>
-						<Route path='/profile/:pName/p/:pId' exact>
-							<Profile />
-						</Route>
-						<Redirect to='/' />
-					</Switch>
-				</main>
+				<main>{routes}</main>
 			</Router>
 		</div>
 	);
