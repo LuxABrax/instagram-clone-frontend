@@ -1,4 +1,4 @@
-import "../styles/profFeed.scss";
+import "../styles/pages/profile.scss";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";

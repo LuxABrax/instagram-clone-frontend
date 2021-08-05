@@ -1,4 +1,4 @@
-import "../styles/login.scss";
+import "../styles/pages/login.scss";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";

@@ -1,4 +1,4 @@
-import "../../styles/postModal.scss";
+import "../../styles/profile/postModal.scss";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";

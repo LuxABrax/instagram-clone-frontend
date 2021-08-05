@@ -1,9 +1,10 @@
+import "../../styles/post/postMenu.scss";
 import { useState } from "react";
-import "../../styles/postMenu.scss";
-import { ReactComponent as Share } from "../../icons/directShare.svg";
-import { ReactComponent as Comment } from "../../icons/comment.svg";
+
 import { ReactComponent as Like } from "../../icons/heart.svg";
 import { ReactComponent as LikeActive } from "../../icons/heartActive.svg";
+import { ReactComponent as Comment } from "../../icons/comment.svg";
+import { ReactComponent as Share } from "../../icons/directShare.svg";
 import { ReactComponent as Bookmark } from "../../icons/save.svg";
 import { ReactComponent as BookmarkActive } from "../../icons/saveActive.svg";
 

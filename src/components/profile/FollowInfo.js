@@ -1,4 +1,5 @@
-import "../../styles/followInfo.scss";
+import "../../styles/profile/followInfo.scss";
+
 const FollowInfo = props => {
 	const { posts, followers, following } = props;
 

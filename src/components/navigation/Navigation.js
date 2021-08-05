@@ -1,4 +1,4 @@
-import "../../styles/navigation.scss";
+import "../../styles/navigation/navigation.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {

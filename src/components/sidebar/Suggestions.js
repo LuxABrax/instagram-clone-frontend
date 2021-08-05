@@ -1,4 +1,4 @@
-import "../../styles/suggestions.scss";
+import "../../styles/sidebar/suggestions.scss";
 import ProfileComp from "../ProfileComp";
 
 const Suggestions = () => {

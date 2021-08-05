@@ -1,6 +1,6 @@
+import "../../styles/profile/header.scss";
 import useWindowDimensions from "../../utils/windowHook";
 
-import "../../styles/profHeader.scss";
 import ProfileIcon from "../ProfileIcon";
 import { ReactComponent as More } from "../../icons/more.svg";
 import FollowInfo from "./FollowInfo";

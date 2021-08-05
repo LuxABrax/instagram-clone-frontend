@@ -1,4 +1,4 @@
-import "../../styles/addComment.scss";
+import "../../styles/post/addComment.scss";
 import { ReactComponent as Emoji } from "../../icons/emoji.svg";
 
 const AddComment = () => {

@@ -1,13 +1,14 @@
-import "../../styles/story.scss";
+import "../../styles/feed/story.scss";
 import ProfileIcon from "../ProfileIcon";
 import users from "../../data/users.js";
 
 const Story = props => {
 	let { storyBorder, seen } = props;
 	console.log(storyBorder);
-	if (storyBorder !== false) storyBorder = true;
-	let accountName = users[Math.floor(Math.random() * users.length)].username;
 
+	if (storyBorder !== false) storyBorder = true;
+
+	let accountName = users[Math.floor(Math.random() * users.length)].username;
 	if (accountName.length > 10) {
 		accountName = accountName.substring(0, 10) + "...";
 	}

@@ -1,4 +1,4 @@
-import "../../styles/profMenu.scss";
+import "../../styles/profile/profMenu.scss";
 import { ReactComponent as ArrDown } from "../../icons/arrDown.svg";
 
 const ProfileMenu = () => {

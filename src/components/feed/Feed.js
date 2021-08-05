@@ -1,4 +1,4 @@
-import "../../styles/feed.scss";
+import "../../styles/feed/feed.scss";
 import Stories from "./Stories";
 import Post from "../post/Post";
 import comments from "../../data/comments.js";

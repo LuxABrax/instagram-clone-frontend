@@ -1,9 +1,11 @@
-import "../../styles/post.scss";
-import { ReactComponent as More } from "../../icons/more.svg";
+import "../../styles/post/post.scss";
+
 import ProfileComp from "../ProfileComp";
-import Comment from "./Comment";
+import { ReactComponent as More } from "../../icons/more.svg";
 import PostMenu from "./PostMenu";
+import Comment from "./Comment";
 import AddComment from "./AddComment";
+
 const Post = props => {
 	const { accountName, image, comments, likedByText, likedByNumber, hours } =
 		props;

@@ -1,5 +1,6 @@
+import "../../styles/feed/stories.scss";
 import Story from "./Story";
-import "../../styles/stories.scss";
+
 const Stories = () => {
 	return (
 		<div className='stories'>
