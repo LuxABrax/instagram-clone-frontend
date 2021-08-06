@@ -4,7 +4,7 @@ import users from "../../data/users.js";
 
 const Story = props => {
 	let { storyBorder, seen } = props;
-	console.log(storyBorder);
+	// console.log(storyBorder);
 
 	if (storyBorder !== false) storyBorder = true;
 

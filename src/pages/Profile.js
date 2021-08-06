@@ -23,44 +23,46 @@ const Profile = () => {
 	const activePage = useSelector(selectPage);
 	let modalActive = useSelector(selectModalActive);
 
-	const sPosts = [];
-	const sortPosts = () => {
-		let len = imagesPosts.length;
-		let rowNum = Math.ceil(len / 3);
-		let emptyNum = rowNum * 3 - len;
-		let totalNum = len + emptyNum;
-
-		let arr = [];
-		let j = 0;
-		for (let i = 0; i < totalNum; i++) {
-			if (i < len) {
-				arr.push(imagesPosts[i]);
-			} else {
-				arr.push({ id: `${i}empty`, image: "empty" });
-			}
-			j++;
-
-			if (j === 3) {
-				sPosts.push(arr);
-				arr = [];
-				j = 0;
-			}
-			if (i === totalNum) sPosts.push(arr);
-		}
-		setSortedPosts(sPosts);
-		setArrSorted(true);
-	};
-
 	function openModal(postId) {
 		dispatch(toggleModal());
 		push(`/profile/${pName}/p/${postId}`);
 	}
 
+	const sPosts = [];
+
 	useEffect(() => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
+
+		const sortPosts = () => {
+			let len = imagesPosts.length;
+			let rowNum = Math.ceil(len / 3);
+			let emptyNum = rowNum * 3 - len;
+			let totalNum = len + emptyNum;
+
+			let arr = [];
+			let j = 0;
+			for (let i = 0; i < totalNum; i++) {
+				if (i < len) {
+					arr.push(imagesPosts[i]);
+				} else {
+					arr.push({ id: `${i}empty`, image: "empty" });
+				}
+				j++;
+
+				if (j === 3) {
+					sPosts.push(arr);
+					arr = [];
+					j = 0;
+				}
+				if (i === totalNum) sPosts.push(arr);
+			}
+			setSortedPosts(sPosts);
+			setArrSorted(true);
+		};
+
 		sortPosts();
-	}, []);
+	}, [activePage, dispatch, modalActive, pId]);
 
 	return (
 		<div className='profile'>

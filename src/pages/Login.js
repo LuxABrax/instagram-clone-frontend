@@ -7,15 +7,45 @@ import { changeNavActive } from "../features/navigation/navigationSlice";
 
 import Footer from "../components/sidebar/Footer";
 
+import Input from "../components/login/Input";
+import {
+	VALIDATOR_REQUIRE,
+	VALIDATOR_MINLENGTH,
+} from "../components/login/validators";
+import { useForm } from "../components/login/formHook";
+
 const Login = () => {
 	const [mode, setMode] = useState("login");
-	const [showPass, setShowPass] = useState(false);
+	const [loginErr, setLoginErr] = useState("");
+	const [formState, inputHandler, setFormData] = useForm(
+		{
+			email: {
+				value: "",
+				isValid: false,
+			},
+			password: {
+				value: "",
+				isValid: false,
+			},
+		},
+		false
+	);
+
+	// setFormData({ ...formState.inputs }, false);
 
 	const dispatch = useDispatch();
 	const { push } = useHistory();
 
 	function handleLogin(e) {
 		e.preventDefault();
+		console.log(formState.inputs);
+
+		// setLoginErr(
+		// 	"The username you entered doesn't belong to an account. Please check your username and try again."
+		// );
+		// setLoginErr(
+		// 	"Sorry, your password was incorrect. Please double-check your password"
+		// );
 		dispatch(changeNavActive(true));
 		dispatch(setLogin(true));
 		push("/home");
@@ -43,31 +73,25 @@ const Login = () => {
 								/>
 							</div>
 							<form className='loginForm' onSubmit={handleLogin}>
-								<div className='inputContainer'>
-									<label for='email'>
-										<span className={`typing`}>
-											Phone number, email or username
-										</span>
-										<input id='email' className={`typing`} />
-									</label>
-								</div>
-								<div className='inputContainer'>
-									<label for='password'>
-										<span className={`typing`}>Password</span>
-										<input
-											id='password'
-											type={`${!showPass ? "password" : "text"}`}
-											className={`typing`}
-										/>
-									</label>
-									<div
-										className={`showPass typing`}
-										onClick={() => {
-											setShowPass(!showPass);
-										}}
-									>{`${showPass ? "Hide" : "Show"}`}</div>
-								</div>
-								<button className='loginBtn' type='submit' disabled>
+								<Input
+									id='email'
+									type='text'
+									label='Phone number, email or username'
+									validators={[VALIDATOR_REQUIRE()]}
+									onInput={inputHandler}
+								/>
+								<Input
+									id='password'
+									type='password'
+									label='Password'
+									validators={[VALIDATOR_MINLENGTH(6)]}
+									onInput={inputHandler}
+								/>
+								<button
+									className='loginBtn'
+									type='submit'
+									disabled={!formState.isValid}
+								>
 									Log In
 								</button>
 								<div className='splitContainer'>
@@ -79,6 +103,9 @@ const Login = () => {
 									<img src='/images/facebook.png' alt='facebook-logo' />
 									<span>Log in with Facebook</span>
 								</div>
+								{loginErr.length > 0 && (
+									<p className='loginError'>{loginErr}</p>
+								)}
 								<p href='' className='forgot'>
 									Forgot password?
 								</p>
