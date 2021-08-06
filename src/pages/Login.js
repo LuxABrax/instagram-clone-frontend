@@ -36,7 +36,36 @@ const Login = () => {
 		false
 	);
 
-	// setFormData({ ...formState.inputs }, false);
+	const switchModeHandler = () => {
+		if (!isLogin) {
+			setFormData(
+				{
+					...formState.inputs,
+					fullName: undefined,
+					username: undefined,
+				},
+				formState.inputs.email.isValid && formState.inputs.password.isValid
+			);
+		} else {
+			setFormData(
+				{
+					...formState.inputs,
+					fullName: {
+						value: "",
+						isValid: false,
+					},
+					username: {
+						value: "",
+						isValid: false,
+					},
+				},
+				false
+			);
+			// console.log("after add ", formState.inputs);
+		}
+		setIsLogin(prevMode => !prevMode);
+		// console.log("after switch ", formState.inputs);
+	};
 
 	const dispatch = useDispatch();
 	const { push } = useHistory();
@@ -149,7 +178,11 @@ const Login = () => {
 						</form>
 					</div>
 
-					<Switch isLogin={isLogin} setIsLogin={setIsLogin} />
+					<Switch
+						isLogin={isLogin}
+						setIsLogin={setIsLogin}
+						switchModeHandler={switchModeHandler}
+					/>
 					<GetTheApp />
 				</div>
 			</div>
