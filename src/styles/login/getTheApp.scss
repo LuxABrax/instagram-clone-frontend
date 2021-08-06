@@ -1,0 +1,24 @@
+.appDownload {
+	display: flex;
+	flex-direction: column;
+	p {
+		font-size: 14px;
+		line-height: 18px;
+		margin: 10px 20px;
+		text-align: center;
+	}
+	.downloads {
+		display: flex;
+		justify-content: center;
+		margin: 10px auto;
+		:first-child {
+			img {
+				margin-right: 8px;
+			}
+		}
+	}
+	img {
+		height: 40px;
+		cursor: pointer;
+	}
+}

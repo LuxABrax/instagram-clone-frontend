@@ -4,18 +4,23 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { setLogin } from "../features/authSlice";
 import { changeNavActive } from "../features/navigation/navigationSlice";
-
-import Footer from "../components/sidebar/Footer";
-
-import Input from "../components/login/Input";
+import { useForm } from "../components/login/formHook";
 import {
 	VALIDATOR_REQUIRE,
 	VALIDATOR_MINLENGTH,
+	VALIDATOR_EMAIL,
+	VALIDATOR_MAXLENGTH,
 } from "../components/login/validators";
-import { useForm } from "../components/login/formHook";
+
+import Input from "../components/login/Input";
+import Preview from "../components/login/Preview";
+import Switch from "../components/login/Switch";
+import GetTheApp from "../components/login/GetTheApp";
+import WithFacebook from "../components/login/WithFacebook";
+import Footer from "../components/sidebar/Footer";
 
 const Login = () => {
-	const [mode, setMode] = useState("login");
+	const [isLogin, setIsLogin] = useState(true);
 	const [loginErr, setLoginErr] = useState("");
 	const [formState, inputHandler, setFormData] = useForm(
 		{
@@ -57,113 +62,97 @@ const Login = () => {
 
 	return (
 		<div className='loginPage'>
-			{mode === "login" ? (
-				<div className='logContainer'>
+			<div className='logContainer'>
+				{isLogin && (
 					<div className='previewContainer'>
-						<div className='images'>
-							<img src='/images/screenshot1.jpg' alt='screenshot' />
-						</div>
+						<Preview />
 					</div>
-					<div className='loginContainer'>
-						<div className='formContainer'>
-							<div className='titleImg'>
-								<img
-									src='/images/instagram-logo-big.png'
-									alt='Instagram title'
-								/>
-							</div>
-							<form className='loginForm' onSubmit={handleLogin}>
-								<Input
-									id='email'
-									type='text'
-									label='Phone number, email or username'
-									validators={[VALIDATOR_REQUIRE()]}
-									onInput={inputHandler}
-								/>
-								<Input
-									id='password'
-									type='password'
-									label='Password'
-									validators={[VALIDATOR_MINLENGTH(6)]}
-									onInput={inputHandler}
-								/>
-								<button
-									className='loginBtn'
-									type='submit'
-									disabled={!formState.isValid}
-								>
-									Log In
-								</button>
-								<div className='splitContainer'>
-									<div className='line'></div>
-									<p>OR</p>
-									<div className='line'></div>
-								</div>
-								<div className='facebookBtn'>
-									<img src='/images/facebook.png' alt='facebook-logo' />
-									<span>Log in with Facebook</span>
-								</div>
-								{loginErr.length > 0 && (
-									<p className='loginError'>{loginErr}</p>
-								)}
-								<p href='' className='forgot'>
-									Forgot password?
+				)}
+				<div className='loginContainer'>
+					<div className='formContainer'>
+						<div className='titleImg'>
+							<img src='/images/instagram-logo-big.png' alt='Instagram title' />
+						</div>
+
+						{!isLogin && <WithFacebook isLogin={isLogin} loginErr={loginErr} />}
+
+						<form className={`${!isLogin && "fix"}`} onSubmit={handleLogin}>
+							{isLogin ? (
+								<>
+									<Input
+										id='email'
+										type='text'
+										label='Phone number, email or username'
+										validators={[VALIDATOR_REQUIRE()]}
+										onInput={inputHandler}
+									/>
+									<Input
+										id='password'
+										type='password'
+										label='Password'
+										validators={[VALIDATOR_MINLENGTH(6)]}
+										onInput={inputHandler}
+									/>
+								</>
+							) : (
+								<>
+									<Input
+										id='email'
+										type='email'
+										label='Email'
+										validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
+										onInput={inputHandler}
+									/>
+									<Input
+										id='fullName'
+										type='text'
+										label='Full Name'
+										validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(50)]}
+										onInput={inputHandler}
+									/>
+									<Input
+										id='username'
+										type='text'
+										label='Username'
+										validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
+										onInput={inputHandler}
+									/>
+									<Input
+										id='password'
+										type='password'
+										label='Password'
+										validators={[VALIDATOR_MINLENGTH(6)]}
+										onInput={inputHandler}
+									/>
+								</>
+							)}
+
+							<button
+								className='loginBtn'
+								type='submit'
+								disabled={!formState.isValid}
+							>
+								{`${isLogin ? "Log In" : "Next"}`}
+							</button>
+
+							{!isLogin && (
+								<p className='policy'>
+									By signing up, you agree to our Terms . Learn how we collect,
+									use and share your data in our Data Policy and how we use
+									cookies and similar technology in our Cookies Policy .
 								</p>
-							</form>
-						</div>
+							)}
 
-						<div className='registerContainer'>
-							<p>
-								Don't have an account?
-								<span
-									className='switchBtn'
-									onClick={() => {
-										setMode("register");
-									}}
-								>
-									Sign up
-								</span>
-							</p>
-						</div>
-						<div className='appDownload'>
-							<p>Get the Real app.</p>
-							<div className='downloads'>
-								<a
-									target='_blank'
-									rel='noreferrer'
-									href='https://apps.apple.com/app/instagram/id389801252?vt=lo'
-								>
-									<img
-										src='/images/downloadApp.png'
-										alt='download from app store'
-									/>
-								</a>
-								<a
-									target='_blank'
-									rel='noreferrer'
-									href='https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb&utm_campaign=loginPage&ig_mid=B5F2BFB5-5A2C-49C6-BF65-4DA9866D6C34&utm_content=lo&utm_medium=badge'
-								>
-									<img
-										src='/images/downloadPlay.png'
-										alt='download from play store'
-									/>
-								</a>
-							</div>
-						</div>
+							{isLogin && (
+								<WithFacebook isLogin={isLogin} loginErr={loginErr} />
+							)}
+						</form>
 					</div>
-				</div>
-			) : (
-				<div className='regContainer'>
-					<button
-						onClick={() => {
-							setMode("login");
-						}}
-					>
-						Switch to Log in
-					</button>
-				</div>
-			)}
 
+					<Switch isLogin={isLogin} setIsLogin={setIsLogin} />
+					<GetTheApp />
+				</div>
+			</div>
 			<Footer />
 		</div>
 	);

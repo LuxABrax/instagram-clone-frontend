@@ -1,0 +1,19 @@
+.switchContainer {
+	background-color: #fff;
+	border: 1px solid #dbdbdb;
+	border-radius: 1px;
+	padding: 10px 0;
+	margin-bottom: 10px;
+	P {
+		color: #262626;
+		font-size: 14px;
+		margin: 15px;
+		text-align: center;
+		span {
+			margin-left: 4px;
+			cursor: pointer;
+			font-weight: 600;
+			color: #0095f6;
+		}
+	}
+}
