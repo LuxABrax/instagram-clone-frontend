@@ -106,32 +106,25 @@ const Login = () => {
 						{!isLogin && <WithFacebook isLogin={isLogin} loginErr={loginErr} />}
 
 						<form className={`${!isLogin && "fix"}`} onSubmit={handleLogin}>
-							{isLogin ? (
+							<>
+								<Input
+									id='email'
+									type='text'
+									label='Phone number, email or username'
+									validators={[VALIDATOR_REQUIRE()]}
+									onInput={inputHandler}
+								/>
+								<Input
+									id='password'
+									type='password'
+									label='Password'
+									validators={[VALIDATOR_MINLENGTH(6)]}
+									onInput={inputHandler}
+								/>
+							</>
+
+							{!isLogin && (
 								<>
-									<Input
-										id='email'
-										type='text'
-										label='Phone number, email or username'
-										validators={[VALIDATOR_REQUIRE()]}
-										onInput={inputHandler}
-									/>
-									<Input
-										id='password'
-										type='password'
-										label='Password'
-										validators={[VALIDATOR_MINLENGTH(6)]}
-										onInput={inputHandler}
-									/>
-								</>
-							) : (
-								<>
-									<Input
-										id='email'
-										type='email'
-										label='Email'
-										validators={[VALIDATOR_REQUIRE(), VALIDATOR_EMAIL()]}
-										onInput={inputHandler}
-									/>
 									<Input
 										id='fullName'
 										type='text'
@@ -144,13 +137,6 @@ const Login = () => {
 										type='text'
 										label='Username'
 										validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
-										onInput={inputHandler}
-									/>
-									<Input
-										id='password'
-										type='password'
-										label='Password'
-										validators={[VALIDATOR_MINLENGTH(6)]}
 										onInput={inputHandler}
 									/>
 								</>
@@ -178,11 +164,7 @@ const Login = () => {
 						</form>
 					</div>
 
-					<Switch
-						isLogin={isLogin}
-						setIsLogin={setIsLogin}
-						switchModeHandler={switchModeHandler}
-					/>
+					<Switch isLogin={isLogin} switchModeHandler={switchModeHandler} />
 					<GetTheApp />
 				</div>
 			</div>

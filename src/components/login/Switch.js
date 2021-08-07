@@ -1,6 +1,6 @@
 import "../../styles/login/switch.scss";
 
-const Switch = ({ isLogin, setIsLogin, switchModeHandler }) => {
+const Switch = ({ isLogin, switchModeHandler }) => {
 	return (
 		<div className='switchContainer'>
 			<p>
@@ -9,9 +9,6 @@ const Switch = ({ isLogin, setIsLogin, switchModeHandler }) => {
 					className='switchBtn'
 					onClick={() => {
 						switchModeHandler();
-						// {
-						// 	isLogin ? setIsLogin(false) : setIsLogin(true);
-						// }
 					}}
 				>
 					{`${isLogin ? "Sign up" : "Log in"}`}
