@@ -54,7 +54,6 @@ export const useForm = (initialInputs, initialFormValidity) => {
 			inputs: inputData,
 			formIsValid: formValidity,
 		});
-		console.log("setForm ", formState.inputs);
 	}, []);
 
 	return [formState, inputHandler, setFormData];

@@ -78,6 +78,10 @@
 	&:disabled {
 		background-color: rgba(0, 149, 246, 0.3);
 	}
+	&:active {
+		background-color: #9ed2f5;
+		transition: background-color 0.2s ease-out;
+	}
 }
 .policy {
 	color: #8e8e8e;

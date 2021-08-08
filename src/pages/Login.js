@@ -1,14 +1,13 @@
 import "../styles/pages/login.scss";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, registerUser } from "../features/authSlice";
 import { useHistory } from "react-router";
-import { setLogin } from "../features/authSlice";
-import { changeNavActive } from "../features/navigation/navigationSlice";
+
 import { useForm } from "../components/login/formHook";
 import {
 	VALIDATOR_REQUIRE,
 	VALIDATOR_MINLENGTH,
-	VALIDATOR_EMAIL,
 	VALIDATOR_MAXLENGTH,
 } from "../components/login/validators";
 
@@ -21,7 +20,6 @@ import Footer from "../components/sidebar/Footer";
 
 const Login = () => {
 	const [isLogin, setIsLogin] = useState(true);
-	const [loginErr, setLoginErr] = useState("");
 	const [formState, inputHandler, setFormData] = useForm(
 		{
 			email: {
@@ -61,33 +59,46 @@ const Login = () => {
 				},
 				false
 			);
-			// console.log("after add ", formState.inputs);
 		}
 		setIsLogin(prevMode => !prevMode);
-		// console.log("after switch ", formState.inputs);
 	};
 
 	const dispatch = useDispatch();
+
+	const { status } = useSelector(state => state.users);
+
 	const { push } = useHistory();
 
-	function handleLogin(e) {
+	async function handleLogin(e) {
 		e.preventDefault();
-		console.log(formState.inputs);
 
-		// setLoginErr(
-		// 	"The username you entered doesn't belong to an account. Please check your username and try again."
-		// );
-		// setLoginErr(
-		// 	"Sorry, your password was incorrect. Please double-check your password"
-		// );
-		dispatch(changeNavActive(true));
-		dispatch(setLogin(true));
-		push("/home");
+		let email = formState.inputs.email.value;
+		let password = formState.inputs.password.value;
+		let name = "";
+		let fullName = "";
+
+		if (!isLogin) {
+			name = formState.inputs.username.value;
+			fullName = formState.inputs.fullName.value;
+		}
+
+		if (isLogin) {
+			await dispatch(loginUser({ email, password }));
+		} else {
+			await dispatch(
+				registerUser({
+					name,
+					email,
+					password,
+					fullName,
+				})
+			);
+		}
+
+		if (status === "success register" || status === "success login") {
+			push("/home");
+		}
 	}
-
-	useEffect(() => {
-		dispatch(changeNavActive(false));
-	});
 
 	return (
 		<div className='loginPage'>
@@ -103,16 +114,19 @@ const Login = () => {
 							<img src='/images/instagram-logo-big.png' alt='Instagram title' />
 						</div>
 
-						{!isLogin && <WithFacebook isLogin={isLogin} loginErr={loginErr} />}
+						{!isLogin && <WithFacebook isLogin={isLogin} />}
 
 						<form className={`${!isLogin && "fix"}`} onSubmit={handleLogin}>
 							<>
 								<Input
 									id='email'
 									type='text'
-									label='Phone number, email or username'
+									label={`${
+										isLogin ? "Phone number, email or username" : "Email"
+									}`}
 									validators={[VALIDATOR_REQUIRE()]}
 									onInput={inputHandler}
+									initialValue='aaaaaaa'
 								/>
 								<Input
 									id='password'
@@ -120,9 +134,9 @@ const Login = () => {
 									label='Password'
 									validators={[VALIDATOR_MINLENGTH(6)]}
 									onInput={inputHandler}
+									initialValue='aaaaaaa'
 								/>
 							</>
-
 							{!isLogin && (
 								<>
 									<Input
@@ -158,9 +172,7 @@ const Login = () => {
 								</p>
 							)}
 
-							{isLogin && (
-								<WithFacebook isLogin={isLogin} loginErr={loginErr} />
-							)}
+							{isLogin && <WithFacebook isLogin={isLogin} />}
 						</form>
 					</div>
 

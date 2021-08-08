@@ -28,13 +28,13 @@ const Profile = () => {
 		push(`/profile/${pName}/p/${postId}`);
 	}
 
-	const sPosts = [];
-
 	useEffect(() => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 
 		const sortPosts = () => {
+			const sPosts = [];
+
 			let len = imagesPosts.length;
 			let rowNum = Math.ceil(len / 3);
 			let emptyNum = rowNum * 3 - len;
@@ -92,8 +92,6 @@ const Profile = () => {
 				{arrSorted ? (
 					<div className='posts'>
 						{sortedPosts.map((postRow, index) => {
-							console.log("mapping row");
-							console.log(postRow);
 							return (
 								<div className='row' key={index}>
 									{postRow.map((postI, idx) => {

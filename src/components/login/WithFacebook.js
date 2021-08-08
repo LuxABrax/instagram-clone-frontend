@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import "../../styles/login/withFacebook.scss";
 
-const WithFacebook = ({ isLogin, loginErr }) => {
+const WithFacebook = ({ isLogin }) => {
+	const loginErr = useSelector(state => state.users.errMessage);
 	return (
 		<>
 			{!isLogin && (
