@@ -1,12 +1,8 @@
 import "../../styles/navigation/menu.scss";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-	goHome,
-	changePage,
-	selectPage,
-} from "../../features/navigation/navigationSlice";
-import { logout, selectUser } from "../../features/authSlice";
+import { goHome, changePage, selectPage } from "../../redux/navigationSlice";
+import { logout, selectUser } from "../../redux/authSlice";
 import ProfileIcon from "../ProfileIcon.js";
 import { ReactComponent as Home } from "../../icons/home.svg";
 import { ReactComponent as HomeActive } from "../../icons/homeActive.svg";

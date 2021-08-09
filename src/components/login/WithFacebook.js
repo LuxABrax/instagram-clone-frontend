@@ -7,7 +7,7 @@ const WithFacebook = ({ isLogin }) => {
 		<>
 			{!isLogin && (
 				<div className='withFacebookTitle'>
-					<h2 className='message'>
+					<h2 className='introMessage'>
 						Sign up to see photos and videos from your friends.
 					</h2>
 					<button className='facebookBtn1' type='button'>

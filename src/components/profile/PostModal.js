@@ -2,7 +2,7 @@ import "../../styles/profile/postModal.scss";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { toggleModal } from "../../features/modalSlice";
+import { toggleModal } from "../../redux/modalSlice";
 
 import ProfileComp from "../ProfileComp";
 import PostMenu from "../post/PostMenu";

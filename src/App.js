@@ -7,12 +7,11 @@ import {
 
 import "./styles/App.scss";
 import Navigation from "./components/navigation/Navigation";
-import CounterPage from "./pages/CounterPage";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useSelector } from "react-redux";
-import { selectLoggedIn } from "./features/authSlice";
+import { selectLoggedIn } from "./redux/authSlice";
 
 function App() {
 	const loggedIn = useSelector(selectLoggedIn);
@@ -32,9 +31,6 @@ function App() {
 			<Switch>
 				<Route path='/' exact>
 					<Home />
-				</Route>
-				<Route path='/counter' exact>
-					<CounterPage />
 				</Route>
 				<Route path='/profile/:pName' exact>
 					<Profile />

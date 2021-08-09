@@ -1,7 +1,7 @@
 import "../styles/pages/login.scss";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, registerUser, setErrMessage } from "../features/authSlice";
+import { loginUser, registerUser, setErrMessage } from "../redux/authSlice";
 import { useHistory } from "react-router";
 
 import { useForm } from "../components/login/formHook";

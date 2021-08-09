@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import {
 	persistReducer,
 	FLUSH,
@@ -9,18 +9,7 @@ import {
 	REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
-import counterReducer from "../features/counter/counterSlice";
-import navigationReducer from "../features/navigation/navigationSlice";
-import modalReducer from "../features/modalSlice";
-import authReducer from "../features/authSlice";
-
-const rootReducer = combineReducers({
-	auth: authReducer,
-	counter: counterReducer,
-	nav: navigationReducer,
-	modal: modalReducer,
-});
+import rootReducer from "./rootReducer";
 
 const persistConfig = {
 	key: "root",

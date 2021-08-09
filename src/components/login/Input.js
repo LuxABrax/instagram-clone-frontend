@@ -1,7 +1,7 @@
 import "../../styles/login/input.scss";
 import { useEffect, useReducer, useState } from "react";
 import { validate } from "./validators";
-import axios from "../../features/axios";
+import axios from "../../axios";
 
 const inputReducer = (state, action) => {
 	switch (action.type) {

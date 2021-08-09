@@ -2,9 +2,9 @@ import "../styles/pages/profile.scss";
 import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { changePage, selectPage } from "../features/navigation/navigationSlice";
-import { toggleModal, selectModalActive } from "../features/modalSlice";
-import { selectUser } from "../features/authSlice";
+import { changePage, selectPage } from "../redux/navigationSlice";
+import { toggleModal, selectModalActive } from "../redux/modalSlice";
+import { selectUser } from "../redux/authSlice";
 
 import PostModal from "../components/profile/PostModal";
 import Header from "../components/profile/Header";
@@ -85,9 +85,9 @@ const Profile = () => {
 					accountName={user.name}
 					fullName={user.fullName}
 					description='Self-taught programmer wannabe, stuck with making the most complex clone a beginner can do. Crazy man'
-					postNumber={27}
-					followers={79}
-					following={79}
+					postNumber={user.posts}
+					followers={user.followers}
+					following={user.following}
 				/>
 				<FeedMenu />
 
