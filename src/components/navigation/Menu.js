@@ -6,7 +6,7 @@ import {
 	changePage,
 	selectPage,
 } from "../../features/navigation/navigationSlice";
-
+import { selectUser } from "../../features/authSlice";
 import ProfileIcon from "../ProfileIcon.js";
 import { ReactComponent as Home } from "../../icons/home.svg";
 import { ReactComponent as HomeActive } from "../../icons/homeActive.svg";
@@ -20,6 +20,7 @@ import luka from "../../icons/luka.jpg";
 
 const Navigation = () => {
 	const activePage = useSelector(selectPage);
+	const user = useSelector(selectUser);
 	const dispatch = useDispatch();
 	// const { push } = useHistory();
 
@@ -63,7 +64,7 @@ const Navigation = () => {
 				)}
 			</div>
 			<Link
-				to='/profile/lux_abrax'
+				to={`/profile/${user.name}`}
 				className='link'
 				onClick={() => {
 					dispatch(changePage("profile"));

@@ -1,7 +1,7 @@
 import "../styles/pages/login.scss";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, registerUser } from "../features/authSlice";
+import { loginUser, registerUser, setErrMessage } from "../features/authSlice";
 import { useHistory } from "react-router";
 
 import { useForm } from "../components/login/formHook";
@@ -9,6 +9,7 @@ import {
 	VALIDATOR_REQUIRE,
 	VALIDATOR_MINLENGTH,
 	VALIDATOR_MAXLENGTH,
+	VALIDATOR_EMAIL,
 } from "../components/login/validators";
 
 import Input from "../components/login/Input";
@@ -34,7 +35,13 @@ const Login = () => {
 		false
 	);
 
+	const dispatch = useDispatch();
+	const { push } = useHistory();
+
+	const { status, errMessage } = useSelector(state => state.users);
+
 	const switchModeHandler = () => {
+		dispatch(setErrMessage(""));
 		if (!isLogin) {
 			setFormData(
 				{
@@ -62,12 +69,6 @@ const Login = () => {
 		}
 		setIsLogin(prevMode => !prevMode);
 	};
-
-	const dispatch = useDispatch();
-
-	const { status } = useSelector(state => state.users);
-
-	const { push } = useHistory();
 
 	async function handleLogin(e) {
 		e.preventDefault();
@@ -124,9 +125,17 @@ const Login = () => {
 									label={`${
 										isLogin ? "Phone number, email or username" : "Email"
 									}`}
-									validators={[VALIDATOR_REQUIRE()]}
+									validators={
+										isLogin
+											? [VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(40)]
+											: [
+													VALIDATOR_REQUIRE(),
+													VALIDATOR_EMAIL(),
+													VALIDATOR_MAXLENGTH(40),
+											  ]
+									}
 									onInput={inputHandler}
-									initialValue='aaaaaaa'
+									isLogin={isLogin}
 								/>
 								<Input
 									id='password'
@@ -134,7 +143,7 @@ const Login = () => {
 									label='Password'
 									validators={[VALIDATOR_MINLENGTH(6)]}
 									onInput={inputHandler}
-									initialValue='aaaaaaa'
+									isLogin={isLogin}
 								/>
 							</>
 							{!isLogin && (
@@ -143,8 +152,9 @@ const Login = () => {
 										id='fullName'
 										type='text'
 										label='Full Name'
-										validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(50)]}
+										validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
 										onInput={inputHandler}
+										isLogin={isLogin}
 									/>
 									<Input
 										id='username'
@@ -152,6 +162,7 @@ const Login = () => {
 										label='Username'
 										validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(30)]}
 										onInput={inputHandler}
+										isLogin={isLogin}
 									/>
 								</>
 							)}
@@ -163,6 +174,10 @@ const Login = () => {
 							>
 								{`${isLogin ? "Log In" : "Next"}`}
 							</button>
+
+							{!isLogin && errMessage.length > 0 && (
+								<p className='loginError'>{errMessage}</p>
+							)}
 
 							{!isLogin && (
 								<p className='policy'>

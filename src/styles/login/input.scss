@@ -10,6 +10,7 @@
 		width: 100%;
 		height: 36px;
 		display: flex;
+		user-select: none;
 
 		span {
 			position: absolute;
@@ -33,6 +34,13 @@
 		padding: 9px 8px 7px 8px;
 		border: none;
 		outline: 0;
+		text-overflow: ellipsis;
+		&.reg {
+			padding-right: 34px;
+			&.pass {
+				padding-right: 76px;
+			}
+		}
 		&:focus {
 			outline: solid 1px #8e8e8e;
 		}
@@ -40,6 +48,18 @@
 		&.typing {
 			padding-top: 14px;
 			padding-bottom: 2px;
+		}
+	}
+	.c {
+		cursor: default;
+		position: absolute;
+		top: 7px;
+		right: 0;
+		z-index: 5;
+		width: 22px;
+		height: 22px;
+		&.p {
+			right: 42px;
 		}
 	}
 	.showPass {

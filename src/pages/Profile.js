@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage, selectPage } from "../features/navigation/navigationSlice";
 import { toggleModal, selectModalActive } from "../features/modalSlice";
+import { selectUser } from "../features/authSlice";
 
 import PostModal from "../components/profile/PostModal";
 import Header from "../components/profile/Header";
@@ -21,6 +22,8 @@ const Profile = () => {
 	const dispatch = useDispatch();
 
 	const activePage = useSelector(selectPage);
+	const user = useSelector(selectUser);
+
 	let modalActive = useSelector(selectModalActive);
 
 	function openModal(postId) {
@@ -31,7 +34,6 @@ const Profile = () => {
 	useEffect(() => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
-
 		const sortPosts = () => {
 			const sPosts = [];
 
@@ -68,7 +70,7 @@ const Profile = () => {
 		<div className='profile'>
 			{pId !== undefined && modalActive && (
 				<PostModal
-					accountName='luxabrax'
+					accountName={user.name}
 					storyBorder={true}
 					image='https://picsum.photos/600'
 					comments={comments[0].comments}
@@ -80,8 +82,8 @@ const Profile = () => {
 			<div className='profFeed'>
 				<Header
 					image={luka}
-					accountName={"lux_abrax"}
-					fullName='Luka'
+					accountName={user.name}
+					fullName={user.fullName}
 					description='Self-taught programmer wannabe, stuck with making the most complex clone a beginner can do. Crazy man'
 					postNumber={27}
 					followers={79}

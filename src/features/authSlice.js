@@ -3,26 +3,19 @@ import axios from "./axios";
 
 export const registerUser = createAsyncThunk(
 	"auth/register",
-	async (user, { rejectWithValue }) => {
-		try {
-			console.log("registering...", user);
-			const response = await axios.post("/auth/register", user);
-			console.log("response: ", await response);
-			if (!response.ok) {
-				console.log(response.data.message);
-				return rejectWithValue(response.data.message);
-			}
-
-			const { data } = response.json();
-			console.log("data", data);
-			return data;
-		} catch (error) {
-			console.log(error.res);
-			console.log(error);
-			throw Error(error);
-			// 	console.log(error.response);
-			// 	return rejectWithValue(error.response.message);
+	async (user, { rejectWithValue, dispatch }) => {
+		const response = await axios.post("/auth/register", user);
+		console.log("response: ", await response.data);
+		console.log("succes: ", await response.data.success);
+		console.log("message: ", await response.data.message);
+		if ((await response.data.success) === false) {
+			dispatch(authSlice.actions.setErrMessage(response.data.message));
+			return rejectWithValue(response.data.message);
+		} else {
+			dispatch(authSlice.actions.setErrMessage(""));
 		}
+
+		return response.data;
 	}
 );
 
@@ -99,9 +92,10 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { setLogin, logout } = authSlice.actions;
+export const { setLogin, logout, setErrMessage } = authSlice.actions;
 
 export const selectLoggedIn = state => state.users.isLoggedIn;
 export const selectErrMsg = state => state.users.errMessage;
+export const selectUser = state => state.users.user;
 
 export default authSlice.reducer;
