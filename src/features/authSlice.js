@@ -55,6 +55,7 @@ export const authSlice = createSlice({
 		},
 		logout: state => {
 			state.user = {};
+			state.errMessage = "";
 			state.status = "idle";
 			state.isLoggedIn = false;
 		},

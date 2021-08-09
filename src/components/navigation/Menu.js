@@ -6,7 +6,7 @@ import {
 	changePage,
 	selectPage,
 } from "../../features/navigation/navigationSlice";
-import { selectUser } from "../../features/authSlice";
+import { logout, selectUser } from "../../features/authSlice";
 import ProfileIcon from "../ProfileIcon.js";
 import { ReactComponent as Home } from "../../icons/home.svg";
 import { ReactComponent as HomeActive } from "../../icons/homeActive.svg";
@@ -62,6 +62,9 @@ const Navigation = () => {
 						onClick={() => dispatch(changePage("notifications"))}
 					/>
 				)}
+			</div>
+			<div className='link'>
+				<Notifications className='icon' onClick={() => dispatch(logout())} />
 			</div>
 			<Link
 				to={`/profile/${user.name}`}
