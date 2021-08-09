@@ -5,7 +5,7 @@ import modalReducer from "../features/modalSlice";
 import authReducer from "../features/authSlice";
 
 const rootReducer = combineReducers({
-	users: authReducer,
+	auth: authReducer,
 	counter: counterReducer,
 	nav: navigationReducer,
 	modal: modalReducer,

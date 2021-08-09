@@ -38,7 +38,7 @@ const Login = () => {
 	const dispatch = useDispatch();
 	const { push } = useHistory();
 
-	const { status, errMessage } = useSelector(state => state.users);
+	const { status, errMessage } = useSelector(state => state.auth);
 
 	const switchModeHandler = () => {
 		dispatch(setErrMessage(""));

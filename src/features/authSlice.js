@@ -38,7 +38,7 @@ export const loginUser = createAsyncThunk(
 );
 
 export const authSlice = createSlice({
-	name: "users",
+	name: "auth",
 	initialState: {
 		isLoggedIn: false,
 		status: "idle",
@@ -94,8 +94,8 @@ export const authSlice = createSlice({
 
 export const { setLogin, logout, setErrMessage } = authSlice.actions;
 
-export const selectLoggedIn = state => state.users.isLoggedIn;
-export const selectErrMsg = state => state.users.errMessage;
-export const selectUser = state => state.users.user;
+export const selectLoggedIn = state => state.auth.isLoggedIn;
+export const selectErrMsg = state => state.auth.errMessage;
+export const selectUser = state => state.auth.user;
 
 export default authSlice.reducer;
