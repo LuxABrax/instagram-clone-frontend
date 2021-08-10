@@ -6,7 +6,6 @@ import { selectUser } from "../../redux/authSlice";
 import ProfileComp from "../ProfileComp";
 import Suggestions from "./Suggestions";
 import Footer from "./Footer";
-import luka from "../../icons/luka.jpg";
 
 const Sidebar = () => {
 	const { width } = useWindowDimensions();
@@ -21,7 +20,7 @@ const Sidebar = () => {
 				caption={user.fullName}
 				urlText='Switch'
 				iconSize='big'
-				image={luka}
+				image={`http://localhost:5000/uploads/${user.photo}`}
 			/>
 			<Suggestions />
 			<Footer />

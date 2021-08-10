@@ -12,7 +12,6 @@ import { ReactComponent as Direct } from "../../icons/direct.svg";
 import { ReactComponent as DirectActive } from "../../icons/directActive.svg";
 import { ReactComponent as Notifications } from "../../icons/notifications.svg";
 import { ReactComponent as NotificationsActive } from "../../icons/notificationsActive.svg";
-import luka from "../../icons/luka.jpg";
 
 const Navigation = () => {
 	const activePage = useSelector(selectPage);
@@ -70,7 +69,7 @@ const Navigation = () => {
 				}}
 			>
 				<ProfileIcon
-					image={luka}
+					image={`http://localhost:5000/uploads/${user.photo}`}
 					iconSize='small'
 					profileActive={activePage === "profile"}
 				/>

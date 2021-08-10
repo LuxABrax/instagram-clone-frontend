@@ -72,7 +72,7 @@ const Profile = () => {
 				<PostModal
 					accountName={user.name}
 					storyBorder={true}
-					image='https://picsum.photos/600'
+					image={`http://localhost:5000/uploads/${user.photo}`}
 					comments={comments[0].comments}
 					likedByText='breskvica'
 					likedByNumber={1929}
@@ -81,7 +81,7 @@ const Profile = () => {
 			)}
 			<div className='profFeed'>
 				<Header
-					image={luka}
+					image={`http://localhost:5000/uploads/${user.photo}`}
 					accountName={user.name}
 					fullName={user.fullName}
 					description='Self-taught programmer wannabe, stuck with making the most complex clone a beginner can do. Crazy man'

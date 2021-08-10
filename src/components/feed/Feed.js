@@ -10,7 +10,7 @@ const Feed = () => {
 			<Post
 				accountName='luxabrax'
 				storyBorder={true}
-				image='https://picsum.photos/600'
+				image='http://localhost:5000/uploads/photo_611277fb50da6f05540f6889.jpg'
 				comments={comments[0].comments}
 				likedByText='breskvica'
 				likedByNumber={1929}
