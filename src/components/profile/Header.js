@@ -38,13 +38,15 @@ const Header = props => {
 							</div>
 							<div className='followInfo'>
 								<span>
-									Posts: <strong>{postNumber}</strong>
+									<strong>{postNumber}</strong>
+									{postNumber > 1 ? " posts" : " post"}
 								</span>
 								<span>
-									Followers: <strong>{followers}</strong>
+									<strong>{followers}</strong>
+									{followers > 1 ? " followers" : " follower"}
 								</span>
 								<span>
-									Following: <strong>{following}</strong>
+									<strong>{following}</strong> following
 								</span>
 							</div>
 							<div className='desc'>

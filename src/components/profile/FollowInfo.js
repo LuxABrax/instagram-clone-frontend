@@ -6,16 +6,18 @@ const FollowInfo = props => {
 	return (
 		<ul className='followInfoComp'>
 			<li>
-				<div className='infoName'>Posts:</div>
 				<div className='info'>{posts}</div>
+				<div className='infoName'>{posts > 1 ? " posts" : " post"}</div>
 			</li>
 			<li>
-				<div className='infoName'>Followers:</div>
 				<div className='info'>{followers}</div>
+				<div className='infoName'>
+					{followers > 1 ? " followers" : " follower"}
+				</div>
 			</li>
 			<li>
-				<div className='infoName'>Following</div>
 				<div className='info'>{following}</div>
+				<div className='infoName'>following</div>
 			</li>
 		</ul>
 	);
