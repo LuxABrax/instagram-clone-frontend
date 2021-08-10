@@ -22,7 +22,22 @@ const Profile = () => {
 	const dispatch = useDispatch();
 
 	const activePage = useSelector(selectPage);
-	const user = useSelector(selectUser);
+
+	let user = useSelector(selectUser);
+
+	const dummyUser = {
+		_id: "12345",
+		name: pName,
+		fullName: pName,
+		posts: 3,
+		followers: 40,
+		following: 10,
+		photo: "https://picsum.photos/800",
+	};
+
+	if (pName !== user.name) {
+		user = { ...dummyUser };
+	}
 
 	let modalActive = useSelector(selectModalActive);
 
