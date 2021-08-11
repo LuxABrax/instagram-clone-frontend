@@ -25,6 +25,7 @@
 			&.typing {
 				transform-origin: left;
 				transform: scale(0.84) translateY(-10px);
+				pointer-events: none;
 			}
 		}
 	}
