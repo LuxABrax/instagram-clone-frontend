@@ -12,6 +12,7 @@ import FeedMenu from "../components/profile/FeedMenu";
 import comments from "../data/comments.js";
 import imagesPosts from "../data/posts";
 import luka from "../icons/luka.jpg";
+import { getUserProfile, selectUserProfile } from "../redux/usersSlice";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -23,20 +24,14 @@ const Profile = () => {
 
 	const activePage = useSelector(selectPage);
 
-	let user = useSelector(selectUser);
+	const user = useSelector(selectUser);
+	const user2 = useSelector(selectUserProfile);
+	let userProfile = {};
 
-	const dummyUser = {
-		_id: "12345",
-		name: pName,
-		fullName: pName,
-		posts: 3,
-		followers: 40,
-		following: 10,
-		photo: "https://picsum.photos/800",
-	};
-
-	if (pName !== user.name) {
-		user = { ...dummyUser };
+	if (pName === user.name) {
+		userProfile = user;
+	} else {
+		userProfile = user2;
 	}
 
 	let modalActive = useSelector(selectModalActive);
@@ -49,6 +44,11 @@ const Profile = () => {
 	useEffect(() => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
+
+		if (pName !== user.name) {
+			dispatch(getUserProfile(pName));
+		}
+
 		const sortPosts = () => {
 			const sPosts = [];
 
@@ -79,15 +79,15 @@ const Profile = () => {
 		};
 
 		sortPosts();
-	}, [activePage, dispatch, modalActive, pId]);
+	}, [activePage, dispatch, modalActive, pId, pName, user.name]);
 
 	return (
 		<div className='profile'>
 			{pId !== undefined && modalActive && (
 				<PostModal
-					accountName={user.name}
+					accountName={userProfile.name}
 					storyBorder={true}
-					image={`http://localhost:5000/uploads/${user.photo}`}
+					image={`http://localhost:5000/uploads/${userProfile.photo}`}
 					comments={comments[0].comments}
 					likedByText='breskvica'
 					likedByNumber={1929}
@@ -96,13 +96,13 @@ const Profile = () => {
 			)}
 			<div className='profFeed'>
 				<Header
-					image={`http://localhost:5000/uploads/${user.photo}`}
-					accountName={user.name}
-					fullName={user.fullName}
+					image={`http://localhost:5000/uploads/${userProfile.photo}`}
+					accountName={userProfile.name}
+					fullName={userProfile.fullName}
 					description='Self-taught programmer wannabe, stuck with making the most complex clone a beginner can do. Crazy man'
-					postNumber={user.posts}
-					followers={user.followers}
-					following={user.following}
+					postNumber={userProfile.posts}
+					followers={userProfile.followers}
+					following={userProfile.following}
 				/>
 				<FeedMenu />
 
