@@ -36,6 +36,23 @@ export const loginUser = createAsyncThunk(
 		return response.data;
 	}
 );
+export const updateUser = createAsyncThunk(
+	"auth/update",
+	async (name, { rejectWithValue, dispatch }) => {
+		const response = await axios.get(`/users/n/${name}`);
+		console.log("response: ", await response.data);
+		console.log("succes: ", await response.data.success);
+		console.log("message: ", await response.data.message);
+		if ((await response.data.success) === false) {
+			dispatch(authSlice.actions.setErrMessage(response.data.message));
+			return rejectWithValue(response.data.message);
+		} else {
+			dispatch(authSlice.actions.setErrMessage(""));
+		}
+
+		return response.data;
+	}
+);
 
 export const authSlice = createSlice({
 	name: "auth",
@@ -89,6 +106,17 @@ export const authSlice = createSlice({
 		[loginUser.rejected]: (state, action) => {
 			state.error.message = action.error.message;
 			state.status = "failed login";
+		},
+		[updateUser.pending]: state => {
+			state.status = "updating";
+		},
+		[updateUser.fulfilled]: (state, { payload }) => {
+			state.user = payload.user;
+			state.status = "success update";
+		},
+		[updateUser.rejected]: (state, action) => {
+			state.error.message = action.error.message;
+			state.status = "failed update";
 		},
 	},
 });

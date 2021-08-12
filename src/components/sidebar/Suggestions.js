@@ -1,15 +1,19 @@
 import "../../styles/sidebar/suggestions.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
 
 import ProfileComp from "../ProfileComp";
+import { followUserWithID } from "../../redux/usersSlice";
 
 const Suggestions = () => {
 	const user = useSelector(selectUser);
 	const suggestions = useSelector(state => state.users.suggestions);
 
-	const followUser = name => {
-		console.log(user.name, " followUser ", name);
+	const dispatch = useDispatch();
+
+	const followUser = uId2 => {
+		console.log(user._id, " followUser ", uId2);
+		dispatch(followUserWithID({ userId: user._id, followId: uId2 }));
 	};
 
 	return (
@@ -35,6 +39,8 @@ const Suggestions = () => {
 			{suggestions.map(suggestedUser => {
 				return (
 					<ProfileComp
+						key={suggestedUser._id}
+						id={suggestedUser._id}
 						username={suggestedUser.name}
 						caption={`Followed by ${suggestedUser.followers} followers`}
 						urlText='Follow'

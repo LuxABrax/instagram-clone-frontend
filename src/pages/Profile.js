@@ -4,7 +4,7 @@ import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage, selectPage } from "../redux/navigationSlice";
 import { toggleModal, selectModalActive } from "../redux/modalSlice";
-import { selectUser } from "../redux/authSlice";
+import { selectUser, updateUser } from "../redux/authSlice";
 
 import PostModal from "../components/profile/PostModal";
 import Header from "../components/profile/Header";
@@ -17,6 +17,15 @@ import { getUserProfile, selectUserProfile } from "../redux/usersSlice";
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
 	const [sortedPosts, setSortedPosts] = useState([]);
+	const [userState, setUserState] = useState({
+		name: "",
+		_id: "",
+		fullName: "",
+		photo: "",
+		posts: 0,
+		followers: 0,
+		following: 0,
+	});
 
 	let { pName, pId } = useParams();
 	const { push } = useHistory();
@@ -48,6 +57,12 @@ const Profile = () => {
 		if (pName !== user.name) {
 			dispatch(getUserProfile(pName));
 		}
+		if (pName === user.name) {
+			dispatch(getUserProfile(pName));
+		}
+		// if (pName === user.name) {
+		// 	dispatch(updateUser(user.name));
+		// }
 
 		const sortPosts = () => {
 			const sPosts = [];

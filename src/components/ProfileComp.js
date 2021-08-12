@@ -6,6 +6,7 @@ import users from "../data/users";
 
 const ProfileComp = props => {
 	const {
+		id,
 		username,
 		caption,
 		urlText,
@@ -45,7 +46,7 @@ const ProfileComp = props => {
 					<span className={`caption ${captionSize}`}>{caption}</span>
 				</div>
 			)}
-			<p className='followLink' onClick={() => followUser(accountName)}>
+			<p className='followLink' onClick={() => followUser(id)}>
 				{urlText}
 			</p>
 		</div>

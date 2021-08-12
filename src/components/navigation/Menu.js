@@ -18,6 +18,7 @@ const Navigation = () => {
 	const user = useSelector(selectUser);
 	const dispatch = useDispatch();
 	// const { push } = useHistory();
+	if (user === undefined) dispatch(logout());
 
 	return (
 		<div className='menu'>

@@ -17,6 +17,22 @@ export const getUserProfile = createAsyncThunk(
 	}
 );
 
+export const followUserWithID = createAsyncThunk(
+	"users/followUser",
+	async ({ userId, followId }, { rejectWithValue, dispatch }) => {
+		const response = await axios.put(`/follow/${userId}/${followId}`);
+
+		console.log("response: ", await response.data);
+		if ((await response.data.success) === false) {
+			dispatch(usersSlice.actions.setErrMessage(response.data.message));
+			return rejectWithValue(response.data.message);
+		} else {
+			dispatch(usersSlice.actions.setErrMessage(""));
+		}
+		return response.data.data;
+	}
+);
+
 export const getNotFollowedUsers = createAsyncThunk(
 	"users/getNotFollowed",
 	async (userId, { rejectWithValue, dispatch }) => {
@@ -101,6 +117,18 @@ export const usersSlice = createSlice({
 		[getUserProfile.rejected]: (state, { error }) => {
 			state.error.message = error.message;
 			state.status = "get user failed";
+		},
+
+		[followUserWithID.pending]: state => {
+			state.status = "following user";
+		},
+		[followUserWithID.fulfilled]: (state, action) => {
+			// state.userProfile = action.payload;
+			state.status = "follow user success";
+		},
+		[followUserWithID.rejected]: (state, { error }) => {
+			state.error.message = error.message;
+			state.status = "follow user failed";
 		},
 
 		[getNotFollowedUsers.pending]: state => {

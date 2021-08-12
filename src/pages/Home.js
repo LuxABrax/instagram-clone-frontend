@@ -1,7 +1,7 @@
 import "../styles/pages/home.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../redux/authSlice";
+import { logout, selectUser } from "../redux/authSlice";
 import {
 	setSuggestions,
 	getNotFollowedUsers,
@@ -12,12 +12,14 @@ import Feed from "../components/feed/Feed";
 import Sidebar from "../components/sidebar/Sidebar";
 
 const Home = () => {
-	const userId = useSelector(selectUser)._id;
+	const user = useSelector(selectUser);
+	const userId = user._id;
 	const nfUsers = useSelector(selectNotFollowedUsers);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		if (user === undefined) dispatch(logout());
 		if (nfUsers.length === 0) dispatch(getNotFollowedUsers(userId));
 
 		const createSuggestions = () => {
