@@ -14,6 +14,7 @@ const ProfileComp = props => {
 		storyBorder,
 		hideAccountName,
 		image,
+		followUser,
 	} = props;
 
 	const { push } = useHistory();
@@ -44,7 +45,9 @@ const ProfileComp = props => {
 					<span className={`caption ${captionSize}`}>{caption}</span>
 				</div>
 			)}
-			<a href='/'>{urlText}</a>
+			<p className='followLink' onClick={() => followUser(accountName)}>
+				{urlText}
+			</p>
 		</div>
 	);
 };

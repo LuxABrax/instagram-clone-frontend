@@ -23,7 +23,7 @@ export const getNotFollowedUsers = createAsyncThunk(
 		const response = await axios.get(`/follow/${userId}/notfollowed`);
 
 		const data = response.data;
-		// console.log("response: ", await response);
+		console.log("response: ", await response);
 		if (data.success === false) {
 			dispatch(usersSlice.actions.setErrMessage(data.message));
 			return rejectWithValue(data.message);
@@ -76,6 +76,7 @@ export const usersSlice = createSlice({
 		followedUsers: [],
 		notFollowedUsers: [],
 		followingUsers: [],
+		suggestions: [],
 		errMessage: "",
 		error: {
 			message: "",
@@ -84,6 +85,9 @@ export const usersSlice = createSlice({
 	reducers: {
 		setErrMessage: (state, action) => {
 			state.errMessage = action.payload;
+		},
+		setSuggestions: (state, action) => {
+			state.suggestions = action.payload;
 		},
 	},
 	extraReducers: {
@@ -137,7 +141,7 @@ export const usersSlice = createSlice({
 	},
 });
 
-export const { setErrMessage } = usersSlice.actions;
+export const { setErrMessage, setSuggestions } = usersSlice.actions;
 
 export const selectUserProfile = state => state.users.userProfile;
 export const selectErrMessage = state => state.users.errMessage;

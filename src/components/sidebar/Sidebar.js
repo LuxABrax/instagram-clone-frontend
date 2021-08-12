@@ -13,19 +13,23 @@ const Sidebar = () => {
 
 	const user = useSelector(selectUser);
 
-	return (
-		<div className='sidebar' style={{ left: leftOffset + "px" }}>
-			<ProfileComp
-				username={user.name}
-				caption={user.fullName}
-				urlText='Switch'
-				iconSize='big'
-				image={`http://localhost:5000/uploads/${user.photo}`}
-			/>
-			<Suggestions />
-			<Footer />
-		</div>
-	);
+	if (width >= 1024) {
+		return (
+			<div className='sidebar' style={{ left: leftOffset + "px" }}>
+				<ProfileComp
+					username={user.name}
+					caption={user.fullName}
+					urlText='Switch'
+					iconSize='big'
+					image={`http://localhost:5000/uploads/${user.photo}`}
+				/>
+				<Suggestions />
+				<Footer />
+			</div>
+		);
+	} else {
+		return null;
+	}
 };
 
 export default Sidebar;
