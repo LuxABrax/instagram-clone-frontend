@@ -17,15 +17,6 @@ import { getUserProfile, selectUserProfile } from "../redux/usersSlice";
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
 	const [sortedPosts, setSortedPosts] = useState([]);
-	const [userState, setUserState] = useState({
-		name: "",
-		_id: "",
-		fullName: "",
-		photo: "",
-		posts: 0,
-		followers: 0,
-		following: 0,
-	});
 
 	let { pName, pId } = useParams();
 	const { push } = useHistory();
@@ -37,11 +28,7 @@ const Profile = () => {
 	const user2 = useSelector(selectUserProfile);
 	let userProfile = {};
 
-	if (pName === user.name) {
-		userProfile = user;
-	} else {
-		userProfile = user2;
-	}
+	userProfile = user2;
 
 	let modalActive = useSelector(selectModalActive);
 
@@ -60,9 +47,6 @@ const Profile = () => {
 		if (pName === user.name) {
 			dispatch(getUserProfile(pName));
 		}
-		// if (pName === user.name) {
-		// 	dispatch(updateUser(user.name));
-		// }
 
 		const sortPosts = () => {
 			const sPosts = [];
@@ -114,7 +98,7 @@ const Profile = () => {
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}
 					accountName={userProfile.name}
 					fullName={userProfile.fullName}
-					description='Self-taught programmer wannabe, stuck with making the most complex clone a beginner can do. Crazy man'
+					description={userProfile.description}
 					postNumber={userProfile.posts}
 					followers={userProfile.followers}
 					following={userProfile.following}

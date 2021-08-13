@@ -27,6 +27,8 @@ export const followUserWithID = createAsyncThunk(
 			dispatch(usersSlice.actions.setErrMessage(response.data.message));
 			return rejectWithValue(response.data.message);
 		} else {
+			dispatch(usersSlice.actions.removeFromNoFollow(followId));
+			// dispatch(getNotFollowedUsers(userId));
 			dispatch(usersSlice.actions.setErrMessage(""));
 		}
 		return response.data.data;
@@ -40,13 +42,20 @@ export const getNotFollowedUsers = createAsyncThunk(
 
 		const data = response.data;
 		console.log("response: ", await response);
+		const users = data.users.sort(() => Math.random() - 0.5);
+
 		if (data.success === false) {
 			dispatch(usersSlice.actions.setErrMessage(data.message));
 			return rejectWithValue(data.message);
 		} else {
+			dispatch(usersSlice.actions.setLoaded(true));
 			dispatch(usersSlice.actions.setErrMessage(""));
+			if (data.users.length === 0) {
+				dispatch(usersSlice.actions.setErrMessage("No users for following"));
+				dispatch(usersSlice.actions.setNoUsers(true));
+			}
 		}
-		return data.users;
+		return users;
 	}
 );
 
@@ -93,6 +102,9 @@ export const usersSlice = createSlice({
 		notFollowedUsers: [],
 		followingUsers: [],
 		suggestions: [],
+		loadedUsers: false,
+		noUsersToFollow: false,
+		isCreated: false,
 		errMessage: "",
 		error: {
 			message: "",
@@ -102,8 +114,24 @@ export const usersSlice = createSlice({
 		setErrMessage: (state, action) => {
 			state.errMessage = action.payload;
 		},
+		removeFromNoFollow: (state, action) => {
+			const arr = state.users.notFollowedUsers;
+			console.log(arr);
+			const newArr = arr.filter(el => el._id !== action.payload);
+			console.log(newArr);
+			state.users.notFollowedUsers = [...newArr];
+		},
 		setSuggestions: (state, action) => {
 			state.suggestions = action.payload;
+		},
+		setLoaded: (state, action) => {
+			state.loadedUsers = action.payload;
+		},
+		setNoUsers: (state, action) => {
+			state.noUsersToFollow = action.payload;
+		},
+		setIsCreated: (state, action) => {
+			state.isCreated = action.payload;
 		},
 	},
 	extraReducers: {
@@ -135,7 +163,8 @@ export const usersSlice = createSlice({
 			state.status = "getting users not followed";
 		},
 		[getNotFollowedUsers.fulfilled]: (state, action) => {
-			state.notFollowedUsers = action.payload;
+			const arr = action.payload;
+			state.notFollowedUsers = arr.sort(() => Math.random() - 0.5);
 			state.status = "get users success";
 		},
 		[getNotFollowedUsers.rejected]: (state, { error }) => {
@@ -169,7 +198,8 @@ export const usersSlice = createSlice({
 	},
 });
 
-export const { setErrMessage, setSuggestions } = usersSlice.actions;
+export const { setErrMessage, setSuggestions, setIsCreated, setNoUsers } =
+	usersSlice.actions;
 
 export const selectUserProfile = state => state.users.userProfile;
 export const selectErrMessage = state => state.users.errMessage;

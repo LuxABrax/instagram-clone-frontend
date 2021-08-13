@@ -6,6 +6,8 @@ import {
 	setSuggestions,
 	getNotFollowedUsers,
 	selectNotFollowedUsers,
+	setIsCreated,
+	setNoUsers,
 } from "../redux/usersSlice";
 
 import Feed from "../components/feed/Feed";
@@ -15,29 +17,30 @@ const Home = () => {
 	const user = useSelector(selectUser);
 	const userId = user._id;
 	const nfUsers = useSelector(selectNotFollowedUsers);
+	const isLoaded = useSelector(state => state.users.loadedUsers);
+	const noUsers = useSelector(state => state.users.noUsersToFollow);
+	const isCreated = useSelector(state => state.users.isCreated);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (user === undefined) dispatch(logout());
-		if (nfUsers.length === 0) dispatch(getNotFollowedUsers(userId));
 
 		const createSuggestions = () => {
 			const arr = [...nfUsers];
 
 			arr.sort(() => Math.random() - 0.5);
 
-			let newArr = [];
-			if (arr.length > 5) {
-				newArr = arr.slice(0, 5);
-			} else {
-				newArr = [...arr];
-			}
-
-			dispatch(setSuggestions(newArr));
+			dispatch(setSuggestions(arr));
+			dispatch(setIsCreated(true));
 		};
-		if (nfUsers.length > 0) createSuggestions();
-	}, [nfUsers, nfUsers.length, dispatch, userId]);
+		if (nfUsers.length === 0 && !noUsers) {
+			dispatch(getNotFollowedUsers(userId));
+			setTimeout(() => {
+				createSuggestions();
+			}, 1000);
+		}
+	}, [nfUsers, nfUsers.length, dispatch, userId, user, isCreated, noUsers]);
 
 	return (
 		<div className='home'>
