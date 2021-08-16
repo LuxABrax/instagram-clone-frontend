@@ -79,6 +79,9 @@ export const authSlice = createSlice({
 		setErrMessage: (state, action) => {
 			state.errMessage = action.payload;
 		},
+		changePhoto: (state, action) => {
+			state.user.photo = action.payload;
+		},
 	},
 	extraReducers: {
 		[registerUser.pending]: state => {
@@ -121,7 +124,8 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { setLogin, logout, setErrMessage } = authSlice.actions;
+export const { setLogin, logout, setErrMessage, changePhoto } =
+	authSlice.actions;
 
 export const selectLoggedIn = state => state.auth.isLoggedIn;
 export const selectErrMsg = state => state.auth.errMessage;

@@ -29,7 +29,7 @@ const Suggestions = () => {
 		dispatch(followUserWithID({ userId: user._id, followId: uId2 }));
 		// const arr = suggestions.filter(s => s._id !== uId2);
 		// dispatch(([...arr]));
-		if (suggestions.length == 1) {
+		if (suggestions.length === 1) {
 			setSuggestions(suggestions.pop());
 			console.log(suggestions);
 		} else {
@@ -42,20 +42,6 @@ const Suggestions = () => {
 
 	return (
 		<div className='suggestions'>
-			{/* <button
-				onClick={() => {
-					dispatch(getFollowedUsers(userId));
-				}}
-			>
-				followed
-			</button>
-			<button
-				onClick={() => {
-					dispatch(getFollowingUsers(userId));
-				}}
-			>
-				following
-			</button> */}
 			<div className='titleContainer'>
 				<div className='title'>Suggestions For You</div>
 				<a href='/'>See All</a>
@@ -79,41 +65,6 @@ const Suggestions = () => {
 						);
 					return null;
 				})}
-			{/* <ProfileComp
-				caption='Followed by marko123 + 3 more'
-				urlText='Follow'
-				iconSize='medium'
-				captionSize='small'
-				storyBorder={true}
-			/>
-			<ProfileComp
-				caption='Followed by romaleromali + 23 more'
-				urlText='Follow'
-				iconSize='medium'
-				captionSize='small'
-				storyBorder={false}
-			/>
-			<ProfileComp
-				caption='Followed by ivan_ivic + 13 more'
-				urlText='Follow'
-				iconSize='medium'
-				captionSize='small'
-				storyBorder={false}
-			/>
-			<ProfileComp
-				caption='Followed by richwebdeveloper + 1.050 more'
-				urlText='Follow'
-				iconSize='medium'
-				captionSize='small'
-				storyBorder={true}
-			/>
-			<ProfileComp
-				caption='Followed by ivan_ivic + 13 more'
-				urlText='Follow'
-				iconSize='medium'
-				captionSize='small'
-				storyBorder={false}
-			/> */}
 		</div>
 	);
 };

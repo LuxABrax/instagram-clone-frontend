@@ -1,7 +1,7 @@
 import "../styles/profileIcon.scss";
 
 const ProfileIcon = props => {
-	const { image, iconSize, storyBorder, profileActive, seen } = props;
+	const { image, iconSize, storyBorder, profileActive, seen, onClick } = props;
 
 	const getRandomInt = (min, max) => {
 		min = Math.ceil(min);
@@ -21,6 +21,7 @@ const ProfileIcon = props => {
 				className={`profileIcon ${iconSize}`}
 				src={profileImage}
 				alt='profile'
+				onClick={onClick}
 			/>
 			{storyBorder && (
 				<div className={`storyBorder ${iconSize} ${seen && "seen"}`}></div>

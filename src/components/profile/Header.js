@@ -15,9 +15,11 @@ const Header = props => {
 		postNumber,
 		followers,
 		following,
+		changeImg,
 	} = props;
 	const { width } = useWindowDimensions();
 	console.log(width);
+
 	return (
 		<div className='profHeader'>
 			<header>
@@ -25,6 +27,7 @@ const Header = props => {
 					<ProfileIcon
 						image={image}
 						iconSize={width < 736 ? "xBig" : "xxBig"}
+						onClick={changeImg}
 					/>
 				</div>
 				<div className='profInfo'>

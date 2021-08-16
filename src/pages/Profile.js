@@ -3,7 +3,12 @@ import { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage, selectPage } from "../redux/navigationSlice";
-import { toggleModal, selectModalActive } from "../redux/modalSlice";
+import {
+	toggleModal,
+	selectModalActive,
+	changeModalName,
+	selectModalName,
+} from "../redux/modalSlice";
 import { selectUser, updateUser } from "../redux/authSlice";
 
 import PostModal from "../components/profile/PostModal";
@@ -13,6 +18,7 @@ import comments from "../data/comments.js";
 import imagesPosts from "../data/posts";
 import luka from "../icons/luka.jpg";
 import { getUserProfile, selectUserProfile } from "../redux/usersSlice";
+import ChangeImgModal from "../components/profile/ChangeImgModal";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -31,10 +37,15 @@ const Profile = () => {
 	userProfile = user2;
 
 	let modalActive = useSelector(selectModalActive);
+	let modalName = useSelector(selectModalName);
 
 	function openModal(postId) {
 		dispatch(toggleModal());
 		push(`/profile/${pName}/p/${postId}`);
+	}
+
+	function changeImg() {
+		if (pName === user.name) dispatch(toggleModal("img"));
 	}
 
 	useEffect(() => {
@@ -93,6 +104,7 @@ const Profile = () => {
 					hours={2}
 				/>
 			)}
+			{modalName === "img" && modalActive && <ChangeImgModal id={user._id} />}
 			<div className='profFeed'>
 				<Header
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}
@@ -102,6 +114,7 @@ const Profile = () => {
 					postNumber={userProfile.posts}
 					followers={userProfile.followers}
 					following={userProfile.following}
+					changeImg={changeImg}
 				/>
 				<FeedMenu />
 

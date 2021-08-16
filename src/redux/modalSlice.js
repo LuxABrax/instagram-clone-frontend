@@ -4,18 +4,20 @@ export const modalSlice = createSlice({
 	name: "modal",
 	initialState: {
 		modalActive: false,
+		modalName: "",
 	},
 	reducers: {
-		toggleModal: state => {
-			console.log("state: ", state.modalActive);
+		toggleModal: (state, action) => {
+			if (action.payload !== undefined) state.modalName = action.payload;
+			if (state.modalActive) state.modalName = "";
 			state.modalActive = !state.modalActive;
-			console.log("state: ", state.modalActive);
 		},
 	},
 });
 
-export const { toggleModal } = modalSlice.actions;
+export const { toggleModal, changeModalName } = modalSlice.actions;
 
 export const selectModalActive = state => state.modal.modalActive;
+export const selectModalName = state => state.modal.modalName;
 
 export default modalSlice.reducer;
