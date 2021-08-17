@@ -14,13 +14,14 @@ import { useState } from "react";
 const Suggestions = () => {
 	const user = useSelector(selectUser);
 	const users = useSelector(state => state.users.notFollowedUsers);
+	const noUsers = useSelector(state => state.users.noUsersToFollow);
 
 	const dispatch = useDispatch();
 
 	const [suggestions, setSuggestions] = useState([]);
-
+	if (users.length === 0 && !noUsers) dispatch(getNotFollowedUsers(user._id));
 	if (users.length > 0 && suggestions.length === 0) {
-		dispatch(getNotFollowedUsers(user._id));
+		// dispatch(getNotFollowedUsers(user._id));
 		setSuggestions([...users]);
 	}
 
@@ -48,13 +49,13 @@ const Suggestions = () => {
 			</div>
 			{suggestions.length > 0 &&
 				suggestions.map((suggestedUser, i) => {
-					console.log(suggestions);
 					if (i < 5)
 						return (
 							<ProfileComp
 								key={suggestedUser._id}
 								id={suggestedUser._id}
 								username={suggestedUser.name}
+								image={`http://localhost:5000/uploads/${suggestedUser.photo}`}
 								caption={`Followed by ${suggestedUser.followers} followers`}
 								urlText='Follow'
 								iconSize='medium'

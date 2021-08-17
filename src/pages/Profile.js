@@ -6,10 +6,9 @@ import { changePage, selectPage } from "../redux/navigationSlice";
 import {
 	toggleModal,
 	selectModalActive,
-	changeModalName,
 	selectModalName,
 } from "../redux/modalSlice";
-import { selectUser, updateUser } from "../redux/authSlice";
+import { selectUser } from "../redux/authSlice";
 
 import PostModal from "../components/profile/PostModal";
 import Header from "../components/profile/Header";

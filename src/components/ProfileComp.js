@@ -18,6 +18,7 @@ const ProfileComp = props => {
 		hideAccountName,
 		image,
 		followUser,
+		onClick,
 	} = props;
 
 	const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const ProfileComp = props => {
 					iconSize={iconSize}
 					storyBorder={storyBorder}
 					image={image}
+					onClick={onClick}
 				/>
 			</div>
 			{(accountName || caption) && !hideAccountName && (
