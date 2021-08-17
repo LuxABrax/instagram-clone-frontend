@@ -16,7 +16,6 @@ import Header from "../components/profile/Header";
 import FeedMenu from "../components/profile/FeedMenu";
 import comments from "../data/comments.js";
 import imagesPosts from "../data/posts";
-import luka from "../icons/luka.jpg";
 import { getUserProfile, selectUserProfile } from "../redux/usersSlice";
 import ChangeImgModal from "../components/profile/ChangeImgModal";
 

@@ -1,8 +1,10 @@
 import "../styles/profileComp.scss";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 
 import ProfileIcon from "./ProfileIcon";
 import users from "../data/users";
+import { logout } from "../redux/authSlice";
 
 const ProfileComp = props => {
 	const {
@@ -18,6 +20,7 @@ const ProfileComp = props => {
 		followUser,
 	} = props;
 
+	const dispatch = useDispatch();
 	const { push } = useHistory();
 
 	let accountName = username
@@ -46,7 +49,16 @@ const ProfileComp = props => {
 					<span className={`caption ${captionSize}`}>{caption}</span>
 				</div>
 			)}
-			<p className='followLink' onClick={() => followUser(id)}>
+			<p
+				className='followLink'
+				onClick={() => {
+					if (urlText === "Switch") {
+						dispatch(logout());
+					} else {
+						followUser(id);
+					}
+				}}
+			>
 				{urlText}
 			</p>
 		</div>

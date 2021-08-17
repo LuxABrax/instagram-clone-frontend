@@ -59,9 +59,6 @@ const Navigation = () => {
 					/>
 				)}
 			</div>
-			<div className='link'>
-				<Notifications className='icon' onClick={() => dispatch(logout())} />
-			</div>
 			<Link
 				to={`/profile/${user.name}`}
 				className='link'
