@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { toggleModal } from "../../redux/modalSlice";
-import "../../styles/profile/modal.scss";
+import { toggleModal } from "../../../redux/modalSlice";
+import "../../../styles/profile/modal.scss";
 
 const Modal = ({ profile, children }) => {
 	const dispatch = useDispatch();

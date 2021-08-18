@@ -10,7 +10,7 @@ import {
 } from "../redux/modalSlice";
 import { selectUser } from "../redux/authSlice";
 
-import PostModal from "../components/profile/PostModal";
+import PostModal from "../components/profile/modals/PostModal";
 import Header from "../components/profile/Header";
 import FeedMenu from "../components/profile/FeedMenu";
 import comments from "../data/comments.js";
@@ -21,8 +21,9 @@ import {
 	getUserProfile,
 	selectUserProfile,
 } from "../redux/usersSlice";
-import ChangeImgModal from "../components/profile/ChangeImgModal";
-import FollowersModal from "../components/profile/FollowersModal";
+import ChangeImgModal from "../components/profile/modals/ChangeImgModal";
+import FollowersModal from "../components/profile/modals/FollowersModal";
+import UnFollowModal from "../components/profile/modals/UnFollowModal";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -59,12 +60,12 @@ const Profile = () => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 
-		if (pName !== user.name) {
-			dispatch(getUserProfile(pName));
-		}
-		if (pName === user.name) {
-			dispatch(getUserProfile(pName));
-		}
+		// if (pName !== user.name) {
+		// 	dispatch(getUserProfile(pName));
+		// }
+		// if (pName === user.name) {
+		dispatch(getUserProfile(pName));
+		// }
 
 		const sortPosts = () => {
 			const sPosts = [];
@@ -112,6 +113,9 @@ const Profile = () => {
 				/>
 			)}
 			{modalName === "img" && modalActive && <ChangeImgModal id={user._id} />}
+			{modalName === "unFollow" && modalActive && (
+				<UnFollowModal id={user._id} />
+			)}
 			{modalName === "followers" && modalActive && (
 				<FollowersModal
 					id={user._id}
@@ -129,6 +133,7 @@ const Profile = () => {
 			<div className='profFeed'>
 				<Header
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}
+					id={userProfile._id}
 					accountName={userProfile.name}
 					fullName={userProfile.fullName}
 					description={userProfile.description}

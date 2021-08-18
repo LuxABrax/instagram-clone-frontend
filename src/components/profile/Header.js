@@ -3,14 +3,16 @@ import useWindowDimensions from "../../utils/windowHook";
 
 import ProfileIcon from "../ProfileIcon";
 import { ReactComponent as More } from "../../icons/more.svg";
+import { ReactComponent as Cog } from "../../icons/cog.svg";
 import FollowInfo from "./FollowInfo";
 import ProfileMenu from "./ProfileMenu";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../redux/modalSlice";
 
 const Header = props => {
 	const {
 		image,
+		id,
 		accountName,
 		fullName,
 		description,
@@ -22,6 +24,7 @@ const Header = props => {
 	const { width } = useWindowDimensions();
 
 	const dispatch = useDispatch();
+	const { name } = useSelector(state => state.auth.user);
 
 	function showFollowers() {
 		dispatch(toggleModal("followers"));
@@ -45,20 +48,23 @@ const Header = props => {
 						<>
 							<div className='title'>
 								<h2>{accountName}</h2>
-								<ProfileMenu />
-
-								<More className='moreIcon' />
+								<ProfileMenu id={id} />
+								{name === accountName ? (
+									<Cog className='moreIcon' />
+								) : (
+									<More className='moreIcon' />
+								)}
 							</div>
 							<div className='followInfo'>
 								<span>
 									<strong>{postNumber}</strong>
 									{postNumber > 1 || postNumber === 0 ? " posts" : " post"}
 								</span>
-								<span onClick={showFollowers}>
+								<span className='f' onClick={showFollowers}>
 									<strong>{followers}</strong>
 									{followers > 1 ? " followers" : " follower"}
 								</span>
-								<span onClick={showFollowing}>
+								<span className='f' onClick={showFollowing}>
 									<strong>{following}</strong> following
 								</span>
 							</div>
@@ -73,9 +79,13 @@ const Header = props => {
 						<>
 							<div className='title'>
 								<h2>{accountName}</h2>
-								<More className='moreIcon' />
+								{name === accountName ? (
+									<Cog className='moreIcon' />
+								) : (
+									<More className='moreIcon' />
+								)}
 							</div>
-							<ProfileMenu />
+							<ProfileMenu id={id} />
 						</>
 					)}
 				</div>

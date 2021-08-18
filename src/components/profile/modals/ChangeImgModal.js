@@ -1,10 +1,10 @@
-import "../../styles/profile/changeImg.scss";
+import "../../../styles/profile/changeImg.scss";
 
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { toggleModal } from "../../redux/modalSlice";
-import axios from "../../axios";
-import { changePhoto } from "../../redux/authSlice";
+import { toggleModal } from "../../../redux/modalSlice";
+import axios from "../../../axios";
+import { changePhoto } from "../../../redux/authSlice";
 
 const ChangeImgModal = ({ id }) => {
 	const dispatch = useDispatch();

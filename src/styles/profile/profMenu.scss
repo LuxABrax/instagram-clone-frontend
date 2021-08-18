@@ -6,22 +6,33 @@
 	margin-left: 12px;
 	margin-right: -4px;
 	// justify-content: space-between;
-	button {
+	.profBtn {
 		background-color: transparent;
 		color: #262626;
 		border-radius: 3px;
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: bold;
-		line-height: 18px;
-		height: 1.8rem;
+		line-height: 26px;
+		height: 30px;
 		border: 1px solid $border-color-grey;
-		padding: 0 0.5rem;
+		padding: 0 9px;
 		margin-left: 0.5rem;
 		cursor: pointer;
-	}
-	.arr {
-		transform: rotate(180deg);
-		margin-top: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		&.arr {
+			padding: 0 11px;
+		}
+
+		.arr {
+			&.up {
+				transform: rotate(360deg);
+			}
+			&.down {
+				transform: rotate(180deg);
+			}
+		}
 	}
 }
 @media (max-width: 736px) {

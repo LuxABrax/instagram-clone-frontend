@@ -1,4 +1,4 @@
-import "../../styles/profile/changeImg.scss";
+import "../../../styles/profile/changeImg.scss";
 
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,9 +8,9 @@ import {
 	selectFollowedUsers,
 	selectFollowingUsers,
 	selectNotFollowedUsers,
-} from "../../redux/usersSlice";
+} from "../../../redux/usersSlice";
 
-import FollowersItem from "./FollowersItem";
+import FollowersItem from "../FollowersItem";
 
 const FollowersModal = ({ id, type, uId, btnType }) => {
 	const [fws, setFws] = useState([]);

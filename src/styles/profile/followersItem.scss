@@ -12,11 +12,22 @@
 		opacity: 0.7;
 		background: #dbdbdb;
 	}
+	&.inMenu {
+		position: static;
+		img {
+			height: 14px;
+			width: 14px;
+			margin: 0 24px;
+		}
+	}
+	&.isMessage {
+		display: none;
+	}
 }
 
 .flw {
-	color: white;
-	background: #0095f6;
+	color: white !important;
+	background: #0095f6 !important;
 	&:active {
 		background: #0095f6;
 	}

@@ -1,14 +1,14 @@
-import "../../styles/profile/postModal.scss";
+import "../../../styles/profile/postModal.scss";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { toggleModal } from "../../redux/modalSlice";
+import { toggleModal } from "../../../redux/modalSlice";
 
-import ProfileComp from "../ProfileComp";
-import PostMenu from "../post/PostMenu";
-import Comment from "../post/Comment";
-import AddComment from "../post/AddComment";
-import { ReactComponent as More } from "../../icons/more.svg";
+import ProfileComp from "../../ProfileComp";
+import PostMenu from "../../post/PostMenu";
+import Comment from "../../post/Comment";
+import AddComment from "../../post/AddComment";
+import { ReactComponent as More } from "../../../icons/more.svg";
 
 const PostModal = props => {
 	const { accountName, image, comments, likedByText, likedByNumber, hours } =
