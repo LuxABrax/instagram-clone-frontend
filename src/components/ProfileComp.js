@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import ProfileIcon from "./ProfileIcon";
 import users from "../data/users";
 import { logout } from "../redux/authSlice";
+import { toggleModal } from "../redux/modalSlice";
 
 const ProfileComp = props => {
 	const {
@@ -43,6 +44,7 @@ const ProfileComp = props => {
 					<span
 						className='accountName'
 						onClick={() => {
+							if (onClick !== undefined) dispatch(toggleModal());
 							push(`/profile/${accountName}`);
 						}}
 					>

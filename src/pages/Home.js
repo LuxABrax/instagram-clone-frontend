@@ -7,7 +7,6 @@ import {
 	getNotFollowedUsers,
 	selectNotFollowedUsers,
 	setIsCreated,
-	setNoUsers,
 } from "../redux/usersSlice";
 
 import Feed from "../components/feed/Feed";
@@ -17,7 +16,7 @@ const Home = () => {
 	const user = useSelector(selectUser);
 	const userId = user._id;
 	const nfUsers = useSelector(selectNotFollowedUsers);
-	const isLoaded = useSelector(state => state.users.loadedUsers);
+	// const isLoaded = useSelector(state => state.users.loadedUsers);
 	const noUsers = useSelector(state => state.users.noUsersToFollow);
 	const isCreated = useSelector(state => state.users.isCreated);
 

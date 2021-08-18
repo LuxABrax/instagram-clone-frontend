@@ -7,6 +7,9 @@ export const getUserProfile = createAsyncThunk(
 		const response = await axios.get(`/users/n/${userName}`);
 
 		// console.log("response: ", await response.data);
+		const user = await response.data.data;
+		console.log(user);
+
 		if (response.data.success === false) {
 			dispatch(usersSlice.actions.setErrMessage(response.data.message));
 			return rejectWithValue(response.data.message);

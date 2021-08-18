@@ -15,8 +15,14 @@ import Header from "../components/profile/Header";
 import FeedMenu from "../components/profile/FeedMenu";
 import comments from "../data/comments.js";
 import imagesPosts from "../data/posts";
-import { getUserProfile, selectUserProfile } from "../redux/usersSlice";
+import {
+	getFollowedUsers,
+	getFollowingUsers,
+	getUserProfile,
+	selectUserProfile,
+} from "../redux/usersSlice";
 import ChangeImgModal from "../components/profile/ChangeImgModal";
+import FollowersModal from "../components/profile/FollowersModal";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -27,7 +33,7 @@ const Profile = () => {
 	const dispatch = useDispatch();
 
 	const activePage = useSelector(selectPage);
-
+	const status = useSelector(state => state.users.status);
 	const user = useSelector(selectUser);
 	const user2 = useSelector(selectUserProfile);
 	let userProfile = {};
@@ -45,7 +51,10 @@ const Profile = () => {
 	function changeImg() {
 		if (pName === user.name) dispatch(toggleModal("img"));
 	}
-
+	if (status === "get user success") {
+		dispatch(getFollowedUsers(user2._id));
+		dispatch(getFollowingUsers(user2._id));
+	}
 	useEffect(() => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
@@ -103,6 +112,20 @@ const Profile = () => {
 				/>
 			)}
 			{modalName === "img" && modalActive && <ChangeImgModal id={user._id} />}
+			{modalName === "followers" && modalActive && (
+				<FollowersModal
+					id={user._id}
+					type='followers'
+					btnType={user.name === pName ? "remove" : ""}
+				/>
+			)}
+			{modalName === "following" && modalActive && (
+				<FollowersModal
+					id={user._id}
+					type='following'
+					btnType={user.name === pName ? "remove" : ""}
+				/>
+			)}
 			<div className='profFeed'>
 				<Header
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}

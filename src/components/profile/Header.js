@@ -5,6 +5,8 @@ import ProfileIcon from "../ProfileIcon";
 import { ReactComponent as More } from "../../icons/more.svg";
 import FollowInfo from "./FollowInfo";
 import ProfileMenu from "./ProfileMenu";
+import { useDispatch } from "react-redux";
+import { toggleModal } from "../../redux/modalSlice";
 
 const Header = props => {
 	const {
@@ -18,7 +20,15 @@ const Header = props => {
 		changeImg,
 	} = props;
 	const { width } = useWindowDimensions();
-	console.log(width);
+
+	const dispatch = useDispatch();
+
+	function showFollowers() {
+		dispatch(toggleModal("followers"));
+	}
+	function showFollowing() {
+		dispatch(toggleModal("following"));
+	}
 
 	return (
 		<div className='profHeader'>
@@ -42,13 +52,13 @@ const Header = props => {
 							<div className='followInfo'>
 								<span>
 									<strong>{postNumber}</strong>
-									{postNumber > 1 ? " posts" : " post"}
+									{postNumber > 1 || postNumber === 0 ? " posts" : " post"}
 								</span>
-								<span>
+								<span onClick={showFollowers}>
 									<strong>{followers}</strong>
 									{followers > 1 ? " followers" : " follower"}
 								</span>
-								<span>
+								<span onClick={showFollowing}>
 									<strong>{following}</strong> following
 								</span>
 							</div>
