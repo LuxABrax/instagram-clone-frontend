@@ -1,0 +1,62 @@
+.modalContainer {
+	width: 400px;
+	z-index: 11;
+	margin: 2rem auto;
+	display: flex;
+	flex-direction: column;
+	background-color: #fff;
+	border-radius: 12px;
+	overflow: hidden;
+}
+@media (max-width: 736px) {
+	.modalContainer {
+		width: 260px;
+	}
+}
+
+.avatarContainer {
+	margin: 16px;
+	margin-top: 32px;
+	min-height: 90px;
+	display: flex;
+	justify-content: center;
+}
+
+.unfAvatar {
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+}
+
+.textContainer {
+	margin: 16px 32px;
+	text-align: center;
+	h2 {
+		color: #262626;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: 18px;
+		margin: -3px 0 -4;
+	}
+}
+.modalBtns {
+	display: flex;
+	flex-direction: column;
+	margin-top: 16px;
+	button {
+		cursor: pointer;
+		background-color: transparent;
+		border: none;
+		border-top: 1px solid #dbdbdb;
+		min-height: 48px;
+		padding: 4px 8px;
+		line-height: 1.5;
+		&:active {
+			background-color: #c7c7c7;
+		}
+		&:first-child {
+			color: #ed4956;
+			font-weight: 700;
+		}
+	}
+}

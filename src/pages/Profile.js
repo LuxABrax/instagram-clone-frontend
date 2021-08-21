@@ -114,7 +114,12 @@ const Profile = () => {
 			)}
 			{modalName === "img" && modalActive && <ChangeImgModal id={user._id} />}
 			{modalName === "unFollow" && modalActive && (
-				<UnFollowModal id={user._id} />
+				<UnFollowModal
+					uid={user._id}
+					id={userProfile._id}
+					photo={userProfile.photo}
+					name={userProfile.name}
+				/>
 			)}
 			{modalName === "followers" && modalActive && (
 				<FollowersModal

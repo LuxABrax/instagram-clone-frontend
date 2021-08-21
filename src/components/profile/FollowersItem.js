@@ -5,7 +5,7 @@ import ProfileComp from "../ProfileComp";
 import "../../styles/profile/followersItem.scss";
 import FollowButton from "./FollowButton";
 
-const FollowersItem = ({ follower, id, btnType }) => {
+const FollowersItem = ({ follower, id, btnType, fType }) => {
 	const { _id, name, fullName, photo } = follower;
 	const dispatch = useDispatch();
 
@@ -33,7 +33,12 @@ const FollowersItem = ({ follower, id, btnType }) => {
 					push(`/profile/${name}`);
 				}}
 			/>
-			<FollowButton follower={follower} id={id} />
+			<FollowButton
+				follower={follower}
+				id={id}
+				btnType={btnType}
+				fType={fType}
+			/>
 		</li>
 	);
 };

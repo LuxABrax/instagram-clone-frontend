@@ -1,6 +1,9 @@
 .profHeader {
 	display: flex;
 	flex-direction: column;
+	.f {
+		cursor: pointer;
+	}
 	header {
 		display: flex;
 		justify-content: space-around;

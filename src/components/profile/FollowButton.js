@@ -1,37 +1,78 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { toggleModal } from "../../redux/modalSlice";
+import {
+	changeModalName,
+	selectModalActive,
+	toggleModal,
+} from "../../redux/modalSlice";
 import {
 	followUserWithID,
 	getNotFollowedUsers,
 	selectNotFollowedUsers,
+	selectUnFollowUser,
+	setUnFollowUser,
+	selectUserProfile,
+	getUserProfile,
 } from "../../redux/usersSlice";
 import "../../styles/profile/followersItem.scss";
 
-const FollowButton = ({ follower, id, btnType, inMenu, isMessage }) => {
+const FollowButton = ({ follower, id, btnType, inMenu, isMessage, fType }) => {
 	const [followBtn, setFollowBtn] = useState({ btnType });
 	const [folBtn, setFolBtn] = useState(true);
 
-	const { _id } = follower;
+	const { _id, name, photo } = follower;
 	const dispatch = useDispatch();
 
 	const { push } = useHistory();
 	const notFollowed = useSelector(selectNotFollowedUsers);
+	const profile = useSelector(selectUserProfile);
+	const unFollowUser = useSelector(selectUnFollowUser);
+	const modalActive = useSelector(selectModalActive);
 
 	const handleButton = async () => {
 		// console.log("follower: ", follwId, "user: ", id);
 		if (folBtn) {
-			if (followBtn !== "remove") {
-				await dispatch(followUserWithID({ userId: id, followId: _id }));
-				dispatch(getNotFollowedUsers(id));
+			if (followBtn === "remove") {
+				if (modalActive) {
+					dispatch(
+						setUnFollowUser({
+							id: _id,
+							name,
+							photo,
+							remove: true,
+							followerOr: fType === "following",
+						})
+					);
+					dispatch(changeModalName("unFollow"));
+				} else {
+					dispatch(toggleModal("unFollow"));
+				}
 			} else {
+				await dispatch(followUserWithID({ userId: id, followId: _id }));
+				await dispatch(getUserProfile(profile.name));
+				dispatch(getNotFollowedUsers(id));
 				console.log("remove");
-				dispatch(toggleModal("unFollow"));
 			}
 		} else {
 			console.log("following");
-			dispatch(toggleModal("unFollow"));
+			if (modalActive) {
+				dispatch(setUnFollowUser({ id: _id, name, photo, remove: false }));
+				dispatch(changeModalName("unFollow"));
+				setFolBtn(true);
+			} else {
+				if (!isMessage) {
+					dispatch(
+						setUnFollowUser({
+							id: profile._id,
+							name: profile.name,
+							photo: profile.photo,
+							remove: false,
+						})
+					);
+					dispatch(toggleModal("unFollow"));
+				}
+			}
 		}
 	};
 	useEffect(() => {

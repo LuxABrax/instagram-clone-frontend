@@ -26,19 +26,31 @@ const ProfileMenu = ({ id }) => {
 	const changeArrow = () => {
 		setArrowUp(!arrowUp);
 	};
+
+	const handleEdit = () => {
+		console.log("handle Edit");
+	};
+	const handleAddPost = () => {
+		console.log("handle Add post");
+	};
 	return (
 		<div className='profileMenu'>
 			{sameUser ? (
-				<button className='profBtn flwBtn inMenu'>Edit</button>
+				<>
+					<button className='profBtn flwBtn inMenu flw' onClick={handleAddPost}>
+						Add Post
+					</button>
+					<button className='profBtn flwBtn inMenu' onClick={handleEdit}>
+						Edit
+					</button>
+				</>
 			) : (
 				<>
-					{/* <button className='profBtn flwBtn inMenu'>Message</button> */}
 					<FollowButton
 						follower={selectedUser}
 						inMenu={true}
 						isMessage={true}
 					/>
-					{/* <button className='follow'>Follow {_id}</button> */}
 					{selectedUser !== {} && (
 						<FollowButton follower={selectedUser} id={user._id} inMenu={true} />
 					)}

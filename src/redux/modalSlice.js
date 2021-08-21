@@ -12,6 +12,9 @@ export const modalSlice = createSlice({
 			if (state.modalActive) state.modalName = "";
 			state.modalActive = !state.modalActive;
 		},
+		changeModalName: (state, action) => {
+			state.modalName = action.payload;
+		},
 	},
 });
 

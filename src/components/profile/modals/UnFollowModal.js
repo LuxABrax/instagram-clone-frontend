@@ -1,14 +1,20 @@
-import "../../../styles/profile/changeImg.scss";
+import "../../../styles/profile/unFollowModal.scss";
 
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { toggleModal } from "../../../redux/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal, changeModalName } from "../../../redux/modalSlice";
 import axios from "../../../axios";
 import Modal from "./Modal";
-import ProfileIcon from "../../ProfileIcon";
+import {
+	addToNoFollow,
+	getNotFollowedUsers,
+	getUserProfile,
+	selectUnFollowUser,
+} from "../../../redux/usersSlice";
 
-const UnFollowModal = ({ id, photo, name }) => {
+const UnFollowModal = ({ uid, id, photo, name }) => {
 	const dispatch = useDispatch();
+	const unFollowUser = useSelector(selectUnFollowUser);
 
 	useEffect(() => {
 		document.body.style.overflow = "hidden";
@@ -18,23 +24,50 @@ const UnFollowModal = ({ id, photo, name }) => {
 	function closeModal() {
 		dispatch(toggleModal());
 	}
-	function unFollow(params) {}
-	function choosePhoto() {
-		document.getElementById("photoFile").click();
+	async function unFollow() {
+		console.log(uid, unFollowUser.id);
+		let ff = "unf";
+		if (unFollowUser.remove) {
+			if (unFollowUser.followerOr) {
+				ff = "unf";
+			} else {
+				ff = "rf";
+			}
+		} else {
+			ff = "unf";
+		}
+		// if (unFollowUser.remove && !unFollowUser.followerOr) ff = "rfg";
+		const res = await axios.put(`/follow/${ff}/${uid}/${unFollowUser.id}`);
+		const data = await res.data;
+		console.log(data);
+		if (data.success) {
+			console.log(data.success);
+			await dispatch(getUserProfile(name));
+			await dispatch(addToNoFollow({ _id: id, name, photo }));
+			await dispatch(getNotFollowedUsers(uid));
+			dispatch(toggleModal());
+		}
 	}
 
 	return (
 		<Modal>
-			<div className='modalTitle'>
-				<h3>Unfoollow</h3>
-				<ProfileIcon
-					image={`https://localhost:5000/imges/${photo}`}
-					iconSize='xBig'
-				/>
-			</div>
-			<div className='modalBtns'>
-				<button onClick={unFollow}>Unfollow</button>
-				<button onClick={closeModal}>Cancel</button>
+			<div className='modalContainer'>
+				<div className='avatarContainer'>
+					<img
+						src={`http://localhost:5000/uploads/${unFollowUser.photo}`}
+						className='unfAvatar'
+					/>
+				</div>
+				<div className='textContainer'>
+					<h2>
+						If you change your mind, you'll have to request to follow @
+						{unFollowUser.name} again.
+					</h2>
+				</div>
+				<div className='modalBtns'>
+					<button onClick={unFollow}>Unfollow</button>
+					<button onClick={closeModal}>Cancel</button>
+				</div>
 			</div>
 		</Modal>
 	);

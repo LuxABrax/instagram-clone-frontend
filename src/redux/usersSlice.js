@@ -108,6 +108,13 @@ export const usersSlice = createSlice({
 		loadedUsers: false,
 		noUsersToFollow: false,
 		isCreated: false,
+		unFollowUser: {
+			id: "",
+			name: "",
+			photo: "",
+			remove: false,
+			followerOr: false,
+		},
 		errMessage: "",
 		error: {
 			message: "",
@@ -116,6 +123,9 @@ export const usersSlice = createSlice({
 	reducers: {
 		setErrMessage: (state, action) => {
 			state.errMessage = action.payload;
+		},
+		addToNoFollow: (state, action) => {
+			state.notFollowedUsers.push(action.payload);
 		},
 		removeFromNoFollow: (state, action) => {
 			const arr = state.users.notFollowedUsers;
@@ -135,6 +145,9 @@ export const usersSlice = createSlice({
 		},
 		setIsCreated: (state, action) => {
 			state.isCreated = action.payload;
+		},
+		setUnFollowUser: (state, action) => {
+			state.unFollowUser = action.payload;
 		},
 	},
 	extraReducers: {
@@ -201,13 +214,21 @@ export const usersSlice = createSlice({
 	},
 });
 
-export const { setErrMessage, setSuggestions, setIsCreated, setNoUsers } =
-	usersSlice.actions;
+export const {
+	setErrMessage,
+	setSuggestions,
+	setIsCreated,
+	setNoUsers,
+	setUnFollowUser,
+	addToNoFollow,
+	removeFromNoFollow,
+} = usersSlice.actions;
 
 export const selectUserProfile = state => state.users.userProfile;
 export const selectErrMessage = state => state.users.errMessage;
 export const selectFollowedUsers = state => state.users.followedUsers;
 export const selectNotFollowedUsers = state => state.users.notFollowedUsers;
 export const selectFollowingUsers = state => state.users.followingUsers;
+export const selectUnFollowUser = state => state.users.unFollowUser;
 
 export default usersSlice.reducer;

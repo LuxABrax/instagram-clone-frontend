@@ -33,18 +33,26 @@ const FollowersModal = ({ id, type, uId, btnType }) => {
 	}, [type, followers, fws, following, notFollowed, btnType]);
 	return (
 		<Modal>
-			<div className='modalTitle'>
-				<h3 style={{ height: 42 + "px" }}>
-					{type === "followers" ? "Followers" : "Following"}
-				</h3>
+			<div className='modalContent'>
+				<div className='modalTitle'>
+					<h3 style={{ height: 42 + "px" }}>
+						{type === "followers" ? "Followers" : "Following"}
+					</h3>
+				</div>
+				<ul style={{ overflowY: "scroll", height: 358 + "px" }}>
+					{fws.map((el, idx) => {
+						return (
+							<FollowersItem
+								key={idx}
+								follower={el}
+								id={id}
+								btnType={btnType}
+								fType={type}
+							/>
+						);
+					})}
+				</ul>
 			</div>
-			<ul style={{ overflowY: "scroll", height: 358 + "px" }}>
-				{fws.map((el, idx) => {
-					return (
-						<FollowersItem key={idx} follower={el} id={id} btnType={btnType} />
-					);
-				})}
-			</ul>
 		</Modal>
 	);
 };

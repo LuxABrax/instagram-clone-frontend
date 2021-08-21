@@ -22,7 +22,7 @@ const Modal = ({ profile, children }) => {
 	return (
 		<div className='modal'>
 			<div className='background' onClick={closeModal}></div>
-			<div className='modalContent'>{children}</div>
+			{children}
 		</div>
 	);
 };
