@@ -2,15 +2,17 @@ import "../../styles/profile/profMenu.scss";
 import { ReactComponent as ArrDown } from "../../icons/arrDown.svg";
 import { useParams } from "react-router";
 import { selectUserProfile } from "../../redux/usersSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { selectUser } from "../../redux/authSlice";
+import { logout, selectUser } from "../../redux/authSlice";
 import FollowButton from "./FollowButton";
+import { toggleModal } from "../../redux/modalSlice";
 
 const ProfileMenu = ({ id }) => {
 	const [sameUser, setSameUser] = useState(false);
 	const [arrowUp, setArrowUp] = useState(false);
 	let { pName } = useParams();
+	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
 	const selectedUser = useSelector(selectUserProfile);
 	const { _id, name } = selectedUser;
@@ -30,8 +32,12 @@ const ProfileMenu = ({ id }) => {
 	const handleEdit = () => {
 		console.log("handle Edit");
 	};
+	const handleLogout = () => {
+		dispatch(logout());
+	};
 	const handleAddPost = () => {
 		console.log("handle Add post");
+		dispatch(toggleModal("addPost"));
 	};
 	return (
 		<div className='profileMenu'>
@@ -42,6 +48,9 @@ const ProfileMenu = ({ id }) => {
 					</button>
 					<button className='profBtn flwBtn inMenu' onClick={handleEdit}>
 						Edit
+					</button>
+					<button className='profBtn flwBtn inMenu' onClick={handleLogout}>
+						Log Out
 					</button>
 				</>
 			) : (

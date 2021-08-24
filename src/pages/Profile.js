@@ -9,18 +9,24 @@ import {
 	selectModalName,
 } from "../redux/modalSlice";
 import { selectUser } from "../redux/authSlice";
-
-import PostModal from "../components/profile/modals/PostModal";
-import Header from "../components/profile/Header";
-import FeedMenu from "../components/profile/FeedMenu";
-import comments from "../data/comments.js";
-import imagesPosts from "../data/posts";
 import {
 	getFollowedUsers,
 	getFollowingUsers,
 	getUserProfile,
+	selectActPost,
+	selectUserPosts,
 	selectUserProfile,
+	setActivePost,
+	setUserPosts,
 } from "../redux/usersSlice";
+
+import axios from "../axios";
+
+import Header from "../components/profile/Header";
+import FeedMenu from "../components/profile/FeedMenu";
+import comments from "../data/comments.js";
+import PostModal from "../components/profile/modals/PostModal";
+import AddPostModal from "../components/profile/modals/AddPostModal";
 import ChangeImgModal from "../components/profile/modals/ChangeImgModal";
 import FollowersModal from "../components/profile/modals/FollowersModal";
 import UnFollowModal from "../components/profile/modals/UnFollowModal";
@@ -28,6 +34,7 @@ import UnFollowModal from "../components/profile/modals/UnFollowModal";
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
 	const [sortedPosts, setSortedPosts] = useState([]);
+	const [imagesPosts, setImagesPosts] = useState([]);
 
 	let { pName, pId } = useParams();
 	const { push } = useHistory();
@@ -37,6 +44,7 @@ const Profile = () => {
 	const status = useSelector(state => state.users.status);
 	const user = useSelector(selectUser);
 	const user2 = useSelector(selectUserProfile);
+	const posts = useSelector(selectUserPosts);
 	let userProfile = {};
 
 	userProfile = user2;
@@ -52,20 +60,29 @@ const Profile = () => {
 	function changeImg() {
 		if (pName === user.name) dispatch(toggleModal("img"));
 	}
+
 	if (status === "get user success") {
 		dispatch(getFollowedUsers(user2._id));
 		dispatch(getFollowingUsers(user2._id));
 	}
+
 	useEffect(() => {
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
-
-		// if (pName !== user.name) {
-		// 	dispatch(getUserProfile(pName));
-		// }
-		// if (pName === user.name) {
 		dispatch(getUserProfile(pName));
-		// }
+	}, [activePage, dispatch, modalActive, pId, pName]);
+
+	useEffect(() => {
+		const getPosts = async () => {
+			const res = await axios.get(`/posts/profile/${user2._id}`);
+			console.log(await res.data);
+			const arr = await [...res.data.data];
+			arr.reverse();
+			dispatch(setUserPosts(arr));
+			setImagesPosts(arr);
+			sortPosts();
+		};
+		getPosts();
 
 		const sortPosts = () => {
 			const sPosts = [];
@@ -81,7 +98,7 @@ const Profile = () => {
 				if (i < len) {
 					arr.push(imagesPosts[i]);
 				} else {
-					arr.push({ id: `${i}empty`, image: "empty" });
+					arr.push({ _id: `${i}empty`, photo: "empty" });
 				}
 				j++;
 
@@ -92,25 +109,37 @@ const Profile = () => {
 				}
 				if (i === totalNum) sPosts.push(arr);
 			}
+			// console.log(sPosts);
 			setSortedPosts(sPosts);
 			setArrSorted(true);
 		};
 
-		sortPosts();
-	}, [activePage, dispatch, modalActive, pId, pName, user.name]);
+		// if (imagesPosts.length > 0) sortPosts();
+	}, [dispatch, imagesPosts.length, user.name, user2._id]);
+
+	const addImage = image => {
+		const arr = [...imagesPosts];
+		arr.unshift(image);
+		setImagesPosts([...arr]);
+	};
 
 	return (
 		<div className='profile'>
 			{pId !== undefined && modalActive && (
 				<PostModal
+					pId={pId}
 					accountName={userProfile.name}
 					storyBorder={true}
+					// photo={`http://localhost:5000/uploads/${activePost.photo}`}
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}
 					comments={comments[0].comments}
 					likedByText='breskvica'
-					likedByNumber={1929}
+					likedByNumber={5}
 					hours={2}
 				/>
+			)}
+			{modalName === "addPost" && modalActive && (
+				<AddPostModal id={user._id} addImage={addImage} />
 			)}
 			{modalName === "img" && modalActive && <ChangeImgModal id={user._id} />}
 			{modalName === "unFollow" && modalActive && (
@@ -155,7 +184,7 @@ const Profile = () => {
 							return (
 								<div className='row' key={index}>
 									{postRow.map((postI, idx) => {
-										if (postI.image === "empty") {
+										if (postI.photo === "empty") {
 											return (
 												<div className='postContainer' key={idx}>
 													<img src='' alt='empty' />
@@ -166,9 +195,14 @@ const Profile = () => {
 												<div
 													className='postContainer'
 													key={idx}
-													onClick={() => openModal(postI.id)}
+													onClick={async () => {
+														openModal(postI._id);
+													}}
 												>
-													<img src={postI.image} alt='' />
+													<img
+														src={`http://localhost:5000/uploads/posts/${postI.photo}`}
+														alt=''
+													/>
 												</div>
 											);
 										}

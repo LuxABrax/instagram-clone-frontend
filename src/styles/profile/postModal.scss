@@ -27,8 +27,12 @@
 		display: flex;
 		background-color: $background-white;
 
-		img {
-			flex: 1;
+		// img {
+		// 	flex: 1;
+		// }
+		.postImg {
+			width: 400px;
+			height: 400px;
 		}
 		.postDesc {
 			flex: 1;

@@ -20,7 +20,7 @@ const FeedMenu = () => {
 				<Posts className='icon' />
 				<p>POSTS</p>
 			</div>
-			<div
+			{/* <div
 				className={`tab ${activeTab === "igtv" ? "active" : ""}`}
 				onClick={() => {
 					setActiveTab("igtv");
@@ -28,7 +28,7 @@ const FeedMenu = () => {
 			>
 				<IGTV className='icon' />
 				<p>IGTV</p>
-			</div>
+			</div> */}
 			<div
 				className={`tab ${activeTab === "saved" ? "active" : ""}`}
 				onClick={() => {

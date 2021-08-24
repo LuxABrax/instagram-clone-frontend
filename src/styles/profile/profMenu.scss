@@ -39,6 +39,11 @@
 	.profileMenu {
 		margin: 0;
 		margin-left: -8px;
+		.profBtn {
+			line-height: 14px;
+			font-size: 13px;
+			padding: 8px 9px;
+		}
 	}
 	.message {
 		margin-left: 0 !important;
