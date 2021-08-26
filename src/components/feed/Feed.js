@@ -1,39 +1,32 @@
 import "../../styles/feed/feed.scss";
+import { useSelector } from "react-redux";
+import { selectPosts } from "../../redux/usersSlice";
+
 import Stories from "./Stories";
 import Post from "../post/Post";
 import comments from "../../data/comments.js";
 
 const Feed = () => {
+	const posts = useSelector(selectPosts);
+
 	return (
 		<div className='feed'>
 			<Stories />
-			<Post
-				accountName='luxabrax'
-				storyBorder={true}
-				image='http://localhost:5000/uploads/photo_611277fb50da6f05540f6889.jpg'
-				comments={comments[0].comments}
-				likedByText='breskvica'
-				likedByNumber={1929}
-				hours={2}
-			/>
-			<Post
-				accountName='luxabrax'
-				storyBorder={false}
-				image='https://picsum.photos/800'
-				comments={comments[1].comments}
-				likedByText='luxabrax'
-				likedByNumber={279}
-				hours={16}
-			/>
-			<Post
-				accountName='luxabrax'
-				storyBorder={true}
-				image='https://picsum.photos/800/1000'
-				comments={comments[2].comments}
-				likedByText='somebody'
-				likedByNumber={9}
-				hours={23}
-			/>
+			{posts.length > 0 &&
+				posts.map(post => {
+					return (
+						<Post
+							key={post._id}
+							accountName={post.name}
+							storyBorder={true}
+							image={`http://localhost:5000/uploads/posts/${post.photo}`}
+							comments={comments[0].comments}
+							likedByText='breskvica'
+							likedByNumber={post.likes.length}
+							hours={2}
+						/>
+					);
+				})}
 		</div>
 	);
 };

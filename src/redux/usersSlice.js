@@ -102,6 +102,7 @@ export const usersSlice = createSlice({
 		status: "idle",
 		userProfile: {},
 		userPosts: [],
+		posts: [],
 		activePost: {},
 		followedUsers: [],
 		notFollowedUsers: [],
@@ -156,6 +157,9 @@ export const usersSlice = createSlice({
 		},
 		setActivePost: (state, action) => {
 			state.activePost = action.payload;
+		},
+		setPosts: (state, action) => {
+			state.posts = action.payload;
 		},
 	},
 	extraReducers: {
@@ -232,6 +236,7 @@ export const {
 	removeFromNoFollow,
 	setUserPosts,
 	setActivePost,
+	setPosts,
 } = usersSlice.actions;
 
 export const selectUserProfile = state => state.users.userProfile;
@@ -242,5 +247,6 @@ export const selectFollowingUsers = state => state.users.followingUsers;
 export const selectUnFollowUser = state => state.users.unFollowUser;
 export const selectUserPosts = state => state.users.userPosts;
 export const selectActPost = state => state.users.activePost;
+export const selectPosts = state => state.users.posts;
 
 export default usersSlice.reducer;
