@@ -9,7 +9,7 @@
 .posts {
 	display: flex;
 	flex-direction: column;
-	.row {
+	.pRow {
 		display: flex;
 		margin-bottom: 1.75rem;
 		user-select: none;
@@ -26,6 +26,7 @@
 				height: 100%;
 				pointer-events: none;
 				user-select: none;
+				object-fit: cover;
 			}
 		}
 	}

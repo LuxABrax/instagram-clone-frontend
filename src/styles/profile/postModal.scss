@@ -31,8 +31,9 @@
 		// 	flex: 1;
 		// }
 		.postImg {
-			width: 400px;
-			height: 400px;
+			max-width: 600px;
+			height: auto;
+			object-fit: cover;
 		}
 		.postDesc {
 			flex: 1;

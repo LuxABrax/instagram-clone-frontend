@@ -182,7 +182,7 @@ const Profile = () => {
 					<div className='posts'>
 						{sortedPosts.map((postRow, index) => {
 							return (
-								<div className='row' key={index}>
+								<div className='pRow' key={index}>
 									{postRow.map((postI, idx) => {
 										if (postI.photo === "empty") {
 											return (

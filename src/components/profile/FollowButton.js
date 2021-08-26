@@ -97,7 +97,11 @@ const FollowButton = ({ follower, id, btnType, inMenu, isMessage, fType }) => {
 			onClick={handleButton}
 		>
 			{followBtn === "remove" ? (
-				"Remove"
+				fType !== "following" ? (
+					"Remove"
+				) : (
+					"Following"
+				)
 			) : folBtn ? (
 				"Follow"
 			) : inMenu ? (

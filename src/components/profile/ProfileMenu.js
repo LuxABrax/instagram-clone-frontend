@@ -47,7 +47,7 @@ const ProfileMenu = ({ id }) => {
 						Add Post
 					</button>
 					<button className='profBtn flwBtn inMenu' onClick={handleEdit}>
-						Edit
+						Edit Profile
 					</button>
 					<button className='profBtn flwBtn inMenu' onClick={handleLogout}>
 						Log Out

@@ -33,10 +33,21 @@
 	text-align: center;
 	h2 {
 		color: #262626;
+		font-size: 22px;
+		line-height: 26px;
+		font-weight: 300;
+		margin: -4px 0 -5px;
+	}
+	h3 {
+		color: #262626;
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 18px;
-		margin: -3px 0 -4;
+		margin: -3px 0 -4px;
+		&.rem {
+			padding-top: 1rem;
+			color: #8e8e8e;
+		}
 	}
 }
 .modalBtns {

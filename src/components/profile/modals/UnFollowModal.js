@@ -25,7 +25,7 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 		dispatch(toggleModal());
 	}
 	async function unFollow() {
-		console.log(uid, unFollowUser.id);
+		// console.log(uid, unFollowUser.id);
 		let ff = "unf";
 		if (unFollowUser.remove) {
 			if (unFollowUser.followerOr) {
@@ -36,12 +36,11 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 		} else {
 			ff = "unf";
 		}
-		// if (unFollowUser.remove && !unFollowUser.followerOr) ff = "rfg";
+
 		const res = await axios.put(`/follow/${ff}/${uid}/${unFollowUser.id}`);
 		const data = await res.data;
-		console.log(data);
+		// console.log(data);
 		if (data.success) {
-			console.log(data.success);
 			await dispatch(getUserProfile(name));
 			await dispatch(addToNoFollow({ _id: id, name, photo }));
 			await dispatch(getNotFollowedUsers(uid));
@@ -59,13 +58,25 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 					/>
 				</div>
 				<div className='textContainer'>
-					<h2>
-						If you change your mind, you'll have to request to follow @
-						{unFollowUser.name} again.
-					</h2>
+					{unFollowUser.remove && !unFollowUser.followerOr && (
+						<h2>Remove Follower?</h2>
+					)}
+					<h3
+						className={
+							unFollowUser.remove && !unFollowUser.followerOr ? "rem" : ""
+						}
+					>
+						{unFollowUser.remove && !unFollowUser.followerOr
+							? `Instagram wont tell ${unFollowUser.name} they were removed from your followers`
+							: `If you change your mind, you'll have to request to follow @${unFollowUser.name} again.`}
+					</h3>
 				</div>
 				<div className='modalBtns'>
-					<button onClick={unFollow}>Unfollow</button>
+					<button onClick={unFollow}>
+						{unFollowUser.remove && !unFollowUser.followerOr
+							? "Remove"
+							: "Unfollow"}
+					</button>
 					<button onClick={closeModal}>Cancel</button>
 				</div>
 			</div>

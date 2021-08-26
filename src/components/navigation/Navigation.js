@@ -12,7 +12,7 @@ const Navigation = () => {
 	const navActive = useSelector(selectLoggedIn);
 
 	return (
-		<div className={`navigation ${!navActive && "hidden"}`}>
+		<div className={`navigation ${!navActive ? "hidden" : ""}`}>
 			<div className='container'>
 				<div
 					className='logoContainer'
