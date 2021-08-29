@@ -13,7 +13,7 @@ import { ReactComponent as More } from "../../../icons/more.svg";
 import axios from "../../../axios";
 
 const PostModal = props => {
-	const { pId, accountName, image, comments, hours } = props;
+	const { pId, accountName, image, hours } = props;
 
 	const [likedUser, setLikedUser] = useState({
 		id: "",
@@ -35,7 +35,13 @@ const PostModal = props => {
 		const getPost = async () => {
 			const { data } = await axios.get(`/posts/${pId}`);
 			const gPost = await data.data;
-			await dispatch(setActivePost(gPost));
+			let coms = [];
+			if (gPost.comments.length > 0)
+				coms = gPost.comments.map(c => {
+					return JSON.parse(c);
+				});
+			const post = { ...gPost, comments: coms };
+			await dispatch(setActivePost(post));
 		};
 
 		getPost();
@@ -91,15 +97,16 @@ const PostModal = props => {
 					<div className='postDescBody'>
 						<p>{aPost.description}</p>
 						<div className='comments'>
-							{comments.map(comment => {
-								return (
-									<Comment
-										key={comment.id}
-										accountName={comment.user}
-										comment={comment.text}
-									/>
-								);
-							})}
+							{aPost.comments !== undefined &&
+								aPost.comments.map(comment => {
+									return (
+										<Comment
+											key={comment.cId}
+											accountName={comment.uName}
+											comment={comment.text}
+										/>
+									);
+								})}
 						</div>
 						<PostMenu id={aPost._id} type={"pModal"} />
 						{aPost.likes !== undefined && aPost.likes.length > 0 && (
@@ -121,7 +128,7 @@ const PostModal = props => {
 						)}
 
 						<div className='timePosted'>{hours} HOURS AGO</div>
-						<AddComment />
+						<AddComment id={aPost._id} />
 					</div>
 				</div>
 			</div>

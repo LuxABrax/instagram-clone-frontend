@@ -66,14 +66,29 @@ export const postsSlice = createSlice({
 			const { userId } = action.payload;
 			state.activePost.saved = state.activePost.saved.filter(l => l !== userId);
 		},
+		addComment: (state, { payload }) => {
+			const { p, idx, com } = payload;
+			if (p === "posts") {
+				state.posts[idx].comments.push(com);
+			} else {
+				state.activePost.comments.push(com);
+			}
+		},
 	},
 	extraReducers: {
 		[getPosts.pending]: state => {
 			state.status = "Get Posts";
 		},
 		[getPosts.fulfilled]: (state, { payload }) => {
-			console.log(payload);
-			state.posts = payload;
+			const posts = payload.map(p => {
+				if (p.comments.length === 0) return p;
+
+				const coms = p.comments.map(c => {
+					return JSON.parse(c);
+				});
+				return { ...p, comments: coms };
+			});
+			state.posts = posts;
 			state.status = "Get Posts Success";
 		},
 		[getPosts.rejected]: (state, { error }) => {
@@ -95,6 +110,7 @@ export const {
 	removeSave,
 	addSaveAct,
 	removeSaveAct,
+	addComment,
 } = postsSlice.actions;
 
 export const selectPosts = state => state.posts.posts;

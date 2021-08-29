@@ -1,6 +1,7 @@
 import "../../styles/post/postMenu.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 import { ReactComponent as Like } from "../../icons/heart.svg";
 import { ReactComponent as LikeActive } from "../../icons/heartActive.svg";
@@ -23,11 +24,12 @@ import {
 } from "../../redux/postsSlice";
 import axios from "../../axios";
 
-const PostMenu = ({ id, type }) => {
+const PostMenu = ({ id, type, name }) => {
 	const [liked, setLiked] = useState(false);
 	const [bookmarked, setBookmarked] = useState(false);
 
 	const dispatch = useDispatch();
+	const { push } = useHistory();
 	const posts = useSelector(selectPosts);
 	const aPost = useSelector(selectActivePost);
 	const uid = useSelector(selectUser)._id;
@@ -130,7 +132,16 @@ const PostMenu = ({ id, type }) => {
 						style={{ height: 28 + "px" }}
 					/>
 				)}
-				<Comment className='icon' />
+				<Comment
+					className='icon'
+					onClick={() => {
+						if (name !== undefined) {
+							push(`/profile/${name}/p/${id}`);
+						} else {
+							document.getElementById(`p${id}`).focus();
+						}
+					}}
+				/>
 				<Share className='icon' />
 			</div>
 			{bookmarked ? (

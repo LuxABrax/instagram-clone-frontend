@@ -7,18 +7,78 @@
 	font-size: 0.85em;
 	padding: 0.5rem 0;
 	margin-right: 1rem;
+	min-height: 48px;
+	position: relative;
 	.icon {
 		width: 40px;
 		height: 40px;
 		padding: 0.5rem;
 		padding-left: 0;
 	}
+	.emojiContainer {
+		position: absolute;
+		z-index: 10;
+		left: 0;
+		top: -320px;
+		.background {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background-color: transparent;
+		}
+		.emoji-picker-react {
+			z-index: 11;
+		}
+	}
 	.commentText {
+		background: 0 0;
+		border: 0;
+		color: #262626;
 		flex: 1;
-		color: $font-color-secondary;
+		&.empty {
+			color: $font-color-secondary;
+		}
+		max-height: 80px;
+		outline: 0;
+		padding: 0;
+		resize: none;
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+		&::-webkit-scrollbar {
+			/* Chrome */
+			display: none;
+		}
 	}
 
 	.postText {
-		color: $link-color-secondary;
+		color: $link-color;
+		cursor: pointer;
+		&:disabled {
+			cursor: default;
+			color: $link-color-secondary;
+		}
+
+		background: transparent;
+		border: 0;
 	}
+}
+.h18 {
+	height: 18px;
+}
+.h36 {
+	height: 36px;
+}
+.h54 {
+	height: 54px;
+}
+.h72 {
+	height: 72px;
+}
+.h90 {
+	height: 90px;
+}
+.h108 {
+	height: 108px;
 }

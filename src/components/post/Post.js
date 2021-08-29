@@ -64,7 +64,7 @@ const Post = props => {
 			</header>
 			<img className='postImage' src={image} alt='post content' />
 			<div className='postDesc'>
-				<PostMenu id={id} />
+				<PostMenu id={id} name={accountName} />
 				{likes.length > 0 && (
 					<div className='likedBy'>
 						<ProfileComp
@@ -86,15 +86,15 @@ const Post = props => {
 					{comments.map(comment => {
 						return (
 							<Comment
-								key={comment.id}
-								accountName={comment.user}
+								key={comment.cId}
+								accountName={comment.uName}
 								comment={comment.text}
 							/>
 						);
 					})}
 				</div>
 				<div className='timePosted'>{hours} HOURS AGO</div>
-				<AddComment />
+				<AddComment id={id} p={"posts"} />
 			</div>
 		</div>
 	);
