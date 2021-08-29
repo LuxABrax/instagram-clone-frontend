@@ -18,6 +18,7 @@ const Feed = () => {
 						<Post
 							key={post._id}
 							id={post._id}
+							uid={post.uId}
 							accountName={post.name}
 							storyBorder={true}
 							image={`http://localhost:5000/uploads/posts/${post.photo}`}

@@ -4,9 +4,9 @@ import { useState } from "react";
 import { ReactComponent as Posts } from "../../icons/profileFeedTab/posts.svg";
 // import { ReactComponent as IGTV } from "../../icons/profileFeedTab/igtv.svg";
 import { ReactComponent as Saved } from "../../icons/profileFeedTab/saved.svg";
-import { ReactComponent as Tagged } from "../../icons/profileFeedTab/tagged.svg";
+// import { ReactComponent as Tagged } from "../../icons/profileFeedTab/tagged.svg";
 
-const FeedMenu = () => {
+const FeedMenu = ({ showSaved, showPosts, isOwner }) => {
 	const [activeTab, setActiveTab] = useState("posts");
 
 	return (
@@ -15,6 +15,7 @@ const FeedMenu = () => {
 				className={`tab ${activeTab === "posts" ? "active" : ""}`}
 				onClick={() => {
 					setActiveTab("posts");
+					showPosts();
 				}}
 			>
 				<Posts className='icon' />
@@ -29,16 +30,20 @@ const FeedMenu = () => {
 				<IGTV className='icon' />
 				<p>IGTV</p>
 			</div> */}
-			<div
-				className={`tab ${activeTab === "saved" ? "active" : ""}`}
-				onClick={() => {
-					setActiveTab("saved");
-				}}
-			>
-				<Saved className='icon' />
-				<p>SAVED</p>
-			</div>
-			<div
+			{isOwner && (
+				<div
+					className={`tab ${activeTab === "saved" ? "active" : ""}`}
+					onClick={() => {
+						setActiveTab("saved");
+						showSaved();
+					}}
+				>
+					<Saved className='icon' />
+					<p>SAVED</p>
+				</div>
+			)}
+
+			{/* <div
 				className={`tab ${activeTab === "tagged" ? "active" : ""}`}
 				onClick={() => {
 					setActiveTab("tagged");
@@ -46,7 +51,7 @@ const FeedMenu = () => {
 			>
 				<Tagged className='icon' />
 				<p>TAGGED</p>
-			</div>
+			</div> */}
 		</div>
 	);
 };

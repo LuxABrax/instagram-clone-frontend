@@ -1,20 +1,35 @@
 import "../../styles/post/post.scss";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectFollowedUsers } from "../../redux/usersSlice";
+import axios from "../../axios";
 
 import ProfileComp from "../ProfileComp";
 import { ReactComponent as More } from "../../icons/more.svg";
 import PostMenu from "./PostMenu";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
-import { useEffect, useState } from "react";
-import axios from "../../axios";
-const Post = props => {
-	const { id, accountName, image, comments, hours, likes } = props;
 
+const Post = props => {
+	const { id, accountName, uid, image, comments, hours, likes } = props;
+
+	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [likedUser, setLikedUser] = useState({
 		id: "",
 		name: "",
 		photo: "",
 	});
+
+	const fUsers = useSelector(selectFollowedUsers);
+
+	useEffect(() => {
+		const getPhoto = async () => {
+			const user = fUsers.filter(u => u._id === uid);
+			if (user[0] !== undefined) setOwnerPhoto(user[0].photo);
+		};
+		if (fUsers.length > 0) getPhoto();
+		return () => {};
+	}, [fUsers, uid]);
 
 	useEffect(() => {
 		const getPhotoName = async () => {
@@ -36,7 +51,15 @@ const Post = props => {
 	return (
 		<div className='post'>
 			<header>
-				<ProfileComp iconSize='medium' username={accountName} />
+				<ProfileComp
+					iconSize='medium'
+					username={accountName}
+					image={
+						ownerPhoto.length > 0
+							? `http://localhost:5000/uploads/${ownerPhoto}`
+							: ""
+					}
+				/>
 				<More className='moreBtn' />
 			</header>
 			<img className='postImage' src={image} alt='post content' />

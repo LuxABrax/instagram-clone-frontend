@@ -48,6 +48,24 @@ export const postsSlice = createSlice({
 			const { userId } = action.payload;
 			state.activePost.likes = state.activePost.likes.filter(l => l !== userId);
 		},
+		addSave: (state, action) => {
+			const { userId, pidx } = action.payload;
+			state.posts[pidx].saved.push(userId);
+		},
+		removeSave: (state, action) => {
+			const { userId, pidx } = action.payload;
+			state.posts[pidx].saved = state.posts[pidx].saved.filter(
+				l => l !== userId
+			);
+		},
+		addSaveAct: (state, action) => {
+			const { userId } = action.payload;
+			state.activePost.saved.push(userId);
+		},
+		removeSaveAct: (state, action) => {
+			const { userId } = action.payload;
+			state.activePost.saved = state.activePost.saved.filter(l => l !== userId);
+		},
 	},
 	extraReducers: {
 		[getPosts.pending]: state => {
@@ -73,6 +91,10 @@ export const {
 	removeLike,
 	addLikeAct,
 	removeLikeAct,
+	addSave,
+	removeSave,
+	addSaveAct,
+	removeSaveAct,
 } = postsSlice.actions;
 
 export const selectPosts = state => state.posts.posts;

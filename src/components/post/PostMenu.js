@@ -12,8 +12,12 @@ import { selectUser } from "../../redux/authSlice";
 import {
 	addLike,
 	addLikeAct,
+	addSave,
+	addSaveAct,
 	removeLike,
 	removeLikeAct,
+	removeSave,
+	removeSaveAct,
 	selectActivePost,
 	selectPosts,
 } from "../../redux/postsSlice";
@@ -48,25 +52,56 @@ const PostMenu = ({ id, type }) => {
 		await axios.put(`/posts/dislike/${id}/${uid}`);
 	};
 
+	const handleSave = async () => {
+		if (type === "pModal") {
+			dispatch(addSaveAct({ userId: uid }));
+		} else {
+			const pidx = posts.findIndex(el => el._id === id);
+			if (pidx !== -1) dispatch(addSave({ userId: uid, pidx }));
+		}
+		await axios.put(`/posts/save/${id}/${uid}`);
+	};
+
+	const handleUnSave = async () => {
+		if (type === "pModal") {
+			dispatch(removeSaveAct({ userId: uid }));
+		} else {
+			const pidx = posts.findIndex(el => el._id === id);
+			if (pidx !== -1) dispatch(removeSave({ userId: uid, pidx }));
+		}
+		await axios.put(`/posts/unsave/${id}/${uid}`);
+	};
+
 	useEffect(() => {
 		if (type === "pModal") {
 			if (aPost.photo !== undefined) {
 				if (aPost.photo.length > 0) {
 					let likes = aPost.likes;
+					let saved = aPost.saved;
 
 					if (likes.length > 0) {
 						const findLikeById = likes.filter(like => like === uid).length > 0;
 						setLiked(findLikeById);
 					}
+					if (saved.length > 0) {
+						const findSaveById = saved.filter(save => save === uid).length > 0;
+						setBookmarked(findSaveById);
+					}
 				}
 			}
 		} else {
 			if (posts.length > 0) {
-				let likes = posts.filter(post => post._id === id)[0].likes;
+				let post = posts.filter(post => post._id === id)[0];
+				let likes = post.likes;
+				let saved = post.saved;
 
 				if (likes.length > 0) {
 					const findLikeById = likes.filter(like => like === uid).length > 0;
 					setLiked(findLikeById);
+				}
+				if (saved.length > 0) {
+					const findSaveById = saved.filter(save => save === uid).length > 0;
+					setBookmarked(findSaveById);
 				}
 			}
 		}
@@ -99,9 +134,21 @@ const PostMenu = ({ id, type }) => {
 				<Share className='icon' />
 			</div>
 			{bookmarked ? (
-				<BookmarkActive className='icon' onClick={() => setBookmarked(false)} />
+				<BookmarkActive
+					className='icon'
+					onClick={() => {
+						handleUnSave();
+						setBookmarked(false);
+					}}
+				/>
 			) : (
-				<Bookmark className='icon' onClick={() => setBookmarked(true)} />
+				<Bookmark
+					className='icon'
+					onClick={() => {
+						handleSave();
+						setBookmarked(true);
+					}}
+				/>
 			)}
 		</div>
 	);

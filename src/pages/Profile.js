@@ -13,6 +13,7 @@ import {
 	getFollowedUsers,
 	getFollowingUsers,
 	getUserProfile,
+	selectUserPosts,
 	selectUserProfile,
 	setUserPosts,
 } from "../redux/usersSlice";
@@ -49,11 +50,24 @@ const Profile = () => {
 	let modalActive = useSelector(selectModalActive);
 	let modalName = useSelector(selectModalName);
 
+	const userPosts = useSelector(selectUserPosts);
+
 	function openModal(postId) {
 		dispatch(toggleModal());
 		push(`/profile/${pName}/p/${postId}`);
 	}
 
+	const showSaved = async () => {
+		const res = await axios.get(`/posts/saved/${user._id}`);
+		console.log(await res.data);
+		const arr = await [...res.data.data];
+		arr.reverse();
+		// dispatch(setUserSaved(arr));
+		setImagesPosts(arr);
+	};
+	const showPosts = () => {
+		setImagesPosts([...userPosts]);
+	};
 	function changeImg() {
 		if (pName === user.name) dispatch(toggleModal("img"));
 	}
@@ -171,7 +185,11 @@ const Profile = () => {
 					following={userProfile.following}
 					changeImg={changeImg}
 				/>
-				<FeedMenu />
+				<FeedMenu
+					showSaved={showSaved}
+					showPosts={showPosts}
+					isOwner={pName === user.name}
+				/>
 
 				{arrSorted ? (
 					<div className='posts'>

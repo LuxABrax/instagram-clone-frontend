@@ -7,6 +7,7 @@ import {
 	getNotFollowedUsers,
 	selectNotFollowedUsers,
 	setIsCreated,
+	getFollowedUsers,
 } from "../redux/usersSlice";
 import { getPosts } from "../redux/postsSlice";
 
@@ -35,16 +36,20 @@ const Home = () => {
 			dispatch(setSuggestions(arr));
 			dispatch(setIsCreated(true));
 		};
+		const getUsers = async () => {
+			await dispatch(getNotFollowedUsers(userId));
+			// setTimeout(() => {
+			createSuggestions();
+			// }, 1000);
+		};
 		if (nfUsers.length === 0 && !noUsers) {
-			dispatch(getNotFollowedUsers(userId));
-			setTimeout(() => {
-				createSuggestions();
-			}, 1000);
+			getUsers();
 		}
 	}, [nfUsers, nfUsers.length, dispatch, userId, user, isCreated, noUsers]);
 
 	useEffect(() => {
 		const getPostsEF = async () => {
+			await dispatch(getFollowedUsers(userId));
 			await dispatch(getPosts(userId));
 		};
 		getPostsEF();
