@@ -1,6 +1,6 @@
 import "../../styles/feed/feed.scss";
 import { useSelector } from "react-redux";
-import { selectPosts } from "../../redux/usersSlice";
+import { selectPosts } from "../../redux/postsSlice";
 
 import Stories from "./Stories";
 import Post from "../post/Post";
@@ -17,12 +17,12 @@ const Feed = () => {
 					return (
 						<Post
 							key={post._id}
+							id={post._id}
 							accountName={post.name}
 							storyBorder={true}
 							image={`http://localhost:5000/uploads/posts/${post.photo}`}
 							comments={comments[0].comments}
-							likedByText='breskvica'
-							likedByNumber={post.likes.length}
+							likes={post.likes}
 							hours={2}
 						/>
 					);

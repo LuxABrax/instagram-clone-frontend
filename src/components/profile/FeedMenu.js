@@ -2,7 +2,7 @@ import "../../styles/profile/feedMenu.scss";
 import { useState } from "react";
 
 import { ReactComponent as Posts } from "../../icons/profileFeedTab/posts.svg";
-import { ReactComponent as IGTV } from "../../icons/profileFeedTab/igtv.svg";
+// import { ReactComponent as IGTV } from "../../icons/profileFeedTab/igtv.svg";
 import { ReactComponent as Saved } from "../../icons/profileFeedTab/saved.svg";
 import { ReactComponent as Tagged } from "../../icons/profileFeedTab/tagged.svg";
 

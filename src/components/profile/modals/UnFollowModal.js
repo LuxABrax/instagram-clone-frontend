@@ -2,7 +2,7 @@ import "../../../styles/profile/unFollowModal.scss";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal, changeModalName } from "../../../redux/modalSlice";
+import { toggleModal } from "../../../redux/modalSlice";
 import axios from "../../../axios";
 import Modal from "./Modal";
 import {
@@ -54,6 +54,7 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 				<div className='avatarContainer'>
 					<img
 						src={`http://localhost:5000/uploads/${unFollowUser.photo}`}
+						alt={unFollowUser.name}
 						className='unfAvatar'
 					/>
 				</div>

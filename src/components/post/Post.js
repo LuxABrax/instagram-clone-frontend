@@ -5,10 +5,33 @@ import { ReactComponent as More } from "../../icons/more.svg";
 import PostMenu from "./PostMenu";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
-
+import { useEffect, useState } from "react";
+import axios from "../../axios";
 const Post = props => {
-	const { accountName, image, comments, likedByText, likedByNumber, hours } =
-		props;
+	const { id, accountName, image, comments, hours, likes } = props;
+
+	const [likedUser, setLikedUser] = useState({
+		id: "",
+		name: "",
+		photo: "",
+	});
+
+	useEffect(() => {
+		const getPhotoName = async () => {
+			const id = likes[likes.length - 1];
+			const res = await axios.get(`/users/i/${id}`);
+			const data = await res.data;
+			if (!data.success) {
+				console.log("no user");
+			} else {
+				setLikedUser({ id: id, name: data.data.name, photo: data.data.photo });
+			}
+		};
+		if (likes !== undefined && likes.length > 0) {
+			getPhotoName();
+		}
+		return () => {};
+	}, [likes]);
 
 	return (
 		<div className='post'>
@@ -18,14 +41,24 @@ const Post = props => {
 			</header>
 			<img className='postImage' src={image} alt='post content' />
 			<div className='postDesc'>
-				<PostMenu />
-				<div className='likedBy'>
-					<ProfileComp iconSize='small' hideAccountName={true} />
-					<span>
-						Liked by <strong>{likedByText}</strong> and{" "}
-						<strong>{likedByNumber} others</strong>
-					</span>
-				</div>
+				<PostMenu id={id} />
+				{likes.length > 0 && (
+					<div className='likedBy'>
+						<ProfileComp
+							iconSize='small'
+							hideAccountName={true}
+							image={`http://localhost:5000/uploads/${likedUser.photo}`}
+						/>
+						<span>
+							Liked by <strong>{likedUser.name}</strong>
+							{likes.length > 1 && (
+								<>
+									and <strong>{likes.length - 1} others</strong>
+								</>
+							)}
+						</span>
+					</div>
+				)}
 				<div className='comments'>
 					{comments.map(comment => {
 						return (

@@ -13,10 +13,7 @@ import {
 	getFollowedUsers,
 	getFollowingUsers,
 	getUserProfile,
-	selectActPost,
-	selectUserPosts,
 	selectUserProfile,
-	setActivePost,
 	setUserPosts,
 } from "../redux/usersSlice";
 
@@ -44,7 +41,7 @@ const Profile = () => {
 	const status = useSelector(state => state.users.status);
 	const user = useSelector(selectUser);
 	const user2 = useSelector(selectUserProfile);
-	const posts = useSelector(selectUserPosts);
+
 	let userProfile = {};
 
 	userProfile = user2;
@@ -80,10 +77,11 @@ const Profile = () => {
 			arr.reverse();
 			dispatch(setUserPosts(arr));
 			setImagesPosts(arr);
-			sortPosts();
 		};
 		getPosts();
+	}, [dispatch, user2._id]);
 
+	useEffect(() => {
 		const sortPosts = () => {
 			const sPosts = [];
 
@@ -114,8 +112,8 @@ const Profile = () => {
 			setArrSorted(true);
 		};
 
-		// if (imagesPosts.length > 0) sortPosts();
-	}, [dispatch, imagesPosts.length, user.name, user2._id]);
+		sortPosts();
+	}, [dispatch, imagesPosts]);
 
 	const addImage = image => {
 		const arr = [...imagesPosts];
@@ -130,11 +128,8 @@ const Profile = () => {
 					pId={pId}
 					accountName={userProfile.name}
 					storyBorder={true}
-					// photo={`http://localhost:5000/uploads/${activePost.photo}`}
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}
 					comments={comments[0].comments}
-					likedByText='breskvica'
-					likedByNumber={5}
 					hours={2}
 				/>
 			)}

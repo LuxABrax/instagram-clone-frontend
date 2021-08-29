@@ -55,7 +55,7 @@ const AddPostModal = ({ id, addImage }) => {
 	return (
 		<Modal>
 			<div className='modalCont .row'>
-				{image !== undefined && <img src={image} />}
+				{image !== undefined && <img src={image} alt='add new' />}
 				<input
 					id='photoFile'
 					type='file'

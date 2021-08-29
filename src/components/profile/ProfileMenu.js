@@ -1,6 +1,5 @@
 import "../../styles/profile/profMenu.scss";
 import { ReactComponent as ArrDown } from "../../icons/arrDown.svg";
-import { useParams } from "react-router";
 import { selectUserProfile } from "../../redux/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -11,11 +10,10 @@ import { toggleModal } from "../../redux/modalSlice";
 const ProfileMenu = ({ id }) => {
 	const [sameUser, setSameUser] = useState(false);
 	const [arrowUp, setArrowUp] = useState(false);
-	let { pName } = useParams();
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
 	const selectedUser = useSelector(selectUserProfile);
-	const { _id, name } = selectedUser;
+	const { name } = selectedUser;
 
 	useEffect(() => {
 		if (user.name === name) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+
 import {
 	changeModalName,
 	selectModalActive,
@@ -10,7 +10,6 @@ import {
 	followUserWithID,
 	getNotFollowedUsers,
 	selectNotFollowedUsers,
-	selectUnFollowUser,
 	setUnFollowUser,
 	selectUserProfile,
 	getUserProfile,
@@ -24,14 +23,11 @@ const FollowButton = ({ follower, id, btnType, inMenu, isMessage, fType }) => {
 	const { _id, name, photo } = follower;
 	const dispatch = useDispatch();
 
-	const { push } = useHistory();
 	const notFollowed = useSelector(selectNotFollowedUsers);
 	const profile = useSelector(selectUserProfile);
-	const unFollowUser = useSelector(selectUnFollowUser);
 	const modalActive = useSelector(selectModalActive);
 
 	const handleButton = async () => {
-		// console.log("follower: ", follwId, "user: ", id);
 		if (folBtn) {
 			if (followBtn === "remove") {
 				if (modalActive) {
@@ -106,7 +102,7 @@ const FollowButton = ({ follower, id, btnType, inMenu, isMessage, fType }) => {
 				"Follow"
 			) : inMenu ? (
 				!isMessage ? (
-					<img src='/images/followers.png' className='' />
+					<img src='/images/followers.png' className='' alt='followers' />
 				) : (
 					"Message"
 				)
