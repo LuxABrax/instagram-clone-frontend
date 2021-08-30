@@ -78,6 +78,7 @@ const Profile = () => {
 	}
 
 	useEffect(() => {
+		window.scrollTo(0, 0);
 		if (activePage !== "profile") dispatch(changePage("profile"));
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 		dispatch(getUserProfile(pName));

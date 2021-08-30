@@ -73,7 +73,7 @@ const AddComment = ({ id, p }) => {
 	const closeEmoji = e => {
 		setShowEmoji(false);
 	};
-	const onEmojiClick = emojiObject => {
+	const onEmojiClick = (event, emojiObject) => {
 		const newCom = commentText + emojiObject.emoji;
 		setCommentText(newCom);
 	};
@@ -82,7 +82,13 @@ const AddComment = ({ id, p }) => {
 		<form className='addComment' onSubmit={handleSubmit}>
 			{showEmoji && (
 				<div className='emojiContainer'>
-					<Picker onEmojiClick={onEmojiClick} />
+					<Picker
+						onEmojiClick={onEmojiClick}
+						disableSearchBar={true}
+						groupVisibility={{
+							flags: false,
+						}}
+					/>
 					<div className='background' onClick={closeEmoji}></div>
 				</div>
 			)}

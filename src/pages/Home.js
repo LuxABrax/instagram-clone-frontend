@@ -48,6 +48,8 @@ const Home = () => {
 	}, [nfUsers, nfUsers.length, dispatch, userId, user, isCreated, noUsers]);
 
 	useEffect(() => {
+		window.scrollTo(0, 0);
+
 		const getPostsEF = async () => {
 			await dispatch(getFollowedUsers(userId));
 			await dispatch(getPosts(userId));

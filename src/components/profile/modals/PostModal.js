@@ -15,6 +15,7 @@ import axios from "../../../axios";
 const PostModal = props => {
 	const { pId, accountName, image, hours } = props;
 
+	const [userImage, setUserImage] = useState("");
 	const [likedUser, setLikedUser] = useState({
 		id: "",
 		name: "def",
@@ -57,20 +58,26 @@ const PostModal = props => {
 	}
 
 	useEffect(() => {
-		const getPhotoName = async () => {
+		const getPhotoName = async uId => {
 			if (aPost) {
-				const id = aPost.likes[aPost.likes.length - 1];
+				let id = aPost.likes[aPost.likes.length - 1];
+				if (uId !== undefined) id = uId;
 				const res = await axios.get(`/users/i/${id}`);
 				const data = await res.data;
 				if (!data.success) {
 					console.log("no user");
 					return "no user";
 				} else {
-					setLikedUser({ name: data.data.name, photo: data.data.photo });
+					if (uId !== undefined) {
+						setUserImage(data.data.photo);
+					} else {
+						setLikedUser({ name: data.data.name, photo: data.data.photo });
+					}
 				}
 			}
 		};
 		if (aPost.likes !== undefined && aPost.likes.length > 0) {
+			getPhotoName(aPost.uId);
 			getPhotoName();
 		}
 		return () => {};
@@ -88,9 +95,9 @@ const PostModal = props => {
 				<div className='postDesc'>
 					<header>
 						<ProfileComp
-							image={image}
+							image={`http://localhost:5000/uploads/${userImage}`}
 							iconSize='medium'
-							username={accountName}
+							username={aPost.name}
 						/>
 						<More className='moreBtn' />
 					</header>
