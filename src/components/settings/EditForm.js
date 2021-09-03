@@ -95,7 +95,7 @@ const EditForm = props => {
 						</div>
 					</div>
 				</div>
-				<div className='formInput'>
+				<div className='formInput em'>
 					<div className='leftC'>
 						<label htmlFor='email'>Email</label>
 					</div>
@@ -103,6 +103,7 @@ const EditForm = props => {
 						<div className='fCont'>
 							<input
 								name='email'
+								type='email'
 								value={email}
 								onChange={e => setEmail(e.target.value)}
 								placeholder='Email'
@@ -110,7 +111,7 @@ const EditForm = props => {
 						</div>
 					</div>
 				</div>
-				<div className='formInput'>
+				<div className='formInput em'>
 					<div className='leftC'>
 						<label htmlFor='description'>Description</label>
 					</div>

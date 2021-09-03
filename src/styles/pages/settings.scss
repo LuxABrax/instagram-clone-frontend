@@ -72,6 +72,10 @@
 	margin-bottom: 16px;
 	justify-content: flex-start;
 
+	&.em {
+		margin-bottom: 32px;
+	}
+
 	.leftC {
 		color: #262626;
 		margin-top: 6px;

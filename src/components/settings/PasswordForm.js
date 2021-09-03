@@ -12,6 +12,11 @@ const PasswordForm = () => {
 	const user = useSelector(selectUser);
 	const { type } = useParams();
 
+	const handleSubmit = e => {
+		e.preventDefault();
+		console.log("change password");
+	};
+
 	return (
 		<>
 			<div className='editPhoto'>
@@ -27,7 +32,7 @@ const PasswordForm = () => {
 					</h1>
 				</div>
 			</div>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<div className='formInput'>
 					<div className='leftC'>
 						<label htmlFor='oldPassword'>Old Password</label>

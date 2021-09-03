@@ -54,7 +54,7 @@ const SettingsMenu = () => {
 			<li>
 				<p>Emails from Instagram</p>
 			</li>
-			<div>
+			<div className='prof'>
 				<p>Switch to Professional Account</p>
 			</div>
 		</ul>
