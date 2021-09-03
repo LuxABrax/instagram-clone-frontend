@@ -2,7 +2,7 @@ import axios from "../../axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
-import { selectUser } from "../../redux/authSlice";
+import { editUser, selectUser } from "../../redux/authSlice";
 import { toggleModal } from "../../redux/modalSlice";
 import ProfileIcon from "../ProfileIcon";
 
@@ -43,7 +43,6 @@ const EditForm = props => {
 			type: tip,
 			value: val,
 		});
-		console.log(await response.data);
 		if (response.data.success) {
 			if (tip === "name") setNameValid(true);
 			if (tip === "email") setEmailValid(true);
@@ -55,7 +54,6 @@ const EditForm = props => {
 
 	const handleSubmit = async e => {
 		e.preventDefault();
-		console.log("submit");
 
 		const res = await axios.put(`/users/${user._id}`, {
 			name: username,
@@ -64,7 +62,10 @@ const EditForm = props => {
 			description: description,
 		});
 		const data = await res.data;
-		console.log(data);
+
+		if (data.success) {
+			dispatch(editUser(data.data));
+		}
 	};
 	return (
 		<>

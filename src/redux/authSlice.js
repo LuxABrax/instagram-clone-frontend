@@ -82,6 +82,13 @@ export const authSlice = createSlice({
 		changePhoto: (state, action) => {
 			state.user.photo = action.payload;
 		},
+		editUser: (state, { payload }) => {
+			const { name, email, fullName, description } = payload;
+			state.user.name = name;
+			state.user.email = email;
+			state.user.description = description;
+			state.user.fullName = fullName;
+		},
 	},
 	extraReducers: {
 		[registerUser.pending]: state => {
@@ -124,7 +131,7 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { setLogin, logout, setErrMessage, changePhoto } =
+export const { setLogin, logout, setErrMessage, changePhoto, editUser } =
 	authSlice.actions;
 
 export const selectLoggedIn = state => state.auth.isLoggedIn;
