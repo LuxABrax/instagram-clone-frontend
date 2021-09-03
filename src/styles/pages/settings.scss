@@ -137,6 +137,9 @@
 		width: 100%;
 		font-size: 16px;
 		line-height: 18px;
+		&.taken {
+			border: 2px solid red;
+		}
 	}
 	textarea {
 		resize: vertical;

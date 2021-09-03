@@ -1,3 +1,4 @@
+import axios from "../../axios";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
@@ -9,6 +10,8 @@ const EditForm = props => {
 	const user = useSelector(selectUser);
 
 	const [username, setUsername] = useState(user.name);
+	const [nameValid, setNameValid] = useState(true);
+	const [emailValid, setEmailValid] = useState(true);
 	const [name, setName] = useState(user.fullName);
 	const [email, setEmail] = useState(user.email);
 	const [description, setDescription] = useState(user.description);
@@ -21,9 +24,47 @@ const EditForm = props => {
 		dispatch(toggleModal("img"));
 	}
 
-	const handleSubmit = e => {
+	const checkEmailName = async tip => {
+		let val = "";
+		if (tip === "name") {
+			val = username;
+			if (val === user.name) {
+				setNameValid(true);
+				return;
+			}
+		} else if (tip === "email") {
+			val = email;
+			if (val === user.email) {
+				setEmailValid(true);
+				return;
+			}
+		}
+		const response = await axios.post("/auth/checkemailname", {
+			type: tip,
+			value: val,
+		});
+		console.log(await response.data);
+		if (response.data.success) {
+			if (tip === "name") setNameValid(true);
+			if (tip === "email") setEmailValid(true);
+		} else {
+			if (tip === "name") setNameValid(false);
+			if (tip === "email") setEmailValid(false);
+		}
+	};
+
+	const handleSubmit = async e => {
 		e.preventDefault();
 		console.log("submit");
+
+		const res = await axios.put(`/users/${user._id}`, {
+			name: username,
+			fullName: name,
+			email: email,
+			description: description,
+		});
+		const data = await res.data;
+		console.log(data);
 	};
 	return (
 		<>
@@ -77,6 +118,8 @@ const EditForm = props => {
 								name='username'
 								value={username}
 								onChange={e => setUsername(e.target.value)}
+								onBlur={() => checkEmailName("name")}
+								className={`${!nameValid ? "taken" : ""}`}
 								placeholder='Username'
 							/>
 							<div className='inputDescription'>
@@ -106,6 +149,8 @@ const EditForm = props => {
 								type='email'
 								value={email}
 								onChange={e => setEmail(e.target.value)}
+								onBlur={() => checkEmailName("email")}
+								className={`${!emailValid ? "taken" : ""}`}
 								placeholder='Email'
 							/>
 						</div>
@@ -131,7 +176,9 @@ const EditForm = props => {
 					<div className='rightC'>
 						<div className='fCont'>
 							<div className='buttonC'>
-								<button type='submit'>Submit</button>
+								<button type='submit' disabled={!nameValid || !emailValid}>
+									Submit
+								</button>
 								<button
 									type='button'
 									className='revBtn'
