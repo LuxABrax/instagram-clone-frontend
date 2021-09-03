@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import { logout, selectUser } from "../../redux/authSlice";
 import FollowButton from "./FollowButton";
 import { toggleModal } from "../../redux/modalSlice";
+import { useHistory } from "react-router";
 
 const ProfileMenu = ({ id }) => {
 	const [sameUser, setSameUser] = useState(false);
 	const [arrowUp, setArrowUp] = useState(false);
+
+	const { push } = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
 	const selectedUser = useSelector(selectUserProfile);
@@ -29,6 +32,7 @@ const ProfileMenu = ({ id }) => {
 
 	const handleEdit = () => {
 		console.log("handle Edit");
+		push("/accounts/edit");
 	};
 	const handleLogout = () => {
 		dispatch(logout());

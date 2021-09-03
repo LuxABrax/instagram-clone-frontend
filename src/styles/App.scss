@@ -18,6 +18,9 @@ main {
 	background-color: $background-grey;
 	margin-top: 54px;
 	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 a {
@@ -34,7 +37,7 @@ a {
 // }
 
 .App {
-	height: 100vh;
+	// height: 100vh;
 }
 
 .App-logo {

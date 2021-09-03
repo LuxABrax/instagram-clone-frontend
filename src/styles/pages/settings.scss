@@ -1,0 +1,209 @@
+.settings {
+	margin: 30px auto 0;
+	max-width: 935px;
+	width: 100%;
+	// height: 100vh;
+	overflow: hidden;
+	display: flex;
+	flex-direction: row;
+	background-color: #fff;
+	border: 1px solid #dbdbdb;
+	border-radius: 3px;
+}
+.settingsContent {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 400px;
+	min-width: 50px;
+
+	form {
+		margin: 16px 0;
+		display: flex;
+		flex-direction: column;
+	}
+}
+.userInfo {
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+	flex: 0 1 auto;
+	margin-right: 20px;
+	h1 {
+		font-size: 20px;
+		line-height: 22px;
+		font-weight: 400;
+		margin-bottom: 2px;
+		&.hPas {
+			font-size: 24px;
+			line-height: 38px;
+		}
+	}
+	button {
+		border: 0px solid black;
+		background-color: transparent;
+		color: #0095f6;
+		cursor: pointer;
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 18px;
+		font-family: inherit;
+		&:active {
+			opacity: 0.7;
+		}
+	}
+}
+.editPhoto {
+	display: flex;
+	margin-top: 32px;
+	.photo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 2px 32px 0 124px;
+		.profileIcon {
+			position: static;
+			transform: none;
+		}
+	}
+}
+.formInput {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 16px;
+	justify-content: flex-start;
+
+	.leftC {
+		color: #262626;
+		margin-top: 6px;
+		padding: 0 32px;
+		flex: 0 0 194px;
+		// text-align: right;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 18px;
+	}
+	.rightC {
+		display: flex;
+		justify-content: flex-start;
+		flex-basis: 355px;
+		flex-grow: 1;
+		width: 100%;
+		margin-right: 60px;
+		font-size: 16px;
+		color: #262626;
+		.fCont {
+			width: 100%;
+			max-width: 335px;
+		}
+		.inputDescription {
+			width: 100%;
+			max-width: 355px;
+			margin-top: 16px;
+			margin-bottom: 8px;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			p,
+			a {
+				color: #8e8e8e;
+				font-weight: 400;
+				font-size: 12px;
+				line-height: 14px;
+				margin: -2px 0 -3px;
+			}
+			p {
+				&:first-child {
+					margin-bottom: 16px;
+				}
+			}
+			a {
+				color: #0095f6;
+			}
+		}
+	}
+
+	input,
+	textarea {
+		border: 1px solid #dbdbdb;
+		border-radius: 3px;
+		color: #262626;
+		flex: 0 1 355px;
+		height: 32px;
+		padding: 0 10px;
+		width: 100%;
+		font-size: 16px;
+		line-height: 18px;
+	}
+	textarea {
+		resize: vertical;
+	}
+	.buttonC {
+		display: flex;
+		justify-content: space-between;
+	}
+	button {
+		border: 1px solid transparent;
+		background-color: #0095f6;
+		border-radius: 4px;
+		color: #fff;
+		cursor: pointer;
+		font-weight: 600;
+		font-family: inherit;
+		padding: 5px 9px;
+		text-align: center;
+		font-size: 14px;
+		line-height: 18px;
+		&:active {
+			background-color: rgba(0, 149, 246, 0.7);
+		}
+		&:disabled {
+			background-color: rgba(0, 149, 246, 0.3);
+			cursor: unset;
+		}
+		&.revBtn {
+			color: #0095f6;
+			background-color: transparent;
+			&:active {
+				opacity: 0.7;
+			}
+		}
+	}
+}
+.copyright {
+	text-align: center;
+}
+
+@media (max-width: 735px) {
+	.settings {
+		max-width: 400px;
+	}
+	.editPhoto {
+		margin: 20px 0 0;
+		.photo {
+			margin: 2px 20px 0;
+		}
+	}
+	.formInput {
+		margin-bottom: 8px;
+		flex-direction: column;
+		.leftC {
+			flex-basis: 25px;
+			padding: 0 20px;
+			&.dn {
+				display: none;
+			}
+		}
+		.rightC {
+			flex-basis: auto;
+			flex-direction: row;
+			padding: 0 20px;
+		}
+	}
+}
+@media (min-width: 736px) {
+	.leftC {
+		padding-left: 32px;
+		padding-right: 32px;
+		text-align: right;
+	}
+}

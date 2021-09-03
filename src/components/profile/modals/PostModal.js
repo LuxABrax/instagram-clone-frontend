@@ -13,7 +13,7 @@ import { ReactComponent as More } from "../../../icons/more.svg";
 import axios from "../../../axios";
 
 const PostModal = props => {
-	const { pId, accountName, image, hours } = props;
+	const { pId, accountName, hours } = props;
 
 	const [userImage, setUserImage] = useState("");
 	const [likedUser, setLikedUser] = useState({

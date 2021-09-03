@@ -10,6 +10,7 @@ import Navigation from "./components/navigation/Navigation";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import { useSelector } from "react-redux";
 import { selectLoggedIn } from "./redux/authSlice";
 
@@ -37,6 +38,9 @@ function App() {
 				</Route>
 				<Route path='/profile/:pName/p/:pId' exact>
 					<Profile />
+				</Route>
+				<Route path='/accounts/:type' exact>
+					<Settings />
 				</Route>
 				<Redirect to='/' />
 			</Switch>
