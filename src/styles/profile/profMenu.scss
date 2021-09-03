@@ -12,8 +12,8 @@
 		border-radius: 3px;
 		font-size: 14px;
 		font-weight: bold;
-		line-height: 26px;
 		height: 30px;
+		max-width: 100px;
 		border: 1px solid $border-color-grey;
 		padding: 0 9px;
 		margin-left: 0.5rem;
@@ -35,7 +35,7 @@
 		}
 	}
 }
-@media (max-width: 736px) {
+@media (max-width: 735px) {
 	.profileMenu {
 		margin: 0;
 		margin-left: -8px;
@@ -47,5 +47,10 @@
 	}
 	.message {
 		margin-left: 0 !important;
+	}
+}
+@media (min-width: 736px) {
+	.profBtn {
+		width: 97px;
 	}
 }

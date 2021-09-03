@@ -1,6 +1,8 @@
+import axios from "../../axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
+
 import { selectUser } from "../../redux/authSlice";
 import ProfileIcon from "../ProfileIcon";
 
@@ -8,13 +10,44 @@ const PasswordForm = () => {
 	const [oldPassword, setOldPassword] = useState("");
 	const [newPassword, setNewPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const [passCorrect, setPassCorrect] = useState(true);
+	const [passEqual, setPassEqual] = useState(true);
 
 	const user = useSelector(selectUser);
 	const { type } = useParams();
 
-	const handleSubmit = e => {
+	const checkPassword = async () => {
+		const res = await axios.post("/auth/check", {
+			email: user.email,
+			password: oldPassword,
+		});
+		const data = await res.data;
+		if (data.success) {
+			setPassCorrect(true);
+		} else {
+			setPassCorrect(false);
+		}
+	};
+
+	const checkPassEqual = () => {
+		if (newPassword === confirmPassword) {
+			setPassEqual(true);
+		} else {
+			setPassEqual(false);
+		}
+	};
+
+	const handleSubmit = async e => {
 		e.preventDefault();
 		console.log("change password");
+		if (!passCorrect || !passEqual) return;
+		const res = await axios.put("/auth/change", {
+			email: user.email,
+			password: oldPassword,
+			newPassword,
+		});
+		const data = await res.data;
+		console.log(data);
 	};
 
 	return (
@@ -44,6 +77,8 @@ const PasswordForm = () => {
 								name='oldPassword'
 								value={oldPassword}
 								onChange={e => setOldPassword(e.target.value)}
+								onBlur={checkPassword}
+								className={`${!passCorrect ? "taken" : ""}`}
 								placeholder=''
 							/>
 						</div>
@@ -76,6 +111,8 @@ const PasswordForm = () => {
 								name='confirmPassword'
 								value={confirmPassword}
 								onChange={e => setConfirmPassword(e.target.value)}
+								onBlur={checkPassEqual}
+								className={`${!passEqual ? "taken" : ""}`}
 								placeholder=''
 							/>
 						</div>
