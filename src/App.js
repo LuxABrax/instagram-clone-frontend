@@ -36,6 +36,9 @@ function App() {
 				<Route path='/profile/:pName' exact>
 					<Profile />
 				</Route>
+				<Route path='/profile/:pName/saved' exact>
+					<Profile />
+				</Route>
 				<Route path='/profile/:pName/p/:pId' exact>
 					<Profile />
 				</Route>

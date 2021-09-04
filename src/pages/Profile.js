@@ -1,6 +1,6 @@
 import "../styles/pages/profile.scss";
 import { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage, selectPage } from "../redux/navigationSlice";
 import {
@@ -34,6 +34,7 @@ const Profile = () => {
 	const [sortedPosts, setSortedPosts] = useState([]);
 	const [imagesPosts, setImagesPosts] = useState([]);
 
+	let location = useLocation();
 	let { pName, pId } = useParams();
 	const { push } = useHistory();
 	const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const Profile = () => {
 
 	const showSaved = async () => {
 		const res = await axios.get(`/posts/saved/${user._id}`);
-		console.log(await res.data);
+		// console.log(await res.data);
 		const arr = await [...res.data.data];
 		arr.reverse();
 		// dispatch(setUserSaved(arr));
@@ -87,14 +88,25 @@ const Profile = () => {
 	useEffect(() => {
 		const getPosts = async () => {
 			const res = await axios.get(`/posts/profile/${user2._id}`);
-			console.log(await res.data);
+			// console.log(await res.data);
 			const arr = await [...res.data.data];
 			arr.reverse();
 			dispatch(setUserPosts(arr));
 			setImagesPosts(arr);
 		};
-		getPosts();
-	}, [dispatch, user2._id]);
+		const getSaved = async () => {
+			const res = await axios.get(`/posts/saved/${user._id}`);
+			const arr = await [...res.data.data];
+			arr.reverse();
+			// dispatch(setUserSaved(arr));
+			setImagesPosts(arr);
+		};
+		if (location.pathname === `/profile/${user.name}/saved`) {
+			getSaved();
+		} else {
+			getPosts();
+		}
+	}, [dispatch, user, user2, location.pathname]);
 
 	useEffect(() => {
 		const sortPosts = () => {

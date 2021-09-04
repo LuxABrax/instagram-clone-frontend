@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { goHome, changePage, selectPage } from "../../redux/navigationSlice";
 import { logout, selectUser } from "../../redux/authSlice";
+import { selectUserProfile } from "../../redux/usersSlice";
+
 import ProfileIcon from "../ProfileIcon.js";
 import { ReactComponent as Home } from "../../icons/home.svg";
 import { ReactComponent as HomeActive } from "../../icons/homeActive.svg";
@@ -16,6 +18,7 @@ import { ReactComponent as NotificationsActive } from "../../icons/notifications
 const Navigation = () => {
 	const activePage = useSelector(selectPage);
 	const user = useSelector(selectUser);
+	const user2 = useSelector(selectUserProfile);
 	const dispatch = useDispatch();
 	// const { push } = useHistory();
 	if (user === undefined) dispatch(logout());
@@ -69,7 +72,7 @@ const Navigation = () => {
 				<ProfileIcon
 					image={`http://localhost:5000/uploads/${user.photo}`}
 					iconSize='small'
-					profileActive={activePage === "profile"}
+					profileActive={activePage === "profile" && user.name === user2.name}
 				/>
 			</Link>
 		</div>

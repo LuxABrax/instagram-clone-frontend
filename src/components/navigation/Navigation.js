@@ -2,9 +2,9 @@ import "../../styles/navigation/navigation.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { goHome } from "../../redux/navigationSlice";
+import { selectLoggedIn } from "../../redux/authSlice";
 
 import Menu from "./Menu";
-import { selectLoggedIn } from "../../redux/authSlice";
 
 const Navigation = () => {
 	const dispatch = useDispatch();
