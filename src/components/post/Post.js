@@ -11,7 +11,8 @@ import Comment from "./Comment";
 import AddComment from "./AddComment";
 
 const Post = props => {
-	const { id, accountName, uid, image, comments, hours, likes } = props;
+	const { id, accountName, uid, image, description, comments, hours, likes } =
+		props;
 
 	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [likedUser, setLikedUser] = useState({
@@ -19,6 +20,7 @@ const Post = props => {
 		name: "",
 		photo: "",
 	});
+	const [commentsActive, setCommentsActive] = useState(false);
 
 	const fUsers = useSelector(selectFollowedUsers);
 
@@ -67,11 +69,6 @@ const Post = props => {
 				<PostMenu id={id} name={accountName} />
 				{likes.length > 0 && (
 					<div className='likedBy'>
-						<ProfileComp
-							iconSize='small'
-							hideAccountName={true}
-							image={`http://localhost:5000/uploads/${likedUser.photo}`}
-						/>
 						<span>
 							Liked by <strong>{likedUser.name}</strong>
 							{likes.length > 1 && (
@@ -82,8 +79,20 @@ const Post = props => {
 						</span>
 					</div>
 				)}
+				{description.length > 0 && (
+					<div className='postDescription'>
+						<span>{accountName}</span>
+						{description}
+					</div>
+				)}
+				{comments.length > 3 && !commentsActive && (
+					<div className='viewComments' onClick={() => setCommentsActive(true)}>
+						View all {comments.length} comments
+					</div>
+				)}
 				<div className='comments'>
-					{comments.map(comment => {
+					{comments.map((comment, index) => {
+						if (index < comments.length - 3 && !commentsActive) return null;
 						return (
 							<Comment
 								key={comment.cId}

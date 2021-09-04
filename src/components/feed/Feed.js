@@ -19,6 +19,7 @@ const Feed = () => {
 							id={post._id}
 							uid={post.uId}
 							accountName={post.name}
+							description={post.description}
 							storyBorder={true}
 							image={`http://localhost:5000/uploads/posts/${post.photo}`}
 							comments={post.comments}

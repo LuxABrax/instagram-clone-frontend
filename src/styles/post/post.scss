@@ -42,15 +42,37 @@
 .likedBy {
 	display: flex;
 	span {
-		font-size: 0.75em;
-		margin-left: 0.5em;
+		font-size: 14px;
+		margin-left: -1px;
 		padding-top: 0.5em;
+		margin-bottom: 8px;
 	}
 	.profileComp {
 		min-height: 36px;
 		.pIconContainer {
 			min-width: 0;
 		}
+	}
+}
+.postDescription {
+	span {
+		font-size: 14px;
+		font-weight: 700;
+		font-family: inherit;
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+		margin-right: 4px;
+	}
+	margin-bottom: 4px;
+}
+.viewComments {
+	color: #8e8e8e;
+	cursor: pointer;
+	&:hover {
+		text-decoration: underline;
 	}
 }
 .comments {
