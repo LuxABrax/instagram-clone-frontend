@@ -24,7 +24,7 @@ const Feed = () => {
 							image={`http://localhost:5000/uploads/posts/${post.photo}`}
 							comments={post.comments}
 							likes={post.likes}
-							hours={2}
+							createdAt={post.createdAt}
 						/>
 					);
 				})}

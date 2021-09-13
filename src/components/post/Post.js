@@ -1,5 +1,6 @@
 import "../../styles/post/post.scss";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { selectFollowedUsers } from "../../redux/usersSlice";
 import axios from "../../axios";
@@ -9,10 +10,19 @@ import { ReactComponent as More } from "../../icons/more.svg";
 import PostMenu from "./PostMenu";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
+import TimePassed from "./TimePassed";
 
 const Post = props => {
-	const { id, accountName, uid, image, description, comments, hours, likes } =
-		props;
+	const {
+		id,
+		accountName,
+		uid,
+		image,
+		description,
+		comments,
+		likes,
+		createdAt,
+	} = props;
 
 	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [likedUser, setLikedUser] = useState({
@@ -23,6 +33,7 @@ const Post = props => {
 	const [commentsActive, setCommentsActive] = useState(false);
 
 	const fUsers = useSelector(selectFollowedUsers);
+	const { push } = useHistory();
 
 	useEffect(() => {
 		const getPhoto = async () => {
@@ -70,10 +81,18 @@ const Post = props => {
 				{likes.length > 0 && (
 					<div className='likedBy'>
 						<span>
-							Liked by <strong>{likedUser.name}</strong>
+							Liked by{" "}
+							<span
+								className='link'
+								onClick={() => {
+									push(`/profile/${likedUser.name}`);
+								}}
+							>
+								{likedUser.name}
+							</span>
 							{likes.length > 1 && (
 								<>
-									and <strong>{likes.length - 1} others</strong>
+									and <span className='link'>{likes.length - 1} others</span>
 								</>
 							)}
 						</span>
@@ -85,14 +104,19 @@ const Post = props => {
 						{description}
 					</div>
 				)}
-				{comments.length > 3 && !commentsActive && (
-					<div className='viewComments' onClick={() => setCommentsActive(true)}>
-						View all {comments.length} comments
+				{comments.length > 2 && (
+					<div
+						className='viewComments'
+						onClick={() => setCommentsActive(c => !c)}
+					>
+						{commentsActive
+							? "Show less comments"
+							: `View all ${comments.length} comments`}
 					</div>
 				)}
 				<div className='comments'>
 					{comments.map((comment, index) => {
-						if (index < comments.length - 3 && !commentsActive) return null;
+						if (index < comments.length - 2 && !commentsActive) return null;
 						return (
 							<Comment
 								key={comment.cId}
@@ -102,7 +126,14 @@ const Post = props => {
 						);
 					})}
 				</div>
-				<div className='timePosted'>{hours} HOURS AGO</div>
+				<div
+					className='timeContainer'
+					onClick={() => {
+						push(`/profile/${accountName}/p/${id}`);
+					}}
+				>
+					<TimePassed createdAt={createdAt} />
+				</div>
 				<AddComment id={id} p={"posts"} />
 			</div>
 		</div>

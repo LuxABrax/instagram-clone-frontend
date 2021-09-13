@@ -46,6 +46,13 @@
 		margin-left: -1px;
 		padding-top: 0.5em;
 		margin-bottom: 8px;
+		.link {
+			font-weight: 700;
+			cursor: pointer;
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 	.profileComp {
 		min-height: 36px;
@@ -75,15 +82,17 @@
 		text-decoration: underline;
 	}
 }
-.comments {
-	margin-bottom: 0.75em;
+.timeContainer {
+	display: inline-block;
 }
 .timePosted {
-	font-size: 0.6em;
-	// padding-left: 2em;
+	font-size: 10px;
+	line-height: 18px;
+	letter-spacing: 0.2px;
+	text-transform: uppercase;
+	cursor: pointer;
 	padding-bottom: 1em;
 	color: $font-color-secondary;
-	border-bottom: 1px solid $border-color-grey-secondary;
 }
 
 @media only screen and (max-width: 640px) {
