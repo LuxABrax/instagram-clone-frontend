@@ -67,6 +67,7 @@ const Post = props => {
 				<ProfileComp
 					iconSize='medium'
 					username={accountName}
+					showPopup={true}
 					image={
 						ownerPhoto.length > 0
 							? `http://localhost:5000/uploads/${ownerPhoto}`

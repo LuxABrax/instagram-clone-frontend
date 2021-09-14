@@ -1,8 +1,10 @@
 import "../styles/profileComp.scss";
+import { useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 
 import ProfileIcon from "./ProfileIcon";
+import UserPopup from "./post/UserPopup";
 import users from "../data/users";
 import { logout } from "../redux/authSlice";
 import { toggleModal } from "../redux/modalSlice";
@@ -20,7 +22,10 @@ const ProfileComp = props => {
 		image,
 		followUser,
 		onClick,
+		showPopup,
 	} = props;
+
+	const [popupActive, setPopupActive] = useState(false);
 
 	const dispatch = useDispatch();
 	const { push } = useHistory();
@@ -29,9 +34,23 @@ const ProfileComp = props => {
 		? username
 		: users[Math.floor(Math.random() * users.length)].username;
 
+	function handlePopup() {
+		console.log("show popup");
+		setPopupActive(true);
+	}
 	return (
 		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
-			<div className='pIconContainer'>
+			{popupActive && <UserPopup />}
+			<div
+				className='pIconContainer'
+				onPointerOver={() => {
+					if (showPopup) handlePopup();
+				}}
+				onPointerOut={() => {
+					console.log("Pointer leave");
+					setPopupActive(false);
+				}}
+			>
 				<ProfileIcon
 					iconSize={iconSize}
 					storyBorder={storyBorder}
