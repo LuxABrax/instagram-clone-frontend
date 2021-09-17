@@ -25,6 +25,8 @@ const ProfileComp = props => {
 		showPopup,
 	} = props;
 
+	const [pointerOverTrigger, setPointerOverTrigger] = useState(false);
+	const [pointerOverPopup, setPointerOverPopup] = useState(false);
 	const [popupActive, setPopupActive] = useState(false);
 
 	const dispatch = useDispatch();
@@ -40,7 +42,7 @@ const ProfileComp = props => {
 	}
 	return (
 		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
-			{popupActive && <UserPopup />}
+			{popupActive && <UserPopup fid={id} />}
 			<div
 				className='pIconContainer'
 				onPointerOver={() => {

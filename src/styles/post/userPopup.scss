@@ -1,0 +1,49 @@
+.userPopup {
+	width: 390px;
+	position: absolute;
+	z-index: 9;
+	background-color: #fff;
+	border-radius: 12px;
+	box-shadow: 0 2px 12px 3px rgba(0, 0, 0, 0.2);
+	header {
+		padding: 16px;
+		display: flex;
+		justify-content: flex-start;
+
+		.profIcon {
+			width: 56px;
+		}
+		.profInfo {
+			padding: 0 8px;
+			margin-left: 8px;
+			font-size: 14px;
+			.title {
+				color: #262626;
+				cursor: pointer;
+			}
+			.fullName {
+				color: #8e8e8e;
+			}
+		}
+	}
+	.followInfoComp li.b {
+		cursor: text;
+	}
+	.imageDisplay {
+		img {
+			width: 130px;
+			height: 130px;
+			cursor: pointer;
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
+	.popupBtns {
+		display: flex;
+		padding: 16px;
+		button {
+			padding: 5px 9px;
+		}
+	}
+}

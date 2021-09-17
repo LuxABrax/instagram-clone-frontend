@@ -65,6 +65,7 @@ const Post = props => {
 		<div className='post'>
 			<header>
 				<ProfileComp
+					id={uid}
 					iconSize='medium'
 					username={accountName}
 					showPopup={true}
