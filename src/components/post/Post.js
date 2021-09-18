@@ -1,8 +1,9 @@
 import "../../styles/post/post.scss";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectFollowedUsers } from "../../redux/usersSlice";
+import { setOverTrigger, setPopup, selectPopup } from "../../redux/popupSlice";
 import axios from "../../axios";
 
 import ProfileComp from "../ProfileComp";
@@ -11,6 +12,7 @@ import PostMenu from "./PostMenu";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
 import TimePassed from "./TimePassed";
+import UserPopup from "./UserPopup";
 
 const Post = props => {
 	const {
@@ -33,8 +35,9 @@ const Post = props => {
 	const [commentsActive, setCommentsActive] = useState(false);
 
 	const fUsers = useSelector(selectFollowedUsers);
+	const { popupActive } = useSelector(selectPopup);
 	const { push } = useHistory();
-
+	const dispatch = useDispatch();
 	useEffect(() => {
 		const getPhoto = async () => {
 			const user = fUsers.filter(u => u._id === uid);
@@ -61,8 +64,32 @@ const Post = props => {
 		return () => {};
 	}, [likes]);
 
+	function handlePopup(e, handleType, handleEl) {
+		console.log("handle popup");
+		// if (handleType === "show") {
+		// 	const popupOffset = (e.clientY - 54) / (e.view.outerHeight - 54);
+		// 	console.log(popupOffset);
+		// 	const offY = popupOffset < 0.5 ? -10 : 10;
+		// 	const offX = handleEl === "icon" ? -10 : handleEl === "name" ? 10 : 15;
+		// 	console.log(offY, offX);
+		// 	// dispatch(setPopupOffset());
+		// 	dispatch(setOverTrigger(true));
+		// 	dispatch(setPopup());
+		// } else {
+		// 	dispatch(setOverTrigger(false));
+		// 	setTimeout(() => {
+		// 		dispatch(setPopup());
+		// 	}, 200);
+		// }
+		// dispatch(setPopup());
+	}
+
 	return (
 		<div className='post'>
+			{/* {popupActive && likedUser.id !== undefined && (
+				<UserPopup fid={likedUser.id} />
+			)} */}
+
 			<header>
 				<ProfileComp
 					id={uid}
@@ -88,6 +115,12 @@ const Post = props => {
 								className='link'
 								onClick={() => {
 									push(`/profile/${likedUser.name}`);
+								}}
+								onPointerOver={e => {
+									handlePopup(e, "show", "name");
+								}}
+								onPointerOut={() => {
+									handlePopup();
 								}}
 							>
 								{likedUser.name}
