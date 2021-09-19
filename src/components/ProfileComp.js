@@ -7,11 +7,19 @@ import UserPopup from "./post/UserPopup";
 import users from "../data/users";
 import { logout } from "../redux/authSlice";
 import { toggleModal } from "../redux/modalSlice";
-import { setOverTrigger, setPopup, selectPopup } from "../redux/popupSlice";
+import {
+	setOverTrigger,
+	setPopup,
+	selectPopup,
+	setPopupOffset,
+	setKey,
+} from "../redux/popupSlice";
 import { calcPopupOffset } from "./post/popupOffset";
+import { useState } from "react";
 
 const ProfileComp = props => {
 	const {
+		postId,
 		id,
 		username,
 		caption,
@@ -26,11 +34,10 @@ const ProfileComp = props => {
 		showPopup,
 	} = props;
 
-	const { popupActive } = useSelector(selectPopup);
+	const { popupActive, overTrigger, overPopup, popKey } =
+		useSelector(selectPopup);
 
-	// const [pointerOverTrigger, setPointerOverTrigger] = useState(false);
-	// const [pointerOverPopup, setPointerOverPopup] = useState(false);
-	// const [popupActive, setPopupActive] = useState(false);
+	const [hasPopup, setHasPopup] = useState(false);
 
 	const dispatch = useDispatch();
 	const { push } = useHistory();
@@ -43,16 +50,18 @@ const ProfileComp = props => {
 		console.log("handle popup");
 		if (handleType === "show") {
 			const { offY, offX } = calcPopupOffset(e, hoveredEl);
-			// dispatch(setPopupOffset());
+			dispatch(setKey(postId));
+			dispatch(setPopupOffset({ offY, offX }));
 			dispatch(setOverTrigger(true));
+			setHasPopup(true);
 			dispatch(setPopup());
 		} else {
 			dispatch(setOverTrigger(false));
 			setTimeout(() => {
+				if (!overTrigger && !overPopup) setHasPopup(false);
 				dispatch(setPopup());
-			}, 200);
+			}, 300);
 		}
-		// dispatch(setPopup());
 	}
 	function gotoProfile() {
 		dispatch(setPopup("close"));
@@ -61,7 +70,9 @@ const ProfileComp = props => {
 
 	return (
 		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
-			{popupActive && showPopup && <UserPopup fid={id} />}
+			{popupActive && showPopup && hasPopup && postId === popKey && (
+				<UserPopup fid={id} postId={postId} />
+			)}
 			<div
 				className='pIconContainer'
 				onPointerOver={e => {

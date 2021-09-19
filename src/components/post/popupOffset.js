@@ -4,7 +4,7 @@ export const calcPopupOffset = (e, hoveredEl) => {
 	console.log(yOffsetPercent);
 
 	const offY = yOffsetPercent < 0.5 ? -10 : 10;
-	const offX = hoveredEl === "icon" ? -10 : hoveredEl === "name" ? 10 : 15;
+	const offX = hoveredEl === "icon" ? 4 : hoveredEl === "name" ? 52 : 15;
 	console.log(offY, offX);
 
 	return { offY, offX };

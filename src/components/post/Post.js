@@ -25,7 +25,6 @@ const Post = props => {
 		likes,
 		createdAt,
 	} = props;
-
 	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [likedUser, setLikedUser] = useState({
 		id: "",
@@ -92,6 +91,8 @@ const Post = props => {
 
 			<header>
 				<ProfileComp
+					key={id}
+					postId={id}
 					id={uid}
 					iconSize='medium'
 					username={accountName}

@@ -7,7 +7,6 @@ import { useHistory } from "react-router";
 import ProfileIcon from "../ProfileIcon";
 import FollowInfo from "../profile/FollowInfo";
 
-import axios from "../../axios";
 import {
 	setOverPopup,
 	setPopup,
@@ -17,21 +16,17 @@ import {
 
 const UserPopup = ({ fid }) => {
 	const user = useSelector(selectUser);
-	const { popupActive, popupContent } = useSelector(selectPopup);
+	const { popupContent, popupOffset } = useSelector(selectPopup);
 	const dispatch = useDispatch();
 
 	const [popupFetched, setPopupFetched] = useState(false);
-	// const [popupInfo, setPopupInfo] = useState({
-	// 	accountName: "",
-	// 	id: "",
-	// 	photo: "",
-	// 	fullName: "",
-	// 	posts: undefined,
-	// 	followers: undefined,
-	// 	following: undefined,
-	// 	isFollowing: undefined,
-	// 	postGallery: [],
-	// });
+
+	const { x, y } = popupOffset;
+	const posStyle = {
+		top: `${y < 0 ? "42px" : "none"}`,
+		bottom: `${y > 0 ? "42px" : "none"}`,
+		left: x + "px",
+	};
 
 	const { push } = useHistory();
 
@@ -39,32 +34,7 @@ const UserPopup = ({ fid }) => {
 		const getPopupInfo = async () => {
 			// if (fid !== popupContent._id)
 			await dispatch(getPopupContent({ uId: user._id, fId: fid }));
-			// const res = await axios.get(`/follow/popup/${user._id}/${fid}`);
-			// // console.log(await res.data);
-			// const {
-			// 	_id,
-			// 	name,
-			// 	photo,
-			// 	fullName,
-			// 	posts,
-			// 	followers,
-			// 	following,
-			// 	isFollowing,
-			// 	postGallery,
-			// } = await res.data.popupInfo;
 
-			// setPopupInfo(pI => ({
-			// 	...pI,
-			// 	accountName: name,
-			// 	id: _id,
-			// 	photo,
-			// 	fullName,
-			// 	posts,
-			// 	followers,
-			// 	following,
-			// 	isFollowing,
-			// 	postGallery,
-			// }));
 			setPopupFetched(true);
 		};
 		getPopupInfo();
@@ -76,7 +46,6 @@ const UserPopup = ({ fid }) => {
 	function hidePopup() {
 		dispatch(setOverPopup(false));
 		dispatch(setPopup());
-		// setTimeout(() => {}, 1000);
 	}
 
 	function gotoProfile() {
@@ -96,6 +65,7 @@ const UserPopup = ({ fid }) => {
 				onPointerLeave={() => {
 					hidePopup();
 				}}
+				style={posStyle}
 			>
 				<header>
 					<div className='profIcon'>

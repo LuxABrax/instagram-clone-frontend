@@ -39,12 +39,21 @@ export const popupSlice = createSlice({
 			// isFollowing: undefined,
 			// postGallery: [],
 		},
+		popKey: "",
 		status: "idle",
 		error: {
 			message: "",
 		},
 	},
 	reducers: {
+		setKey: (state, { payload }) => {
+			state.popKey = payload;
+		},
+		setPopupOffset: (state, { payload }) => {
+			const { offY, offX } = payload;
+			state.popupOffset = { x: offX, y: offY };
+		},
+
 		setOverTrigger: (state, action) => {
 			// console.log("over trigger ", action.payload);
 			state.overTrigger = action.payload;
@@ -90,7 +99,13 @@ export const popupSlice = createSlice({
 	},
 });
 
-export const { setOverTrigger, setOverPopup, setPopup } = popupSlice.actions;
+export const {
+	setKey,
+	setPopupOffset,
+	setOverTrigger,
+	setOverPopup,
+	setPopup,
+} = popupSlice.actions;
 
 export const selectPopup = state => state.popup;
 
