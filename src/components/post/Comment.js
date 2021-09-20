@@ -1,8 +1,9 @@
 import { useHistory } from "react-router";
+import PopupTrigger from "../PopupTrigger";
 import "../../styles/post/comment.scss";
 
 const Comment = props => {
-	const { accountName, comment } = props;
+	const { id, uid, accountName, comment } = props;
 	const { push } = useHistory();
 
 	const goToAccount = () => {
@@ -12,7 +13,14 @@ const Comment = props => {
 	return (
 		<div className='commentContainer'>
 			<div className='accountName' onClick={goToAccount}>
-				{accountName}
+				<PopupTrigger
+					id={id}
+					username={accountName}
+					uid={uid}
+					hoveredEl={"comm"}
+				>
+					{accountName}
+				</PopupTrigger>
 			</div>
 			<div className='comment'>{comment}</div>
 		</div>

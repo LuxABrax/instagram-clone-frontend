@@ -16,6 +16,7 @@ import {
 } from "../redux/popupSlice";
 import { calcPopupOffset } from "./post/popupOffset";
 import { useState } from "react";
+import PopupTrigger from "./PopupTrigger";
 
 const ProfileComp = props => {
 	const {
@@ -37,7 +38,7 @@ const ProfileComp = props => {
 	const { popupActive, overTrigger, overPopup, popKey } =
 		useSelector(selectPopup);
 
-	const [hasPopup, setHasPopup] = useState(false);
+	// const [hasPopup, setHasPopup] = useState(false);
 
 	const dispatch = useDispatch();
 	const { push } = useHistory();
@@ -53,12 +54,12 @@ const ProfileComp = props => {
 			dispatch(setKey(postId));
 			dispatch(setPopupOffset({ offY, offX }));
 			dispatch(setOverTrigger(true));
-			setHasPopup(true);
+			// setHasPopup(true);
 			dispatch(setPopup());
 		} else {
 			dispatch(setOverTrigger(false));
 			setTimeout(() => {
-				if (!overTrigger && !overPopup) setHasPopup(false);
+				// if (!overTrigger && !overPopup) setHasPopup(false);
 				dispatch(setPopup());
 			}, 300);
 		}
@@ -70,29 +71,36 @@ const ProfileComp = props => {
 
 	return (
 		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
-			{popupActive && showPopup && hasPopup && postId === popKey && (
+			{/* {popupActive && showPopup && hasPopup && postId === popKey && (
 				<UserPopup fid={id} postId={postId} />
-			)}
-			<div
-				className='pIconContainer'
-				onPointerOver={e => {
-					if (showPopup) {
-						handlePopup(e, "show", "icon");
-					}
-				}}
-				onPointerOut={() => {
-					if (showPopup) {
-						handlePopup();
-					}
-				}}
+			)} */}
+			<PopupTrigger
+				username={username}
+				uid={id}
+				id={id + "pi"}
+				hoveredEl={"comm"}
 			>
-				<ProfileIcon
-					iconSize={iconSize}
-					storyBorder={storyBorder}
-					image={image}
-					onClick={gotoProfile}
-				/>
-			</div>
+				<div
+					className='pIconContainer'
+					// onPointerOver={e => {
+					//   if (showPopup) {
+					//     handlePopup(e, "show", "icon");
+					// 	}
+					// }}
+					// onPointerOut={() => {
+					//   if (showPopup) {
+					//     handlePopup();
+					// 	}
+					// }}
+				>
+					<ProfileIcon
+						iconSize={iconSize}
+						storyBorder={storyBorder}
+						image={image}
+						onClick={gotoProfile}
+					/>
+				</div>
+			</PopupTrigger>
 			{(accountName || caption) && !hideAccountName && (
 				<div className={`textContainer ${captionSize}`}>
 					<span
@@ -101,16 +109,23 @@ const ProfileComp = props => {
 							if (onClick !== undefined) dispatch(toggleModal());
 							push(`/profile/${accountName}`);
 						}}
-						onPointerOver={e => {
-							if (showPopup) {
-								handlePopup(e, "show", "name");
-							}
-						}}
-						onPointerOut={() => {
-							handlePopup();
-						}}
+						// onPointerOver={e => {
+						// 	if (showPopup) {
+						// 		handlePopup(e, "show", "name");
+						// 	}
+						// }}
+						// onPointerOut={() => {
+						// 	handlePopup();
+						// }}
 					>
-						{accountName}
+						<PopupTrigger
+							username={username}
+							uid={id}
+							id={id + "pa"}
+							hoveredEl={"comm"}
+						>
+							{accountName}
+						</PopupTrigger>
 					</span>
 					<span className={`caption ${captionSize}`}>{caption}</span>
 				</div>

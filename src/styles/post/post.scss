@@ -46,9 +46,11 @@
 		margin-left: -1px;
 		padding-top: 0.5em;
 		margin-bottom: 8px;
+		margin-right: 3px;
 		.link {
 			font-weight: 700;
 			cursor: pointer;
+			margin-left: 3px;
 			&:hover {
 				text-decoration: underline;
 			}
@@ -62,6 +64,7 @@
 	}
 }
 .postDescription {
+	display: flex;
 	span {
 		font-size: 14px;
 		font-weight: 700;

@@ -53,6 +53,7 @@ const Suggestions = () => {
 						return (
 							<ProfileComp
 								key={suggestedUser._id}
+								postId={suggestedUser._id + "su"}
 								id={suggestedUser._id}
 								username={suggestedUser.name}
 								image={`http://localhost:5000/uploads/${suggestedUser.photo}`}
@@ -62,6 +63,7 @@ const Suggestions = () => {
 								captionSize='small'
 								storyBorder={false}
 								followUser={followUser}
+								showPopup={true}
 							/>
 						);
 					return null;

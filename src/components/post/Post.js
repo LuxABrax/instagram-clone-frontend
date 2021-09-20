@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFollowedUsers } from "../../redux/usersSlice";
-import { setOverTrigger, setPopup, selectPopup } from "../../redux/popupSlice";
 import axios from "../../axios";
 
 import ProfileComp from "../ProfileComp";
@@ -12,7 +11,7 @@ import PostMenu from "./PostMenu";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
 import TimePassed from "./TimePassed";
-import UserPopup from "./UserPopup";
+import PopupTrigger from "../PopupTrigger";
 
 const Post = props => {
 	const {
@@ -34,7 +33,6 @@ const Post = props => {
 	const [commentsActive, setCommentsActive] = useState(false);
 
 	const fUsers = useSelector(selectFollowedUsers);
-	const { popupActive } = useSelector(selectPopup);
 	const { push } = useHistory();
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -63,36 +61,12 @@ const Post = props => {
 		return () => {};
 	}, [likes]);
 
-	function handlePopup(e, handleType, handleEl) {
-		console.log("handle popup");
-		// if (handleType === "show") {
-		// 	const popupOffset = (e.clientY - 54) / (e.view.outerHeight - 54);
-		// 	console.log(popupOffset);
-		// 	const offY = popupOffset < 0.5 ? -10 : 10;
-		// 	const offX = handleEl === "icon" ? -10 : handleEl === "name" ? 10 : 15;
-		// 	console.log(offY, offX);
-		// 	// dispatch(setPopupOffset());
-		// 	dispatch(setOverTrigger(true));
-		// 	dispatch(setPopup());
-		// } else {
-		// 	dispatch(setOverTrigger(false));
-		// 	setTimeout(() => {
-		// 		dispatch(setPopup());
-		// 	}, 200);
-		// }
-		// dispatch(setPopup());
-	}
-
 	return (
 		<div className='post'>
-			{/* {popupActive && likedUser.id !== undefined && (
-				<UserPopup fid={likedUser.id} />
-			)} */}
-
 			<header>
 				<ProfileComp
 					key={id}
-					postId={id}
+					postId={id + "p"}
 					id={uid}
 					iconSize='medium'
 					username={accountName}
@@ -110,33 +84,42 @@ const Post = props => {
 				<PostMenu id={id} name={accountName} />
 				{likes.length > 0 && (
 					<div className='likedBy'>
+						<span>Liked by </span>
 						<span>
-							Liked by{" "}
-							<span
-								className='link'
-								onClick={() => {
-									push(`/profile/${likedUser.name}`);
-								}}
-								onPointerOver={e => {
-									handlePopup(e, "show", "name");
-								}}
-								onPointerOut={() => {
-									handlePopup();
-								}}
+							<PopupTrigger
+								username={likedUser.name}
+								uid={likedUser.id}
+								id={id + "lu"}
+								hoveredEl={"liked"}
 							>
-								{likedUser.name}
-							</span>
-							{likes.length > 1 && (
-								<>
-									and <span className='link'>{likes.length - 1} others</span>
-								</>
-							)}
+								<span
+									className='link'
+									onClick={() => {
+										push(`/profile/${likedUser.name}`);
+									}}
+								>
+									{likedUser.name}
+								</span>
+							</PopupTrigger>
 						</span>
+						{likes.length > 1 && (
+							<>
+								<span>and </span>
+								<span className='link'>{likes.length - 1} others</span>
+							</>
+						)}
 					</div>
 				)}
 				{description.length > 0 && (
 					<div className='postDescription'>
-						<span>{accountName}</span>
+						<PopupTrigger
+							username={accountName}
+							uid={uid}
+							id={id + "des"}
+							hoveredEl={"desc"}
+						>
+							<span>{accountName}</span>
+						</PopupTrigger>
 						{description}
 					</div>
 				)}
@@ -156,6 +139,8 @@ const Post = props => {
 						return (
 							<Comment
 								key={comment.cId}
+								id={comment.cId}
+								uid={comment.uId}
 								accountName={comment.uName}
 								comment={comment.text}
 							/>
