@@ -1,25 +1,35 @@
 .userPopup {
 	width: 390px;
 	position: absolute;
-	z-index: 10;
+	z-index: 12;
 	background-color: #fff;
 	border-radius: 12px;
 	box-shadow: 0 2px 14px 3px rgba(0, 0, 0, 0.15);
+
 	header {
 		padding: 16px;
 		display: flex;
 		justify-content: flex-start;
 
+		.profileIcon {
+			position: static;
+			transform: none;
+		}
 		.profIcon {
 			width: 56px;
 		}
-		.profInfo {
+		.popupInfo {
 			padding: 0 8px;
 			margin-left: 8px;
 			font-size: 14px;
+			text-align: left;
+			display: flex;
+			flex-direction: column;
+
 			.title {
 				color: #262626;
 				cursor: pointer;
+				font-weight: bold;
 			}
 			.fullName {
 				color: #8e8e8e;

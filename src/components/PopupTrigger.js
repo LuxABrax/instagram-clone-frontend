@@ -11,7 +11,9 @@ import {
 } from "../redux/popupSlice";
 import { calcPopupOffset } from "./post/popupOffset";
 import UserPopup from "./post/UserPopup";
+
 import "../styles/popupTrigger.scss";
+
 const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
 	const { popupActive, overTrigger, overPopup, popKey } =
 		useSelector(selectPopup);
@@ -44,26 +46,28 @@ const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
 	}
 
 	return (
-		<div
-			className='popupTrigger'
-			onClick={() => {
-				if (onClick !== undefined) dispatch(toggleModal());
-				gotoProfile();
-			}}
-			onPointerOver={e => {
-				if (showPopup) {
-					handlePopup(e, "show", hoveredEl || "name");
-				}
-			}}
-			onPointerOut={() => {
-				handlePopup();
-			}}
-		>
+		<div className='popupTriggerContainer'>
 			{popupActive && showPopup && hasPopup && id === popKey && (
 				<UserPopup fid={uid} postId={id} />
 			)}
-
-			{children}
+			<div
+				className='popupTrigger'
+				onClick={() => {
+					if (onClick !== undefined) dispatch(toggleModal());
+					gotoProfile();
+				}}
+				onPointerOver={e => {
+					if (showPopup) {
+						console.log("trigger");
+						handlePopup(e, "show", hoveredEl || "name");
+					}
+				}}
+				onPointerOut={() => {
+					handlePopup();
+				}}
+			>
+				{children}
+			</div>
 		</div>
 	);
 };

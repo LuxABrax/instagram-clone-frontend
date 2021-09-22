@@ -1,22 +1,13 @@
 import "../styles/profileComp.scss";
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-
-import ProfileIcon from "./ProfileIcon";
-import UserPopup from "./post/UserPopup";
-import users from "../data/users";
+import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
 import { toggleModal } from "../redux/modalSlice";
-import {
-	setOverTrigger,
-	setPopup,
-	selectPopup,
-	setPopupOffset,
-	setKey,
-} from "../redux/popupSlice";
-import { calcPopupOffset } from "./post/popupOffset";
-import { useState } from "react";
+import { setPopup } from "../redux/popupSlice";
+
+import ProfileIcon from "./ProfileIcon";
 import PopupTrigger from "./PopupTrigger";
+import users from "../data/users";
 
 const ProfileComp = props => {
 	const {
@@ -35,11 +26,6 @@ const ProfileComp = props => {
 		showPopup,
 	} = props;
 
-	const { popupActive, overTrigger, overPopup, popKey } =
-		useSelector(selectPopup);
-
-	// const [hasPopup, setHasPopup] = useState(false);
-
 	const dispatch = useDispatch();
 	const { push } = useHistory();
 
@@ -47,23 +33,6 @@ const ProfileComp = props => {
 		? username
 		: users[Math.floor(Math.random() * users.length)].username;
 
-	function handlePopup(e, handleType, hoveredEl) {
-		console.log("handle popup");
-		if (handleType === "show") {
-			const { offY, offX } = calcPopupOffset(e, hoveredEl);
-			dispatch(setKey(postId));
-			dispatch(setPopupOffset({ offY, offX }));
-			dispatch(setOverTrigger(true));
-			// setHasPopup(true);
-			dispatch(setPopup());
-		} else {
-			dispatch(setOverTrigger(false));
-			setTimeout(() => {
-				// if (!overTrigger && !overPopup) setHasPopup(false);
-				dispatch(setPopup());
-			}, 300);
-		}
-	}
 	function gotoProfile() {
 		dispatch(setPopup("close"));
 		push(`/profile/${username}`);
@@ -71,28 +40,24 @@ const ProfileComp = props => {
 
 	return (
 		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
-			{/* {popupActive && showPopup && hasPopup && postId === popKey && (
-				<UserPopup fid={id} postId={postId} />
-			)} */}
-			<PopupTrigger
-				username={username}
-				uid={id}
-				id={id + "pi"}
-				hoveredEl={"comm"}
-			>
-				<div
-					className='pIconContainer'
-					// onPointerOver={e => {
-					//   if (showPopup) {
-					//     handlePopup(e, "show", "icon");
-					// 	}
-					// }}
-					// onPointerOut={() => {
-					//   if (showPopup) {
-					//     handlePopup();
-					// 	}
-					// }}
+			{showPopup ? (
+				<PopupTrigger
+					username={username}
+					uid={id}
+					id={postId + "pi"}
+					hoveredEl={"icon"}
 				>
+					<div className='pIconContainer'>
+						<ProfileIcon
+							iconSize={iconSize}
+							storyBorder={storyBorder}
+							image={image}
+							onClick={gotoProfile}
+						/>
+					</div>
+				</PopupTrigger>
+			) : (
+				<div className='pIconContainer'>
 					<ProfileIcon
 						iconSize={iconSize}
 						storyBorder={storyBorder}
@@ -100,7 +65,8 @@ const ProfileComp = props => {
 						onClick={gotoProfile}
 					/>
 				</div>
-			</PopupTrigger>
+			)}
+
 			{(accountName || caption) && !hideAccountName && (
 				<div className={`textContainer ${captionSize}`}>
 					<span
@@ -109,23 +75,19 @@ const ProfileComp = props => {
 							if (onClick !== undefined) dispatch(toggleModal());
 							push(`/profile/${accountName}`);
 						}}
-						// onPointerOver={e => {
-						// 	if (showPopup) {
-						// 		handlePopup(e, "show", "name");
-						// 	}
-						// }}
-						// onPointerOut={() => {
-						// 	handlePopup();
-						// }}
 					>
-						<PopupTrigger
-							username={username}
-							uid={id}
-							id={id + "pa"}
-							hoveredEl={"comm"}
-						>
-							{accountName}
-						</PopupTrigger>
+						{showPopup ? (
+							<PopupTrigger
+								username={username}
+								uid={id}
+								id={postId + "pn"}
+								hoveredEl={"name"}
+							>
+								{accountName}
+							</PopupTrigger>
+						) : (
+							<>{accountName}</>
+						)}
 					</span>
 					<span className={`caption ${captionSize}`}>{caption}</span>
 				</div>

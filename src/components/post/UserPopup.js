@@ -3,10 +3,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
 import { useHistory } from "react-router";
-
-import ProfileIcon from "../ProfileIcon";
-import FollowInfo from "../profile/FollowInfo";
-
 import {
 	setOverPopup,
 	setPopup,
@@ -14,25 +10,27 @@ import {
 	getPopupContent,
 } from "../../redux/popupSlice";
 
+import ProfileIcon from "../ProfileIcon";
+import FollowInfo from "../profile/FollowInfo";
+
 const UserPopup = ({ fid }) => {
 	const user = useSelector(selectUser);
 	const { popupContent, popupOffset } = useSelector(selectPopup);
+
 	const dispatch = useDispatch();
+	const { push } = useHistory();
 
 	const [popupFetched, setPopupFetched] = useState(false);
 
 	const { x, y } = popupOffset;
 	const posStyle = {
-		top: `${y < 0 ? "42px" : "none"}`,
-		bottom: `${y > 0 ? "42px" : "none"}`,
+		top: `${y < 0 ? "22px" : "none"}`,
+		bottom: `${y > 0 ? "22px" : "none"}`,
 		left: x + "px",
 	};
 
-	const { push } = useHistory();
-
 	useEffect(() => {
 		const getPopupInfo = async () => {
-			// if (fid !== popupContent._id)
 			await dispatch(getPopupContent({ uId: user._id, fId: fid }));
 
 			setPopupFetched(true);
@@ -52,10 +50,7 @@ const UserPopup = ({ fid }) => {
 		dispatch(setPopup("close"));
 		push(`/profile/${popupContent.name}`);
 	}
-	if (
-		popupFetched
-		//  && popupActive
-	) {
+	if (popupFetched) {
 		return (
 			<div
 				className='userPopup'
@@ -75,7 +70,7 @@ const UserPopup = ({ fid }) => {
 							onClick={gotoProfile}
 						/>
 					</div>
-					<div className='profInfo'>
+					<div className='popupInfo'>
 						<div className='title'>
 							<h2 onClick={gotoProfile}>{popupContent.name}</h2>
 						</div>

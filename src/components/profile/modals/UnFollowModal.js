@@ -3,14 +3,15 @@ import "../../../styles/profile/unFollowModal.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../../redux/modalSlice";
-import axios from "../../../axios";
-import Modal from "./Modal";
 import {
 	addToNoFollow,
 	getNotFollowedUsers,
 	getUserProfile,
 	selectUnFollowUser,
 } from "../../../redux/usersSlice";
+import axios from "../../../axios";
+
+import Modal from "./Modal";
 
 const UnFollowModal = ({ uid, id, photo, name }) => {
 	const dispatch = useDispatch();
@@ -60,12 +61,12 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 				</div>
 				<div className='textContainer'>
 					{unFollowUser.remove && !unFollowUser.followerOr && (
-						<h2>Remove Follower?</h2>
+						<h2 className='modalTitle'>Remove Follower?</h2>
 					)}
 					<h3
-						className={
+						className={`modalText ${
 							unFollowUser.remove && !unFollowUser.followerOr ? "rem" : ""
-						}
+						}`}
 					>
 						{unFollowUser.remove && !unFollowUser.followerOr
 							? `Instagram wont tell ${unFollowUser.name} they were removed from your followers`
