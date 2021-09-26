@@ -3,15 +3,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
 import { useHistory } from "react-router";
-import {
-	setOverPopup,
-	setPopup,
-	selectPopup,
-	getPopupContent,
-} from "../../redux/popupSlice";
+import { setOverPopup, setPopup, selectPopup, getPopupContent } from "../../redux/popupSlice";
 
 import ProfileIcon from "../ProfileIcon";
 import FollowInfo from "../profile/FollowInfo";
+import NoPosts from "../profile/NoPosts";
 
 const UserPopup = ({ fid }) => {
 	const user = useSelector(selectUser);
@@ -87,9 +83,9 @@ const UserPopup = ({ fid }) => {
 					following={popupContent.following}
 					isPopup={true}
 				/>
-				<div className='imageDisplay'>
-					{popupContent.postGallery.length > 0 &&
-						popupContent.postGallery.map(i => {
+				{popupContent.postGallery.length > 0 ? (
+					<div className='imageDisplay'>
+						{popupContent.postGallery.map(i => {
 							return (
 								<img
 									src={`http://localhost:5000/uploads/posts/${i.photo}`}
@@ -102,7 +98,10 @@ const UserPopup = ({ fid }) => {
 								/>
 							);
 						})}
-				</div>
+					</div>
+				) : (
+					<NoPosts isPopup username={popupContent.name} />
+				)}
 				<div className='popupBtns'>
 					{popupContent.isFollowing ? (
 						<>

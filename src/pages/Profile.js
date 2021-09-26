@@ -3,11 +3,7 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage, selectPage } from "../redux/navigationSlice";
-import {
-	toggleModal,
-	selectModalActive,
-	selectModalName,
-} from "../redux/modalSlice";
+import { toggleModal, selectModalActive, selectModalName } from "../redux/modalSlice";
 import { selectUser } from "../redux/authSlice";
 import {
 	getFollowedUsers,
@@ -22,12 +18,14 @@ import axios from "../axios";
 
 import Header from "../components/profile/Header";
 import FeedMenu from "../components/profile/FeedMenu";
-import comments from "../data/comments.js";
-import PostModal from "../components/profile/modals/PostModal";
-import AddPostModal from "../components/profile/modals/AddPostModal";
-import ChangeImgModal from "../components/profile/modals/ChangeImgModal";
-import FollowersModal from "../components/profile/modals/FollowersModal";
-import UnFollowModal from "../components/profile/modals/UnFollowModal";
+import NoPosts from "../components/profile/NoPosts";
+import {
+	PostModal,
+	AddPostModal,
+	ChangeImgModal,
+	FollowersModal,
+	UnFollowModal,
+} from "../components/profile/modals";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -156,13 +154,11 @@ const Profile = () => {
 					accountName={userProfile.name}
 					storyBorder={true}
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}
-					comments={comments[0].comments}
+					// comments={comments[0].comments}
 					hours={2}
 				/>
 			)}
-			{modalName === "addPost" && modalActive && (
-				<AddPostModal id={user._id} addImage={addImage} />
-			)}
+			{modalName === "addPost" && modalActive && <AddPostModal id={user._id} addImage={addImage} />}
 			{modalName === "img" && modalActive && <ChangeImgModal id={user._id} />}
 			{modalName === "unFollow" && modalActive && (
 				<UnFollowModal
@@ -186,59 +182,49 @@ const Profile = () => {
 					btnType={user.name === pName ? "remove" : ""}
 				/>
 			)}
-			<div className='profFeed'>
-				<Header
-					image={`http://localhost:5000/uploads/${userProfile.photo}`}
-					id={userProfile._id}
-					accountName={userProfile.name}
-					fullName={userProfile.fullName}
-					description={userProfile.description}
-					postNumber={userProfile.posts}
-					followers={userProfile.followers}
-					following={userProfile.following}
-					changeImg={changeImg}
-				/>
-				<FeedMenu
-					showSaved={showSaved}
-					showPosts={showPosts}
-					isOwner={pName === user.name}
-				/>
-
-				{arrSorted ? (
-					<div className='posts'>
-						{sortedPosts.map((postRow, index) => {
-							return (
-								<div className='pRow' key={index}>
-									{postRow.map((postI, idx) => {
-										if (postI.photo === "empty") {
-											return (
-												<div className='postContainer' key={idx}>
-													<img src='' alt='empty' />
-												</div>
-											);
-										} else {
-											return (
-												<div
-													className='postContainer'
-													key={idx}
-													onClick={async () => {
-														openModal(postI._id);
-													}}
-												>
-													<img
-														src={`http://localhost:5000/uploads/posts/${postI.photo}`}
-														alt=''
-													/>
-												</div>
-											);
-										}
-									})}
-								</div>
-							);
-						})}
-					</div>
+			<Header
+				image={`http://localhost:5000/uploads/${userProfile.photo}`}
+				id={userProfile._id}
+				accountName={userProfile.name}
+				fullName={userProfile.fullName}
+				description={userProfile.description}
+				postNumber={userProfile.posts}
+				followers={userProfile.followers}
+				following={userProfile.following}
+				changeImg={changeImg}
+			/>
+			<FeedMenu showSaved={showSaved} showPosts={showPosts} isOwner={pName === user.name} />
+			<div className='posts'>
+				{imagesPosts.length > 0 ? (
+					sortedPosts?.map((postRow, index) => {
+						return (
+							<div className='pRow' key={index}>
+								{postRow.map((postI, idx) => {
+									if (postI.photo === "empty") {
+										return (
+											<div className='postContainer' key={idx}>
+												<img src='' alt='empty' />
+											</div>
+										);
+									} else {
+										return (
+											<div
+												className='postContainer'
+												key={idx}
+												onClick={async () => {
+													openModal(postI._id);
+												}}
+											>
+												<img src={`http://localhost:5000/uploads/posts/${postI.photo}`} alt='' />
+											</div>
+										);
+									}
+								})}
+							</div>
+						);
+					})
 				) : (
-					<div>No posts</div>
+					<NoPosts />
 				)}
 			</div>
 		</div>
