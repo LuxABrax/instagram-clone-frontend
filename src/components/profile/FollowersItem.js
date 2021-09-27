@@ -33,12 +33,7 @@ const FollowersItem = ({ follower, id, btnType, fType }) => {
 					push(`/profile/${name}`);
 				}}
 			/>
-			<FollowButton
-				follower={follower}
-				id={id}
-				btnType={btnType}
-				fType={fType}
-			/>
+			<FollowButton follower={follower} id={id} btnType={btnType} fType={fType} />
 		</li>
 	);
 };

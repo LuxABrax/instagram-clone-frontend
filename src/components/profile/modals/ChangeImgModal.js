@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { toggleModal } from "../../../redux/modalSlice";
 import axios from "../../../axios";
 import { changePhoto } from "../../../redux/authSlice";
+import Modal from "./Modal";
 
 const ChangeImgModal = ({ id }) => {
 	const dispatch = useDispatch();
@@ -44,25 +45,19 @@ const ChangeImgModal = ({ id }) => {
 	}
 
 	return (
-		<div className='imgModal'>
-			<div className='background' onClick={closeModal}></div>
-			<div className='modalContent'>
+		<Modal>
+			<div className='modalContent changeImg-modal'>
 				<div className='modalTitle'>
 					<h3>Change Profile Photo</h3>
 				</div>
-				<input
-					id='photoFile'
-					type='file'
-					style={{ display: "none" }}
-					onChange={uploadPhoto}
-				/>
+				<input id='photoFile' type='file' style={{ display: "none" }} onChange={uploadPhoto} />
 				<div className='modalBtns'>
 					<button onClick={choosePhoto}>Upload Photo</button>
 					<button onClick={removePhoto}>Remove Current Photo</button>
 					<button onClick={closeModal}>Cancel</button>
 				</div>
 			</div>
-		</div>
+		</Modal>
 	);
 };
 

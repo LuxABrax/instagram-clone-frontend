@@ -51,7 +51,7 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 
 	return (
 		<Modal>
-			<div className='modalContainer'>
+			<div className='modalContent unFollow-modal'>
 				<div className='avatarContainer'>
 					<img
 						src={`http://localhost:5000/uploads/${unFollowUser.photo}`}
@@ -64,9 +64,7 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 						<h2 className='modalTitle'>Remove Follower?</h2>
 					)}
 					<h3
-						className={`modalText ${
-							unFollowUser.remove && !unFollowUser.followerOr ? "rem" : ""
-						}`}
+						className={`modalText ${unFollowUser.remove && !unFollowUser.followerOr ? "rem" : ""}`}
 					>
 						{unFollowUser.remove && !unFollowUser.followerOr
 							? `Instagram wont tell ${unFollowUser.name} they were removed from your followers`
@@ -75,9 +73,7 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 				</div>
 				<div className='modalBtns'>
 					<button onClick={unFollow}>
-						{unFollowUser.remove && !unFollowUser.followerOr
-							? "Remove"
-							: "Unfollow"}
+						{unFollowUser.remove && !unFollowUser.followerOr ? "Remove" : "Unfollow"}
 					</button>
 					<button onClick={closeModal}>Cancel</button>
 				</div>

@@ -26,6 +26,7 @@ import axios from "../../axios";
 
 const PostMenu = ({ id, type, name }) => {
 	const [liked, setLiked] = useState(false);
+	const [likedAnim, setLikedAnim] = useState(false);
 	const [bookmarked, setBookmarked] = useState(false);
 
 	const dispatch = useDispatch();
@@ -35,6 +36,8 @@ const PostMenu = ({ id, type, name }) => {
 	const uid = useSelector(selectUser)._id;
 
 	const handleLike = async () => {
+		setLikedAnim(true);
+		setLiked(true);
 		if (type === "pModal") {
 			dispatch(addLikeAct({ userId: uid }));
 		} else {
@@ -45,6 +48,8 @@ const PostMenu = ({ id, type, name }) => {
 	};
 
 	const handleDisLike = async () => {
+		setLikedAnim(true);
+		setLiked(false);
 		if (type === "pModal") {
 			dispatch(removeLikeAct({ userId: uid }));
 		} else {
@@ -115,21 +120,15 @@ const PostMenu = ({ id, type, name }) => {
 			<div className='interactions'>
 				{liked ? (
 					<LikeActive
-						className='icon'
-						onClick={() => {
-							handleDisLike();
-							setLiked(false);
-						}}
-						style={{ height: 28 + "px" }}
+						className={`icon ${likedAnim ? "liked" : ""}`}
+						onClick={handleDisLike}
+						onAnimationEnd={() => setLikedAnim(false)}
 					/>
 				) : (
 					<Like
-						className='icon'
-						onClick={() => {
-							handleLike();
-							setLiked(true);
-						}}
-						style={{ height: 28 + "px" }}
+						className={`icon ${likedAnim ? "liked" : ""}`}
+						onClick={handleLike}
+						onAnimationEnd={() => setLikedAnim(false)}
 					/>
 				)}
 				<Comment

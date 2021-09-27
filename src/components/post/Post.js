@@ -14,16 +14,7 @@ import TimePassed from "./TimePassed";
 import PopupTrigger from "../PopupTrigger";
 
 const Post = props => {
-	const {
-		id,
-		accountName,
-		uid,
-		image,
-		description,
-		comments,
-		likes,
-		createdAt,
-	} = props;
+	const { id, accountName, uid, image, description, comments, likes, createdAt } = props;
 	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [likedUser, setLikedUser] = useState({
 		id: "",
@@ -46,7 +37,7 @@ const Post = props => {
 
 	useEffect(() => {
 		const getPhotoName = async () => {
-			const id = likes[likes.length - 1];
+			const id = likes[likes.length - 2];
 			const res = await axios.get(`/users/i/${id}`);
 			const data = await res.data;
 			if (!data.success) {
@@ -71,11 +62,7 @@ const Post = props => {
 					iconSize='medium'
 					username={accountName}
 					showPopup={true}
-					image={
-						ownerPhoto.length > 0
-							? `http://localhost:5000/uploads/${ownerPhoto}`
-							: ""
-					}
+					image={ownerPhoto.length > 0 ? `http://localhost:5000/uploads/${ownerPhoto}` : ""}
 				/>
 				<More className='moreBtn' />
 			</header>
@@ -112,25 +99,15 @@ const Post = props => {
 				)}
 				{description.length > 0 && (
 					<div className='postDescription'>
-						<PopupTrigger
-							username={accountName}
-							uid={uid}
-							id={id + "des"}
-							hoveredEl={"desc"}
-						>
+						<PopupTrigger username={accountName} uid={uid} id={id + "des"} hoveredEl={"desc"}>
 							<span>{accountName}</span>
 						</PopupTrigger>
 						{description}
 					</div>
 				)}
 				{comments.length > 2 && (
-					<div
-						className='viewComments'
-						onClick={() => setCommentsActive(c => !c)}
-					>
-						{commentsActive
-							? "Show less comments"
-							: `View all ${comments.length} comments`}
+					<div className='viewComments' onClick={() => setCommentsActive(c => !c)}>
+						{commentsActive ? "Show less comments" : `View all ${comments.length} comments`}
 					</div>
 				)}
 				<div className='comments'>

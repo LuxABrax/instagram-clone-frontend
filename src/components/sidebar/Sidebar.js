@@ -15,7 +15,7 @@ const Sidebar = () => {
 	const { push } = useHistory();
 	const user = useSelector(selectUser);
 
-	if (width >= 1024) {
+	if (width >= 1000) {
 		return (
 			<div className='sidebar' style={{ left: leftOffset + "px" }}>
 				<ProfileComp

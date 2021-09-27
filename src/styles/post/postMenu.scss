@@ -14,5 +14,21 @@
 		&:hover {
 			cursor: pointer;
 		}
+
+		&.liked {
+			animation: like-button-animation 0.45s ease-in-out;
+		}
+	}
+}
+@keyframes like-button-animation {
+	0%,
+	to {
+		transform: scale(1);
+	}
+	25% {
+		transform: scale(1.2);
+	}
+	50% {
+		transform: scale(0.95);
 	}
 }
