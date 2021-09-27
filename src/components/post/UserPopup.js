@@ -3,7 +3,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
 import { useHistory } from "react-router";
-import { setOverPopup, setPopup, selectPopup, getPopupContent } from "../../redux/popupSlice";
+import {
+	setOverPopup,
+	setPopup,
+	selectPopup,
+	getPopupContent,
+} from "../../redux/popupSlice";
 
 import ProfileIcon from "../ProfileIcon";
 import FollowInfo from "../profile/FollowInfo";
@@ -71,9 +76,7 @@ const UserPopup = ({ fid }) => {
 							<h2 onClick={gotoProfile}>{popupContent.name}</h2>
 						</div>
 						<div className='desc'>
-							<div className='fullName'>
-								<strong>{popupContent.fullName}</strong>
-							</div>
+							<div className='fullName'>{popupContent.fullName}</div>
 						</div>
 					</div>
 				</header>
@@ -105,11 +108,11 @@ const UserPopup = ({ fid }) => {
 				<div className='popupBtns'>
 					{popupContent.isFollowing ? (
 						<>
-							<button>Message</button>
-							<button>Following</button>
+							<button className='flwBtn'>Message</button>
+							<button className='flwBtn'>Following</button>
 						</>
 					) : (
-						<button>Follow</button>
+						<button className='flwBtn flw'>Follow</button>
 					)}
 				</div>
 			</div>

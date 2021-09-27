@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
 import { toggleModal } from "../redux/modalSlice";
 import {
 	selectPopup,
@@ -9,19 +8,18 @@ import {
 	setPopup,
 	setPopupOffset,
 } from "../redux/popupSlice";
+
 import { calcPopupOffset } from "./post/popupOffset";
 import UserPopup from "./post/UserPopup";
 
 import "../styles/popupTrigger.scss";
 
 const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
-	const { popupActive, overTrigger, overPopup, popKey } =
-		useSelector(selectPopup);
+	const { popupActive, overTrigger, overPopup, popKey } = useSelector(selectPopup);
 	const [hasPopup, setHasPopup] = useState(false);
 
 	const showPopup = true;
 	const dispatch = useDispatch();
-	const { push } = useHistory();
 
 	function handlePopup(e, handleType, hoveredEl) {
 		console.log("handle popup");
@@ -40,10 +38,6 @@ const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
 			}, 300);
 		}
 	}
-	function gotoProfile() {
-		dispatch(setPopup("close"));
-		push(`/profile/${username}`);
-	}
 
 	return (
 		<div className='popupTriggerContainer'>
@@ -54,7 +48,6 @@ const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
 				className='popupTrigger'
 				onClick={() => {
 					if (onClick !== undefined) dispatch(toggleModal());
-					gotoProfile();
 				}}
 				onPointerOver={e => {
 					if (showPopup) {

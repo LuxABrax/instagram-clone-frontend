@@ -9,8 +9,7 @@ const Modal = ({ profile, children }) => {
 	const { push } = useHistory();
 
 	function closeModal() {
-		if (profile !== undefined && profile.length > 0)
-			push(`/profile/${profile}`);
+		if (profile !== undefined && profile.length > 0) push(`/profile/${profile}`);
 		dispatch(toggleModal());
 	}
 

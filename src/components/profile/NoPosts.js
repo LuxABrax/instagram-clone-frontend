@@ -3,7 +3,7 @@ import "../../styles/profile/noPosts.scss";
 
 const NoPosts = ({ isPopup, username }) => {
 	return (
-		<div className={`noPosts ${isPopup ? "isPopup" : ""}`}>
+		<div className='noPosts'>
 			<div className={`noPosts-container ${isPopup ? "isPopup" : ""}`}>
 				<div className={`noPosts-image ${isPopup ? "isPopup" : ""}`}>
 					<img src={camera} alt='camera' />

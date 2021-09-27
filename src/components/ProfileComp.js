@@ -1,4 +1,3 @@
-import "../styles/profileComp.scss";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
@@ -8,6 +7,8 @@ import { setPopup } from "../redux/popupSlice";
 import ProfileIcon from "./ProfileIcon";
 import PopupTrigger from "./PopupTrigger";
 import users from "../data/users";
+
+import "../styles/profileComp.scss";
 
 const ProfileComp = props => {
 	const {
@@ -34,6 +35,7 @@ const ProfileComp = props => {
 		: users[Math.floor(Math.random() * users.length)].username;
 
 	function gotoProfile() {
+		if (onClick !== undefined) dispatch(toggleModal());
 		dispatch(setPopup("close"));
 		push(`/profile/${username}`);
 	}
@@ -41,12 +43,7 @@ const ProfileComp = props => {
 	return (
 		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
 			{showPopup ? (
-				<PopupTrigger
-					username={username}
-					uid={id}
-					id={postId + "pi"}
-					hoveredEl={"icon"}
-				>
+				<PopupTrigger username={username} uid={id} id={postId + "pi"} hoveredEl={"icon"}>
 					<div className='pIconContainer'>
 						<ProfileIcon
 							iconSize={iconSize}
@@ -69,13 +66,7 @@ const ProfileComp = props => {
 
 			{(accountName || caption) && !hideAccountName && (
 				<div className={`textContainer ${captionSize}`}>
-					<span
-						className='accountName'
-						onClick={() => {
-							if (onClick !== undefined) dispatch(toggleModal());
-							push(`/profile/${accountName}`);
-						}}
-					>
+					<span className='accountName'>
 						{showPopup ? (
 							<PopupTrigger
 								username={username}
@@ -83,10 +74,10 @@ const ProfileComp = props => {
 								id={postId + "pn"}
 								hoveredEl={"name"}
 							>
-								{accountName}
+								<div onClick={gotoProfile}>{accountName}</div>
 							</PopupTrigger>
 						) : (
-							<>{accountName}</>
+							<div onClick={gotoProfile}>{accountName}</div>
 						)}
 					</span>
 					<span className={`caption ${captionSize}`}>{caption}</span>

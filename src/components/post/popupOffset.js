@@ -9,7 +9,7 @@ export const calcPopupOffset = (e, hoveredEl) => {
 		case "icon":
 			offX = 4;
 			break;
-		case ("name", "comm"):
+		case "name":
 			offX = -4;
 			break;
 		default:

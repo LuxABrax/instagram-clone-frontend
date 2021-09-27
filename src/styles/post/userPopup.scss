@@ -5,6 +5,7 @@
 	background-color: #fff;
 	border-radius: 12px;
 	box-shadow: 0 2px 14px 3px rgba(0, 0, 0, 0.15);
+	cursor: default !important;
 
 	header {
 		padding: 16px;
@@ -21,18 +22,26 @@
 		.popupInfo {
 			padding: 0 8px;
 			margin-left: 8px;
-			font-size: 14px;
 			text-align: left;
 			display: flex;
 			flex-direction: column;
+			justify-content: center;
 
 			.title {
 				color: #262626;
 				cursor: pointer;
-				font-weight: bold;
+				&:hover {
+					text-decoration: underline;
+				}
+				h2 {
+					font-size: 14px;
+					font-weight: 600;
+				}
 			}
 			.fullName {
 				color: #8e8e8e;
+				font-size: 14px;
+				font-weight: 400;
 			}
 		}
 	}
@@ -40,6 +49,7 @@
 		cursor: text;
 	}
 	.imageDisplay {
+		height: 130px;
 		img {
 			width: 130px;
 			height: 130px;
@@ -50,10 +60,17 @@
 		}
 	}
 	.popupBtns {
+		border-top: 1px solid #dbdbdb;
 		display: flex;
 		padding: 16px;
 		button {
+			flex: 1;
 			padding: 5px 9px;
+			position: static !important;
+			cursor: pointer;
+			&:nth-child(2) {
+				margin-left: 8px;
+			}
 		}
 	}
 }
