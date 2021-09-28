@@ -54,7 +54,7 @@ const AddPostModal = ({ id, addImage }) => {
 
 	return (
 		<Modal>
-			<div className='modalCont .row'>
+			<div className='modalContent addPost-modal'>
 				{image !== undefined && <img src={image} alt='add new' />}
 				<input
 					id='photoFile'
@@ -82,7 +82,9 @@ const AddPostModal = ({ id, addImage }) => {
 
 						<DescriptionInput />
 
-						<button onClick={closeModal}>Cancel</button>
+						<button className='cancelBtn' onClick={closeModal}>
+							Cancel
+						</button>
 					</div>
 				</div>
 			</div>
