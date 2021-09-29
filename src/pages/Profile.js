@@ -1,4 +1,3 @@
-import "../styles/pages/profile.scss";
 import { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,9 +15,7 @@ import {
 
 import axios from "../axios";
 
-import Header from "../components/profile/Header";
-import FeedMenu from "../components/profile/FeedMenu";
-import NoPosts from "../components/profile/NoPosts";
+import { Header, FeedMenu, NoPosts } from "../components/profile";
 import {
 	PostModal,
 	AddPostModal,
@@ -26,6 +23,8 @@ import {
 	FollowersModal,
 	UnFollowModal,
 } from "../components/profile/modals";
+
+import "../styles/pages/profile.scss";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -158,7 +157,9 @@ const Profile = () => {
 					hours={2}
 				/>
 			)}
-			{modalName === "addPost" && modalActive && <AddPostModal id={user._id} addImage={addImage} />}
+			{modalName === "addPost" && modalActive && (
+				<AddPostModal id={user._id} addImage={addImage} />
+			)}
 			{modalName === "img" && modalActive && <ChangeImgModal id={user._id} />}
 			{modalName === "unFollow" && modalActive && (
 				<UnFollowModal
@@ -193,7 +194,11 @@ const Profile = () => {
 				following={userProfile.following}
 				changeImg={changeImg}
 			/>
-			<FeedMenu showSaved={showSaved} showPosts={showPosts} isOwner={pName === user.name} />
+			<FeedMenu
+				showSaved={showSaved}
+				showPosts={showPosts}
+				isOwner={pName === user.name}
+			/>
 			<div className='posts'>
 				{imagesPosts.length > 0 ? (
 					sortedPosts?.map((postRow, index) => {
@@ -201,11 +206,7 @@ const Profile = () => {
 							<div className='pRow' key={index}>
 								{postRow.map((postI, idx) => {
 									if (postI.photo === "empty") {
-										return (
-											<div className='postContainer' key={idx}>
-												<img src='' alt='empty' />
-											</div>
-										);
+										return <div className='postContainer' key={idx}></div>;
 									} else {
 										return (
 											<div
@@ -215,7 +216,10 @@ const Profile = () => {
 													openModal(postI._id);
 												}}
 											>
-												<img src={`http://localhost:5000/uploads/posts/${postI.photo}`} alt='' />
+												<img
+													src={`http://localhost:5000/uploads/posts/${postI.photo}`}
+													alt=''
+												/>
 											</div>
 										);
 									}

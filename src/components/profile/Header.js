@@ -1,13 +1,14 @@
-import "../../styles/profile/header.scss";
 import useWindowDimensions from "../../utils/windowHook";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal } from "../../redux/modalSlice";
 
 import ProfileIcon from "../ProfileIcon";
 import { ReactComponent as More } from "../../icons/more.svg";
 import { ReactComponent as Cog } from "../../icons/cog.svg";
 import FollowInfo from "./FollowInfo";
 import ProfileMenu from "./ProfileMenu";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleModal } from "../../redux/modalSlice";
+
+import "../../styles/profile/header.scss";
 
 const Header = props => {
 	const {
@@ -99,11 +100,7 @@ const Header = props => {
 						<div className='description'>{description}</div>
 					</div>
 					<div className='followInfo2'>
-						<FollowInfo
-							posts={postNumber}
-							followers={followers}
-							following={following}
-						/>
+						<FollowInfo posts={postNumber} followers={followers} following={following} />
 					</div>
 				</div>
 			)}

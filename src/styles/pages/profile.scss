@@ -11,13 +11,13 @@
 	flex-direction: column;
 	.pRow {
 		display: flex;
-		margin-bottom: 1.75rem;
+		margin-bottom: 28px;
 		user-select: none;
 
 		.postContainer {
 			display: flex;
 			flex: 1;
-			margin-right: 1.75rem;
+			margin-right: 28px;
 			&:last-child {
 				margin-right: 0;
 			}
@@ -32,15 +32,21 @@
 	}
 }
 
-// @media only screen and (max-width: 1024px) {
-// 	.feed {
-// 		// width: 600px;
-// 	}
-// }
 @media only screen and (max-width: 735px) {
-	.profFeed {
-		width: 97vw;
-		padding-top: 0;
-		// margin: 0 auto;
+	.profile {
+		width: 100%;
+	}
+	.posts {
+		width: 97%;
+		margin: 0 auto;
+		.pRow {
+			margin-bottom: 3px;
+			.postContainer {
+				margin-right: 3px;
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
 	}
 }

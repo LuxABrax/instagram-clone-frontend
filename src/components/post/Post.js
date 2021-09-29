@@ -1,7 +1,6 @@
-import "../../styles/post/post.scss";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectFollowedUsers } from "../../redux/usersSlice";
 import axios from "../../axios";
 
@@ -12,6 +11,8 @@ import Comment from "./Comment";
 import AddComment from "./AddComment";
 import TimePassed from "./TimePassed";
 import PopupTrigger from "../PopupTrigger";
+
+import "../../styles/post/post.scss";
 
 const Post = props => {
 	const { id, accountName, uid, image, description, comments, likes, createdAt } = props;
@@ -25,7 +26,7 @@ const Post = props => {
 
 	const fUsers = useSelector(selectFollowedUsers);
 	const { push } = useHistory();
-	const dispatch = useDispatch();
+
 	useEffect(() => {
 		const getPhoto = async () => {
 			const user = fUsers.filter(u => u._id === uid);
@@ -62,7 +63,9 @@ const Post = props => {
 					iconSize='medium'
 					username={accountName}
 					showPopup={true}
-					image={ownerPhoto.length > 0 ? `http://localhost:5000/uploads/${ownerPhoto}` : ""}
+					image={
+						ownerPhoto.length > 0 ? `http://localhost:5000/uploads/${ownerPhoto}` : ""
+					}
 				/>
 				<More className='moreBtn' />
 			</header>
@@ -99,7 +102,12 @@ const Post = props => {
 				)}
 				{description.length > 0 && (
 					<div className='postDescription'>
-						<PopupTrigger username={accountName} uid={uid} id={id + "des"} hoveredEl={"desc"}>
+						<PopupTrigger
+							username={accountName}
+							uid={uid}
+							id={id + "des"}
+							hoveredEl={"desc"}
+						>
 							<span>{accountName}</span>
 						</PopupTrigger>
 						{description}
@@ -107,7 +115,9 @@ const Post = props => {
 				)}
 				{comments.length > 2 && (
 					<div className='viewComments' onClick={() => setCommentsActive(c => !c)}>
-						{commentsActive ? "Show less comments" : `View all ${comments.length} comments`}
+						{commentsActive
+							? "Show less comments"
+							: `View all ${comments.length} comments`}
 					</div>
 				)}
 				<div className='comments'>

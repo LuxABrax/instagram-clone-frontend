@@ -25,10 +25,7 @@
 		.moreBtn {
 			height: 30px;
 			width: 30px;
-
-			&:hover {
-				cursor: pointer;
-			}
+			cursor: pointer;
 		}
 	}
 	.postImage {
@@ -47,7 +44,7 @@
 		padding-top: 0.5em;
 		margin-bottom: 8px;
 		margin-right: 3px;
-		.link {
+		&.link {
 			font-weight: 700;
 			cursor: pointer;
 			margin-left: 3px;
