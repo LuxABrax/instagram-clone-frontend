@@ -6,7 +6,7 @@
 	margin-bottom: 2rem;
 	border-radius: 3px;
 
-	header {
+	.post-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -41,9 +41,8 @@
 	span {
 		font-size: 14px;
 		margin-left: -1px;
-		padding-top: 0.5em;
-		margin-bottom: 8px;
 		margin-right: 3px;
+		margin-bottom: 8px;
 		&.link {
 			font-weight: 700;
 			cursor: pointer;

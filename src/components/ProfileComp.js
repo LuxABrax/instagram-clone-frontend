@@ -12,7 +12,6 @@ import "../styles/profileComp.scss";
 
 const ProfileComp = props => {
 	const {
-		postId,
 		id,
 		username,
 		caption,
@@ -25,6 +24,7 @@ const ProfileComp = props => {
 		followUser,
 		onClick,
 		showPopup,
+		popupKey,
 	} = props;
 
 	const dispatch = useDispatch();
@@ -43,7 +43,12 @@ const ProfileComp = props => {
 	return (
 		<div className={`profileComp ${captionSize === "small" ? "small" : ""}`}>
 			{showPopup ? (
-				<PopupTrigger username={username} uid={id} id={postId + "pi"} hoveredEl={"icon"}>
+				<PopupTrigger
+					username={username}
+					uid={id}
+					popupKey={popupKey + "pi"}
+					hoveredEl={"icon"}
+				>
 					<div className='pIconContainer'>
 						<ProfileIcon
 							iconSize={iconSize}
@@ -71,7 +76,7 @@ const ProfileComp = props => {
 							<PopupTrigger
 								username={username}
 								uid={id}
-								id={postId + "pn"}
+								popupKey={popupKey + "pn"}
 								hoveredEl={"name"}
 							>
 								<div onClick={gotoProfile}>{accountName}</div>

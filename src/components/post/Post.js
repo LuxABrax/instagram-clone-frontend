@@ -13,9 +13,19 @@ import TimePassed from "./TimePassed";
 import PopupTrigger from "../PopupTrigger";
 
 import "../../styles/post/post.scss";
+import { selectUser } from "../../redux/authSlice";
 
 const Post = props => {
-	const { id, accountName, uid, image, description, comments, likes, createdAt } = props;
+	const {
+		id,
+		accountName,
+		uid,
+		image,
+		description,
+		comments,
+		likes,
+		createdAt,
+	} = props;
 	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [likedUser, setLikedUser] = useState({
 		id: "",
@@ -24,21 +34,24 @@ const Post = props => {
 	});
 	const [commentsActive, setCommentsActive] = useState(false);
 
+	const user = useSelector(selectUser);
 	const fUsers = useSelector(selectFollowedUsers);
 	const { push } = useHistory();
 
 	useEffect(() => {
 		const getPhoto = async () => {
-			const user = fUsers.filter(u => u._id === uid);
-			if (user[0] !== undefined) setOwnerPhoto(user[0].photo);
+			const users = [...fUsers, user];
+			const postUser = users.filter(u => u._id === uid);
+			if (postUser[0] !== undefined) setOwnerPhoto(postUser[0].photo);
 		};
 		if (fUsers.length > 0) getPhoto();
 		return () => {};
-	}, [fUsers, uid]);
+	}, [fUsers, user, uid]);
 
 	useEffect(() => {
 		const getPhotoName = async () => {
-			const id = likes[likes.length - 2];
+			const id =
+				likes.length > 1 ? likes[likes.length - 2] : likes[likes.length - 1];
 			const res = await axios.get(`/users/i/${id}`);
 			const data = await res.data;
 			if (!data.success) {
@@ -55,16 +68,18 @@ const Post = props => {
 
 	return (
 		<div className='post'>
-			<header>
+			<header className='post-header'>
 				<ProfileComp
 					key={id}
-					postId={id + "p"}
+					popupKey={id + "p"}
 					id={uid}
 					iconSize='medium'
 					username={accountName}
 					showPopup={true}
 					image={
-						ownerPhoto.length > 0 ? `http://localhost:5000/uploads/${ownerPhoto}` : ""
+						ownerPhoto.length > 0
+							? `http://localhost:5000/uploads/${ownerPhoto}`
+							: ""
 					}
 				/>
 				<More className='moreBtn' />
@@ -79,7 +94,7 @@ const Post = props => {
 							<PopupTrigger
 								username={likedUser.name}
 								uid={likedUser.id}
-								id={id + "lu"}
+								popupKey={id + "lu"}
 								hoveredEl={"liked"}
 							>
 								<span
@@ -105,7 +120,7 @@ const Post = props => {
 						<PopupTrigger
 							username={accountName}
 							uid={uid}
-							id={id + "des"}
+							popupKey={id + "des"}
 							hoveredEl={"desc"}
 						>
 							<span>{accountName}</span>
@@ -114,7 +129,10 @@ const Post = props => {
 					</div>
 				)}
 				{comments.length > 2 && (
-					<div className='viewComments' onClick={() => setCommentsActive(c => !c)}>
+					<div
+						className='viewComments'
+						onClick={() => setCommentsActive(c => !c)}
+					>
 						{commentsActive
 							? "Show less comments"
 							: `View all ${comments.length} comments`}

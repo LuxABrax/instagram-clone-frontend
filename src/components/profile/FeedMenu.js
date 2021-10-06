@@ -7,7 +7,7 @@ import { ReactComponent as Saved } from "../../icons/profileFeedTab/saved.svg";
 import { useSelector } from "react-redux";
 import { selectUserProfile } from "../../redux/usersSlice";
 import { useHistory, useLocation } from "react-router";
-// import { ReactComponent as Tagged } from "../../icons/profileFeedTab/tagged.svg";
+import { ReactComponent as Tagged } from "../../icons/profileFeedTab/tagged.svg";
 
 const FeedMenu = ({ showSaved, showPosts, isOwner }) => {
 	const [activeTab, setActiveTab] = useState("posts");
@@ -59,15 +59,16 @@ const FeedMenu = ({ showSaved, showPosts, isOwner }) => {
 				</div>
 			)}
 
-			{/* <div
+			<div
 				className={`tab ${activeTab === "tagged" ? "active" : ""}`}
 				onClick={() => {
 					setActiveTab("tagged");
+					push(`/profile/${user.name}/feed`);
 				}}
 			>
 				<Tagged className='icon' />
-				<p>TAGGED</p>
-			</div> */}
+				<p>FEED</p>
+			</div>
 		</div>
 	);
 };

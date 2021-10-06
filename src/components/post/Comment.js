@@ -14,7 +14,7 @@ const Comment = props => {
 		<div className='commentContainer'>
 			<div className='accountName' onClick={goToAccount}>
 				<PopupTrigger
-					id={id}
+					popupKey={id}
 					username={accountName}
 					uid={uid}
 					hoveredEl={"comm"}

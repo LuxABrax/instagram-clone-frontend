@@ -14,8 +14,16 @@ import UserPopup from "./post/UserPopup";
 
 import "../styles/popupTrigger.scss";
 
-const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
-	const { popupActive, overTrigger, overPopup, popKey } = useSelector(selectPopup);
+const PopupTrigger = ({
+	popupKey,
+	uid,
+	username,
+	onClick,
+	hoveredEl,
+	children,
+}) => {
+	const { popupActive, overTrigger, overPopup, popKey } =
+		useSelector(selectPopup);
 	const [hasPopup, setHasPopup] = useState(false);
 
 	const showPopup = true;
@@ -25,7 +33,7 @@ const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
 		console.log("handle popup");
 		if (handleType === "show") {
 			const { offY, offX } = calcPopupOffset(e, hoveredEl);
-			dispatch(setKey(id));
+			dispatch(setKey(popupKey));
 			dispatch(setPopupOffset({ offY, offX }));
 			dispatch(setOverTrigger(true));
 			setHasPopup(true);
@@ -41,8 +49,8 @@ const PopupTrigger = ({ id, uid, username, onClick, hoveredEl, children }) => {
 
 	return (
 		<div className='popupTriggerContainer'>
-			{popupActive && showPopup && hasPopup && id === popKey && (
-				<UserPopup fid={uid} postId={id} />
+			{popupActive && showPopup && hasPopup && popupKey === popKey && (
+				<UserPopup fid={uid} popupKey={popupKey} />
 			)}
 			<div
 				className='popupTrigger'

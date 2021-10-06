@@ -67,7 +67,7 @@ const Home = () => {
 	return (
 		<div className='home'>
 			<div className='container'>
-				<Feed />
+				<Feed withStories />
 				<Sidebar />
 			</div>
 		</div>

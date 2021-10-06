@@ -111,8 +111,12 @@ const UserPopup = ({ fid }) => {
 							<button className='flwBtn'>Message</button>
 							<button className='flwBtn'>Following</button>
 						</>
-					) : (
+					) : popupContent._id !== user._id ? (
 						<button className='flwBtn flw'>Follow</button>
+					) : (
+						<button className='flwBtn' onClick={() => push("/accounts/edit")}>
+							Edit Profile
+						</button>
 					)}
 				</div>
 			</div>

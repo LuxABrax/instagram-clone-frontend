@@ -1,19 +1,19 @@
 .postMenu {
 	display: flex;
 	justify-content: space-between;
-	margin-top: 0.75em;
+	padding-top: 6px;
+	padding-bottom: 8px;
 	.interactions {
 		display: flex;
 	}
 
 	.icon {
-		margin-right: 1em;
-		width: 24px;
-		height: 24px;
-
-		&:hover {
-			cursor: pointer;
-		}
+		width: 40px;
+		height: 40px;
+		padding: 8px;
+		margin-left: -8px;
+		margin-right: 8px;
+		cursor: pointer;
 
 		&.liked {
 			animation: like-button-animation 0.45s ease-in-out;

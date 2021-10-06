@@ -1,9 +1,4 @@
-import {
-	BrowserRouter as Router,
-	Redirect,
-	Route,
-	Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 
 import "./styles/App.scss";
 import Navigation from "./components/navigation/Navigation";
@@ -37,6 +32,9 @@ function App() {
 					<Profile />
 				</Route>
 				<Route path='/profile/:pName/saved' exact>
+					<Profile />
+				</Route>
+				<Route path='/profile/:pName/feed' exact>
 					<Profile />
 				</Route>
 				<Route path='/profile/:pName/p/:pId' exact>

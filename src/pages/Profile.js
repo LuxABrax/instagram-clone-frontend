@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { changePage, selectPage } from "../redux/navigationSlice";
-import { toggleModal, selectModalActive, selectModalName } from "../redux/modalSlice";
+import {
+	toggleModal,
+	selectModalActive,
+	selectModalName,
+} from "../redux/modalSlice";
 import { selectUser } from "../redux/authSlice";
 import {
 	getFollowedUsers,
@@ -25,6 +29,7 @@ import {
 } from "../components/profile/modals";
 
 import "../styles/pages/profile.scss";
+import Feed from "../components/feed/Feed";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -201,32 +206,50 @@ const Profile = () => {
 			/>
 			<div className='posts'>
 				{imagesPosts.length > 0 ? (
-					sortedPosts?.map((postRow, index) => {
-						return (
-							<div className='pRow' key={index}>
-								{postRow.map((postI, idx) => {
-									if (postI.photo === "empty") {
-										return <div className='postContainer' key={idx}></div>;
-									} else {
-										return (
-											<div
-												className='postContainer'
-												key={idx}
-												onClick={async () => {
-													openModal(postI._id);
-												}}
-											>
-												<img
-													src={`http://localhost:5000/uploads/posts/${postI.photo}`}
-													alt=''
-												/>
-											</div>
-										);
-									}
-								})}
-							</div>
-						);
-					})
+					location.pathname === `/profile/${user2.name}/feed` ? (
+						<Feed posts={userPosts} />
+					) : (
+						// imagesPosts?.map((post, idx) => {
+						// 	return (
+						// 		<div
+						// 			className='feedPost'
+						// 			key={idx}
+						// 			onClick={async () => {
+						// 				openModal(post._id);
+						// 			}}
+						// 		>
+						// 			<img src={`http://localhost:5000/uploads/posts/${post.photo}`} alt='' />
+						// 		</div>
+						// 	);
+						// })
+						sortedPosts?.map((postRow, index) => {
+							return (
+								<div className='pRow' key={index}>
+									{postRow.map((postI, idx) => {
+										if (postI.photo === "empty") {
+											return <div className='postContainer' key={idx}></div>;
+										} else {
+											return (
+												<div
+													className='postContainer'
+													key={idx}
+													onClick={async () => {
+														openModal(postI._id);
+													}}
+												>
+													<img
+														className='gridImg'
+														src={`http://localhost:5000/uploads/posts/${postI.photo}`}
+														alt=''
+													/>
+												</div>
+											);
+										}
+									})}
+								</div>
+							);
+						})
+					)
 				) : (
 					<NoPosts />
 				)}

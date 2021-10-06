@@ -22,7 +22,7 @@ const PostModal = props => {
 		photo: "",
 	});
 
-	const { push } = useHistory();
+	const { push, goBack } = useHistory();
 	const dispatch = useDispatch();
 
 	const aPost = useSelector(selectActivePost);
@@ -54,7 +54,8 @@ const PostModal = props => {
 
 	function closeModal() {
 		dispatch(toggleModal());
-		push(`/profile/${accountName}`);
+		goBack();
+		// push(`/profile/${accountName}`);
 	}
 
 	useEffect(() => {

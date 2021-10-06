@@ -8,7 +8,7 @@ export const getPopupContent = createAsyncThunk(
 		const res = await axios.get(`/follow/popup/${uId}/${fId}`);
 
 		const popupContent = await res.data.popupInfo;
-		console.log(popupContent);
+		console.log("popup content: ", popupContent);
 
 		if (res.data.success === false) return rejectWithValue(res.data.message);
 

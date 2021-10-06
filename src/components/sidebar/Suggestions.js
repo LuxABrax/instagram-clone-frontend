@@ -53,7 +53,7 @@ const Suggestions = () => {
 						return (
 							<ProfileComp
 								key={suggestedUser._id}
-								postId={suggestedUser._id + "su"}
+								popupKey={suggestedUser._id + "su"}
 								id={suggestedUser._id}
 								username={suggestedUser.name}
 								image={`http://localhost:5000/uploads/${suggestedUser.photo}`}

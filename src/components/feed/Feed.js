@@ -5,14 +5,22 @@ import { selectPosts } from "../../redux/postsSlice";
 import Stories from "./Stories";
 import Post from "../post/Post";
 
-const Feed = () => {
-	const posts = useSelector(selectPosts);
+const Feed = ({ withStories, posts }) => {
+	const allPosts = useSelector(selectPosts);
 
+	let feedPosts = [];
+	if (posts === undefined) {
+		feedPosts = allPosts;
+	} else {
+		feedPosts = posts;
+	}
+
+	console.log("posts: ", posts);
 	return (
-		<div className='feed'>
-			<Stories />
-			{posts.length > 0 &&
-				posts.map(post => {
+		<div className={`feed ${posts === undefined ? "" : "onProfile"}`}>
+			{withStories && <Stories />}
+			{feedPosts.length > 0 &&
+				feedPosts.map(post => {
 					return (
 						<Post
 							key={post._id}
