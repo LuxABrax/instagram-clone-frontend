@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
-import { selectFollowedUsers } from "../../redux/usersSlice";
+import { selectUser } from "../../redux/authSlice";
+import { selectFollowedUsers, selectUserProfile } from "../../redux/usersSlice";
 import axios from "../../axios";
 
 import ProfileComp from "../ProfileComp";
@@ -13,7 +14,6 @@ import TimePassed from "./TimePassed";
 import PopupTrigger from "../PopupTrigger";
 
 import "../../styles/post/post.scss";
-import { selectUser } from "../../redux/authSlice";
 
 const Post = props => {
 	const {
@@ -26,30 +26,35 @@ const Post = props => {
 		likes,
 		createdAt,
 	} = props;
+
 	const [ownerPhoto, setOwnerPhoto] = useState("");
+	const [commentsActive, setCommentsActive] = useState(false);
 	const [likedUser, setLikedUser] = useState({
 		id: "",
 		name: "",
 		photo: "",
 	});
-	const [commentsActive, setCommentsActive] = useState(false);
 
 	const user = useSelector(selectUser);
+	const userProfile = useSelector(selectUserProfile);
 	const fUsers = useSelector(selectFollowedUsers);
+
 	const { push } = useHistory();
 
 	useEffect(() => {
 		const getPhoto = async () => {
-			const users = [...fUsers, user];
+			const users = [...fUsers, userProfile, user];
+			users.filter((u, i) => users.indexOf(u) === i);
+
 			const postUser = users.filter(u => u._id === uid);
+
 			if (postUser[0] !== undefined) setOwnerPhoto(postUser[0].photo);
 		};
 		if (fUsers.length > 0) getPhoto();
-		return () => {};
-	}, [fUsers, user, uid]);
+	}, [fUsers, user, userProfile, uid]);
 
 	useEffect(() => {
-		const getPhotoName = async () => {
+		const getLikedUser = async () => {
 			const id =
 				likes.length > 1 ? likes[likes.length - 2] : likes[likes.length - 1];
 			const res = await axios.get(`/users/i/${id}`);
@@ -61,9 +66,8 @@ const Post = props => {
 			}
 		};
 		if (likes !== undefined && likes.length > 0) {
-			getPhotoName();
+			getLikedUser();
 		}
-		return () => {};
 	}, [likes]);
 
 	return (

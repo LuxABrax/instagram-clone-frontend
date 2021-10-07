@@ -1,4 +1,3 @@
-import "../../styles/profile/feedMenu.scss";
 import { useState, useEffect } from "react";
 
 import { ReactComponent as Posts } from "../../icons/profileFeedTab/posts.svg";
@@ -9,20 +8,25 @@ import { selectUserProfile } from "../../redux/usersSlice";
 import { useHistory, useLocation } from "react-router";
 import { ReactComponent as Tagged } from "../../icons/profileFeedTab/tagged.svg";
 
+import "../../styles/profile/feedMenu.scss";
+
 const FeedMenu = ({ showSaved, showPosts, isOwner }) => {
-	const [activeTab, setActiveTab] = useState("posts");
+	const [activeTab, setActiveTab] = useState("");
 	const user = useSelector(selectUserProfile);
 
-	const { push } = useHistory();
 	let location = useLocation();
+	const { push } = useHistory();
 
 	useEffect(() => {
 		if (location.pathname === `/profile/${user.name}/saved`) {
 			setActiveTab("saved");
-		} else {
+		} else if (location.pathname === `/profile/${user.name}/feed`) {
+			setActiveTab("feed");
+		} else if (location.pathname === `/profile/${user.name}`) {
 			setActiveTab("posts");
 		}
 	}, [location.pathname, user.name]);
+
 	return (
 		<div className='feedMenu'>
 			<div
@@ -36,15 +40,18 @@ const FeedMenu = ({ showSaved, showPosts, isOwner }) => {
 				<Posts className='icon' />
 				<p>POSTS</p>
 			</div>
-			{/* <div
-				className={`tab ${activeTab === "igtv" ? "active" : ""}`}
+
+			<div
+				className={`tab ${activeTab === "feed" ? "active" : ""}`}
 				onClick={() => {
-					setActiveTab("igtv");
+					setActiveTab("feed");
+					push(`/profile/${user.name}/feed`);
 				}}
 			>
-				<IGTV className='icon' />
-				<p>IGTV</p>
-			</div> */}
+				<span className='glyphIcon feedIcon'></span>
+				<p className='feedIcon'>FEED</p>
+			</div>
+
 			{isOwner && (
 				<div
 					className={`tab ${activeTab === "saved" ? "active" : ""}`}
@@ -63,11 +70,10 @@ const FeedMenu = ({ showSaved, showPosts, isOwner }) => {
 				className={`tab ${activeTab === "tagged" ? "active" : ""}`}
 				onClick={() => {
 					setActiveTab("tagged");
-					push(`/profile/${user.name}/feed`);
 				}}
 			>
 				<Tagged className='icon' />
-				<p>FEED</p>
+				<p>TAGGED</p>
 			</div>
 		</div>
 	);

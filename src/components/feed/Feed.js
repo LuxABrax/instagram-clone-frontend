@@ -1,26 +1,26 @@
-import "../../styles/feed/feed.scss";
-import { useSelector } from "react-redux";
-import { selectPosts } from "../../redux/postsSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserPosts, selectPosts } from "../../redux/postsSlice";
 
 import Stories from "./Stories";
 import Post from "../post/Post";
 
-const Feed = ({ withStories, posts }) => {
-	const allPosts = useSelector(selectPosts);
+import "../../styles/feed/feed.scss";
 
-	let feedPosts = [];
-	if (posts === undefined) {
-		feedPosts = allPosts;
-	} else {
-		feedPosts = posts;
-	}
+const Feed = ({ withStories, onProfile, uId }) => {
+	const posts = useSelector(selectPosts);
 
-	console.log("posts: ", posts);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (onProfile) dispatch(getUserPosts(uId));
+	}, [onProfile, dispatch, uId]);
+
 	return (
-		<div className={`feed ${posts === undefined ? "" : "onProfile"}`}>
+		<div className={`feed ${onProfile ? "onProfile" : ""}`}>
 			{withStories && <Stories />}
-			{feedPosts.length > 0 &&
-				feedPosts.map(post => {
+			{posts.length > 0 &&
+				posts.map(post => {
 					return (
 						<Post
 							key={post._id}

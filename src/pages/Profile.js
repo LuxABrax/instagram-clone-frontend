@@ -16,10 +16,10 @@ import {
 	selectUserProfile,
 	setUserPosts,
 } from "../redux/usersSlice";
-
 import axios from "../axios";
 
 import { Header, FeedMenu, NoPosts } from "../components/profile";
+import Feed from "../components/feed/Feed";
 import {
 	PostModal,
 	AddPostModal,
@@ -29,7 +29,6 @@ import {
 } from "../components/profile/modals";
 
 import "../styles/pages/profile.scss";
-import Feed from "../components/feed/Feed";
 
 const Profile = () => {
 	const [arrSorted, setArrSorted] = useState(false);
@@ -207,21 +206,8 @@ const Profile = () => {
 			<div className='posts'>
 				{imagesPosts.length > 0 ? (
 					location.pathname === `/profile/${user2.name}/feed` ? (
-						<Feed posts={userPosts} />
+						<Feed onProfile uId={userProfile._id} />
 					) : (
-						// imagesPosts?.map((post, idx) => {
-						// 	return (
-						// 		<div
-						// 			className='feedPost'
-						// 			key={idx}
-						// 			onClick={async () => {
-						// 				openModal(post._id);
-						// 			}}
-						// 		>
-						// 			<img src={`http://localhost:5000/uploads/posts/${post.photo}`} alt='' />
-						// 		</div>
-						// 	);
-						// })
 						sortedPosts?.map((postRow, index) => {
 							return (
 								<div className='pRow' key={index}>

@@ -3,15 +3,49 @@ import axios from "../axios";
 
 export const getPosts = createAsyncThunk(
 	"posts/getPosts",
-	async (userId, { rejectWithValue, dispatch }) => {
+	async (userId, { rejectWithValue }) => {
 		const res = await axios.get(`/posts/following/${userId}`);
 		const data = await res.data;
 		if (!data.success) {
 			console.log(data);
 			return rejectWithValue(data.message);
 		}
-		console.log(data.data);
-		return data.data;
+		// Parse Comments
+		const posts = data.data.map(p => {
+			if (p.comments.length === 0) return p;
+			return {
+				...p,
+				comments: p.comments.map(c => {
+					return JSON.parse(c);
+				}),
+			};
+		});
+		// console.log(data.data);
+		return posts;
+	}
+);
+
+export const getUserPosts = createAsyncThunk(
+	"posts/getUserPosts",
+	async (userId, { rejectWithValue }) => {
+		const res = await axios.get(`/posts/profile/${userId}`);
+		const data = await res.data;
+		if (!data.success) {
+			console.log(data);
+			return rejectWithValue(data.message);
+		}
+		// Parse Comments
+		const posts = data.data.map(p => {
+			if (p.comments.length === 0) return p;
+			return {
+				...p,
+				comments: p.comments.map(c => {
+					return JSON.parse(c);
+				}),
+			};
+		});
+		// console.log(data.data, posts);
+		return posts;
 	}
 );
 
@@ -80,21 +114,25 @@ export const postsSlice = createSlice({
 			state.status = "Get Posts";
 		},
 		[getPosts.fulfilled]: (state, { payload }) => {
-			const posts = payload.map(p => {
-				if (p.comments.length === 0) return p;
-
-				const coms = p.comments.map(c => {
-					return JSON.parse(c);
-				});
-				return { ...p, comments: coms };
-			});
-			state.posts = posts;
+			state.posts = payload;
 			state.status = "Get Posts Success";
 		},
 		[getPosts.rejected]: (state, { error }) => {
 			console.log(error);
 			state.error = error.message;
 			state.status = "Get Posts Failed";
+		},
+		[getUserPosts.pending]: state => {
+			state.status = "Get User Posts";
+		},
+		[getUserPosts.fulfilled]: (state, { payload }) => {
+			state.posts = payload;
+			state.status = "Get User Posts Success";
+		},
+		[getUserPosts.rejected]: (state, { error }) => {
+			console.log(error);
+			state.error = error.message;
+			state.status = "Get User Posts Failed";
 		},
 	},
 });

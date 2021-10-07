@@ -1,10 +1,11 @@
-import "../../styles/navigation/navigation.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { goHome } from "../../redux/navigationSlice";
 import { selectLoggedIn } from "../../redux/authSlice";
 
 import Menu from "./Menu";
+
+import "../../styles/navigation/navigation.scss";
 
 const Navigation = () => {
 	const dispatch = useDispatch();

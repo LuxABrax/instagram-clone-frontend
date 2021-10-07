@@ -12,13 +12,15 @@
 		width: 600px;
 		margin-right: 0;
 		&.onProfile {
+			width: 100%;
+			max-width: 614px;
 			margin: 0 auto;
 		}
 	}
 }
 @media only screen and (max-width: 640px) {
 	.feed {
-		width: 97vw;
+		width: 94vw;
 		margin: 0 auto;
 	}
 }

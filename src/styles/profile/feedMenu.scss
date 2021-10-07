@@ -23,6 +23,9 @@
 			.icon {
 				fill: $font-color-footer;
 			}
+			.glyphIcon {
+				filter: opacity(0.2);
+			}
 		}
 		&.active {
 			color: $font-color-primary;
@@ -32,9 +35,58 @@
 			.icon {
 				fill: $font-color-primary;
 			}
+			.glyphIcon {
+				filter: opacity(1);
+			}
 		}
 		p {
 			margin-left: 6px;
+		}
+		.glyphIcon {
+			background-image: url("../../images/glyphsSprite.png");
+			background-size: 569px 521px;
+			background-position: -50px -497px;
+			background-repeat: no-repeat;
+			filter: opacity(0.4);
+			height: 24px;
+			width: 24px;
+			transform: scale(0.6);
+		}
+	}
+}
+
+@media screen and (max-width: 735px) {
+	.feedMenu {
+		border-top: none;
+	}
+}
+@media screen and (max-width: 600px) {
+	.feedMenu {
+		justify-content: space-around;
+		border-top: none;
+		border-bottom: 1px solid #dbdbdb;
+		.tab {
+			margin: 0;
+			padding: 0 20px;
+			&.active {
+				border-top: none;
+				.icon {
+					fill: #0095f6;
+				}
+				.glyphIcon {
+					background-position: -25px -497px;
+				}
+			}
+			p {
+				display: none;
+			}
+			.icon {
+				width: 24px;
+				height: 24px;
+			}
+			.glyphIcon {
+				transform: none;
+			}
 		}
 	}
 }
