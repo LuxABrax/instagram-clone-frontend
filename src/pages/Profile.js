@@ -31,7 +31,7 @@ import {
 import "../styles/pages/profile.scss";
 
 const Profile = () => {
-	const [arrSorted, setArrSorted] = useState(false);
+	// const [arrSorted, setArrSorted] = useState(false);
 	const [sortedPosts, setSortedPosts] = useState([]);
 	const [imagesPosts, setImagesPosts] = useState([]);
 
@@ -137,7 +137,7 @@ const Profile = () => {
 			}
 			// console.log(sPosts);
 			setSortedPosts(sPosts);
-			setArrSorted(true);
+			// setArrSorted(true);
 		};
 
 		sortPosts();

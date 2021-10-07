@@ -1,14 +1,6 @@
-import "../../styles/post/postMenu.scss";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-
-import { ReactComponent as Like } from "../../icons/heart.svg";
-import { ReactComponent as LikeActive } from "../../icons/heartActive.svg";
-import { ReactComponent as Comment } from "../../icons/comment.svg";
-import { ReactComponent as Share } from "../../icons/directShare.svg";
-import { ReactComponent as Bookmark } from "../../icons/save.svg";
-import { ReactComponent as BookmarkActive } from "../../icons/saveActive.svg";
 import { selectUser } from "../../redux/authSlice";
 import {
 	addLike,
@@ -24,8 +16,25 @@ import {
 } from "../../redux/postsSlice";
 import axios from "../../axios";
 
-const PostMenu = ({ id, type, name }) => {
-	const [liked, setLiked] = useState(false);
+import { ReactComponent as Like } from "../../icons/heart.svg";
+import { ReactComponent as LikeActive } from "../../icons/heartActive.svg";
+import { ReactComponent as Comment } from "../../icons/comment.svg";
+import { ReactComponent as Share } from "../../icons/directShare.svg";
+import { ReactComponent as Bookmark } from "../../icons/save.svg";
+import { ReactComponent as BookmarkActive } from "../../icons/saveActive.svg";
+
+import "../../styles/post/postMenu.scss";
+
+const PostMenu = ({
+	id,
+	type,
+	name,
+	liked,
+	setLiked,
+	sendLiked,
+	setSendLiked,
+}) => {
+	// const [liked, setLiked] = useState(false);
 	const [likedAnim, setLikedAnim] = useState(false);
 	const [bookmarked, setBookmarked] = useState(false);
 
@@ -35,9 +44,11 @@ const PostMenu = ({ id, type, name }) => {
 	const aPost = useSelector(selectActivePost);
 	const uid = useSelector(selectUser)._id;
 
-	const handleLike = async () => {
+	const handleLike = useCallback(async () => {
 		setLikedAnim(true);
 		setLiked(true);
+		setSendLiked(false);
+
 		if (type === "pModal") {
 			dispatch(addLikeAct({ userId: uid }));
 		} else {
@@ -45,7 +56,7 @@ const PostMenu = ({ id, type, name }) => {
 			if (pidx !== -1) dispatch(addLike({ userId: uid, pidx }));
 		}
 		await axios.put(`/posts/like/${id}/${uid}`);
-	};
+	}, [dispatch, id, posts, setLiked, setSendLiked, type, uid]);
 
 	const handleDisLike = async () => {
 		setLikedAnim(true);
@@ -114,7 +125,12 @@ const PostMenu = ({ id, type, name }) => {
 		}
 
 		return () => {};
-	}, [type, aPost, posts, id, uid]);
+	}, [type, aPost, posts, id, uid, setLiked]);
+
+	useEffect(() => {
+		if (sendLiked === true) handleLike();
+	}, [handleLike, sendLiked]);
+
 	return (
 		<div className='postMenu'>
 			<div className='interactions'>
@@ -145,7 +161,7 @@ const PostMenu = ({ id, type, name }) => {
 			</div>
 			{bookmarked ? (
 				<BookmarkActive
-					className='icon'
+					className='icon bmk'
 					onClick={() => {
 						handleUnSave();
 						setBookmarked(false);
@@ -153,7 +169,7 @@ const PostMenu = ({ id, type, name }) => {
 				/>
 			) : (
 				<Bookmark
-					className='icon'
+					className='icon bmk'
 					onClick={() => {
 						handleSave();
 						setBookmarked(true);

@@ -13,7 +13,7 @@ import { ReactComponent as More } from "../../../icons/more.svg";
 import axios from "../../../axios";
 
 const PostModal = props => {
-	const { pId, accountName, hours } = props;
+	const { pId, hours } = props;
 
 	const [userImage, setUserImage] = useState("");
 	const [likedUser, setLikedUser] = useState({
@@ -22,7 +22,7 @@ const PostModal = props => {
 		photo: "",
 	});
 
-	const { push, goBack } = useHistory();
+	const { goBack } = useHistory();
 	const dispatch = useDispatch();
 
 	const aPost = useSelector(selectActivePost);

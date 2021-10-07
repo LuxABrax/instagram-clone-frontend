@@ -1,18 +1,23 @@
 .postMenu {
 	display: flex;
 	justify-content: space-between;
+	padding-left: 16px;
+	padding-right: 8px;
 	padding-top: 6px;
 	padding-bottom: 8px;
+	padding: 6px 8px 6px 16px;
 	.interactions {
 		display: flex;
+		transform: translate(-8px, -2px);
+	}
+	.bmk {
+		transform: translateY(-2px);
 	}
 
 	.icon {
 		width: 40px;
 		height: 40px;
 		padding: 8px;
-		margin-left: -8px;
-		margin-right: 8px;
 		cursor: pointer;
 
 		&.liked {

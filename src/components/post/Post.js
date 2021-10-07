@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
 import { selectFollowedUsers, selectUserProfile } from "../../redux/usersSlice";
+import { selectPosts } from "../../redux/postsSlice";
 import axios from "../../axios";
 
 import ProfileComp from "../ProfileComp";
@@ -34,12 +35,29 @@ const Post = props => {
 		name: "",
 		photo: "",
 	});
+	const [bigLiked, setBigLiked] = useState(false);
+	const [liked, setLiked] = useState(false);
+	const [sendLiked, setSendLiked] = useState(false);
 
 	const user = useSelector(selectUser);
 	const userProfile = useSelector(selectUserProfile);
 	const fUsers = useSelector(selectFollowedUsers);
+	const posts = useSelector(selectPosts);
 
 	const { push } = useHistory();
+
+	const handleDoubleClick = async () => {
+		setBigLiked(true);
+
+		const pidx = posts.findIndex(el => el._id === id);
+
+		const alreadyLiked =
+			posts[pidx].likes.findIndex(l => l === user._id) !== -1;
+
+		if (alreadyLiked) return;
+
+		setSendLiked(true);
+	};
 
 	useEffect(() => {
 		const getPhoto = async () => {
@@ -88,9 +106,30 @@ const Post = props => {
 				/>
 				<More className='moreBtn' />
 			</header>
-			<img className='postImage' src={image} alt='post content' />
+			<div className='postImage-container'>
+				<img
+					className='postImage'
+					src={image}
+					alt='post content'
+					onDoubleClick={handleDoubleClick}
+				/>
+				<div className='bigHeart-container'>
+					<div
+						className={`bigHeart ${bigLiked ? "bigLiked" : ""}`}
+						onAnimationEnd={() => setBigLiked(false)}
+					></div>
+				</div>
+			</div>
 			<div className='postDesc'>
-				<PostMenu id={id} name={accountName} />
+				<PostMenu
+					id={id}
+					name={accountName}
+					bigLiked={bigLiked}
+					liked={liked}
+					setLiked={setLiked}
+					sendLiked={sendLiked}
+					setSendLiked={setSendLiked}
+				/>
 				{likes.length > 0 && (
 					<div className='likedBy'>
 						<span>Liked by </span>

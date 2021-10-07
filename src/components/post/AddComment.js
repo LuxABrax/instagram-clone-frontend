@@ -1,11 +1,13 @@
-import "../../styles/post/addComment.scss";
 import { useEffect, useState } from "react";
-import { ReactComponent as Emoji } from "../../icons/emoji.svg";
-import Picker from "emoji-picker-react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
-import axios from "../../axios";
 import { addComment, selectPosts } from "../../redux/postsSlice";
+import axios from "../../axios";
+
+import { ReactComponent as Emoji } from "../../icons/emoji.svg";
+import Picker from "emoji-picker-react";
+
+import "../../styles/post/addComment.scss";
 
 const AddComment = ({ id, p }) => {
 	const [commentText, setCommentText] = useState("");

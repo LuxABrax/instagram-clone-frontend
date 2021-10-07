@@ -2,7 +2,7 @@ import "../styles/pages/home.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../redux/authSlice";
-import { selectPopup, setPopup } from "../redux/popupSlice";
+// import { selectPopup, setPopup } from "../redux/popupSlice";
 import {
 	setSuggestions,
 	getNotFollowedUsers,
@@ -16,7 +16,7 @@ import Feed from "../components/feed/Feed";
 import Sidebar from "../components/sidebar/Sidebar";
 
 const Home = () => {
-	const { popupActive } = useSelector(selectPopup);
+	// const { popupActive } = useSelector(selectPopup);
 	const user = useSelector(selectUser);
 	const userId = user._id;
 	const nfUsers = useSelector(selectNotFollowedUsers);
