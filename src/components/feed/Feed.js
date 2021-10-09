@@ -6,6 +6,7 @@ import Stories from "./Stories";
 import Post from "../post/Post";
 
 import "../../styles/feed/feed.scss";
+import SuggestedUsers from "./SuggestedUsers";
 
 const Feed = ({ withStories, onProfile, uId }) => {
 	const posts = useSelector(selectPosts);
@@ -20,20 +21,23 @@ const Feed = ({ withStories, onProfile, uId }) => {
 		<div className={`feed ${onProfile ? "onProfile" : ""}`}>
 			{withStories && <Stories />}
 			{posts.length > 0 &&
-				posts.map(post => {
+				posts.map((post, index) => {
 					return (
-						<Post
-							key={post._id}
-							id={post._id}
-							uid={post.uId}
-							accountName={post.name}
-							description={post.description}
-							storyBorder={true}
-							image={`http://localhost:5000/uploads/posts/${post.photo}`}
-							comments={post.comments}
-							likes={post.likes}
-							createdAt={post.createdAt}
-						/>
+						<>
+							{index === 3 && <SuggestedUsers />}
+							<Post
+								key={post._id}
+								id={post._id}
+								uid={post.uId}
+								accountName={post.name}
+								description={post.description}
+								storyBorder={true}
+								image={`http://localhost:5000/uploads/posts/${post.photo}`}
+								comments={post.comments}
+								likes={post.likes}
+								createdAt={post.createdAt}
+							/>
+						</>
 					);
 				})}
 		</div>

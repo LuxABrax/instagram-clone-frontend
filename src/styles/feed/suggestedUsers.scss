@@ -1,0 +1,82 @@
+.suggestedUsers {
+	margin-bottom: 24px;
+	padding: 20px 0;
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	border-radius: 4px;
+	border: 1px solid #dbdbdb;
+}
+
+.suggested-header {
+	display: flex;
+	justify-content: space-between;
+	margin: 0 20px 12px 20px;
+	span {
+		flex: 1;
+		margin-right: 12px;
+		color: #8e8e8e;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 18px;
+	}
+}
+.text-btn {
+	color: #0095f6;
+	font-size: 14px;
+	font-weight: 600;
+	font-family: inherit;
+
+	&:active {
+		opacity: 0.5;
+	}
+}
+.suggested-list-container {
+	position: relative;
+}
+.arrowBtn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	padding: 16px 8px;
+	&.left {
+		left: 0;
+	}
+	&.right {
+		right: 0;
+	}
+	&.hide {
+		display: none;
+	}
+}
+.arrBack {
+	width: 24px;
+	height: 24px;
+	background-image: url("../../images/spriteCore.png");
+	background-repeat: no-repeat;
+	background-position: -97px -333px;
+	&.rightArr {
+		transform: scaleX(-1);
+	}
+}
+.suggested-list {
+	display: flex;
+	list-style: none;
+}
+.spacing-li {
+	min-width: 12px;
+}
+
+.suggestedUser-container {
+	min-width: 200px;
+	height: 208px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@media screen and (max-width: 735px) {
+	.suggestedUser-container {
+		min-width: 161px;
+	}
+}

@@ -1,4 +1,5 @@
 .flwBtn {
+	cursor: pointer;
 	position: absolute;
 	right: 16px;
 	top: 10px;
@@ -29,6 +30,7 @@
 .flw {
 	color: white !important;
 	background: #0095f6 !important;
+	border-color: transparent !important;
 	&:active {
 		background: #0095f6;
 	}
