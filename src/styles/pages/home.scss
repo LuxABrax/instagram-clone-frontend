@@ -1,7 +1,3 @@
-// .home {
-// 	width: 100%;
-// 	height: 100%;
-// }
 @import "../properties";
 
 .home {
@@ -11,10 +7,10 @@
 
 	.container {
 		height: 100%;
+		max-width: 935px;
 		display: flex;
 		justify-content: left;
 		margin: 0 auto;
-		max-width: 935px;
 		position: relative;
 	}
 }

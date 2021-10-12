@@ -3,12 +3,10 @@
 	position: relative;
 	.previewImg {
 		height: 427px;
-		left: 0;
-		position: absolute;
-		top: 0;
 		width: 240px;
-		opacity: 1;
-		visibility: visible;
+		position: absolute;
+		left: 0;
+		top: 0;
 		opacity: 0;
 		visibility: hidden;
 		&.past,

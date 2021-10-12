@@ -30,6 +30,10 @@ const SuggestedUsers = () => {
 		const list = document.getElementById("suggested-list");
 		list.scrollLeft = 0;
 	};
+	const handleRArrow = () => {
+		const list = document.getElementById("suggested-list");
+		list.scrollLeft = 400;
+	};
 
 	const onScroll = e => {
 		const currentScrollX = e.target.scrollLeft;
@@ -87,7 +91,10 @@ const SuggestedUsers = () => {
 				>
 					<div className='arrBack'></div>
 				</button>
-				<button className={`arrowBtn right ${rightArrow ? "" : "hide"}`}>
+				<button
+					className={`arrowBtn right ${rightArrow ? "" : "hide"}`}
+					onClick={handleRArrow}
+				>
 					<div className='arrBack rightArr'></div>
 				</button>
 			</div>

@@ -1,24 +1,26 @@
 .suggestedUsers {
-	margin-bottom: 24px;
-	padding: 20px 0;
-	background-color: #fff;
 	display: flex;
 	flex-direction: column;
-	border-radius: 4px;
+	padding: 20px 0;
+	margin-bottom: 24px;
+
+	background-color: #fff;
 	border: 1px solid #dbdbdb;
+	border-radius: 4px;
 }
 
 .suggested-header {
 	display: flex;
 	justify-content: space-between;
 	margin: 0 20px 12px 20px;
+
 	span {
 		flex: 1;
 		margin-right: 12px;
 		color: #8e8e8e;
 		font-size: 14px;
-		font-weight: 600;
 		line-height: 18px;
+		font-weight: 600;
 	}
 }
 .text-btn {
@@ -68,11 +70,11 @@
 }
 
 .suggestedUser-container {
-	min-width: 200px;
-	height: 208px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	height: 208px;
+	min-width: 200px;
 }
 
 @media screen and (max-width: 735px) {
