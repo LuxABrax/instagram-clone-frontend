@@ -1,16 +1,19 @@
-import "../../../styles/profile/postModal.scss";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleModal } from "../../../redux/modalSlice";
+import { selectUser } from "../../../redux/authSlice";
 import { selectActivePost, setActivePost } from "../../../redux/postsSlice";
+import useWindowDimensions from "../../../utils/windowHook";
+import axios from "../../../axios";
 
 import ProfileComp from "../../ProfileComp";
 import PostMenu from "../../post/PostMenu";
 import Comment from "../../post/Comment";
 import AddComment from "../../post/AddComment";
 import { ReactComponent as More } from "../../../icons/more.svg";
-import axios from "../../../axios";
+
+import "../../../styles/profile/postModal.scss";
 
 const PostModal = props => {
 	const { pId, hours } = props;
@@ -22,10 +25,27 @@ const PostModal = props => {
 		photo: "",
 	});
 
+	const [bigLiked, setBigLiked] = useState(false);
+	const [liked, setLiked] = useState(false);
+	const [sendLiked, setSendLiked] = useState(false);
+
 	const { goBack } = useHistory();
 	const dispatch = useDispatch();
 
+	const user = useSelector(selectUser);
 	const aPost = useSelector(selectActivePost);
+
+	const { width } = useWindowDimensions();
+
+	const handleDoubleClick = async () => {
+		setBigLiked(true);
+
+		const alreadyLiked = aPost.likes.findIndex(l => l === user._id) !== -1;
+
+		if (alreadyLiked) return;
+
+		setSendLiked(true);
+	};
 
 	useEffect(() => {
 		document.body.style.overflow = "hidden";
@@ -88,12 +108,7 @@ const PostModal = props => {
 		<div className='postModal'>
 			<div className='background' onClick={() => closeModal()}></div>
 			<div className='modalContent'>
-				<img
-					className='postImg'
-					src={`http://localhost:5000/uploads/posts/${aPost.photo}`}
-					alt={aPost.description}
-				/>
-				<div className='postDesc'>
+				{width <= 735 && (
 					<header>
 						<ProfileComp
 							image={`http://localhost:5000/uploads/${userImage}`}
@@ -102,6 +117,24 @@ const PostModal = props => {
 						/>
 						<More className='moreBtn' />
 					</header>
+				)}
+				<img
+					className='postImg'
+					src={`http://localhost:5000/uploads/posts/${aPost.photo}`}
+					alt={aPost.description}
+				/>
+				<div className='postDesc'>
+					{width > 735 && (
+						<header>
+							<ProfileComp
+								image={`http://localhost:5000/uploads/${userImage}`}
+								iconSize='medium'
+								username={aPost.name}
+							/>
+							<More className='moreBtn' />
+						</header>
+					)}
+
 					<div className='postDescBody'>
 						<p>{aPost.description}</p>
 						<div className='comments'>
@@ -116,7 +149,16 @@ const PostModal = props => {
 									);
 								})}
 						</div>
-						<PostMenu id={aPost._id} type={"pModal"} />
+						<PostMenu
+							id={aPost._id}
+							type={"pModal"}
+							name={aPost.name}
+							bigLiked={bigLiked}
+							liked={liked}
+							setLiked={setLiked}
+							sendLiked={sendLiked}
+							setSendLiked={setSendLiked}
+						/>
 						{aPost.likes !== undefined && aPost.likes.length > 0 && (
 							<div className='likedBy'>
 								<ProfileComp

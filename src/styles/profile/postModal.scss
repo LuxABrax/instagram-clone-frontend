@@ -23,13 +23,9 @@
 		height: 88%;
 		max-width: 935px;
 		margin: 2rem auto;
-		// margin-top: 32px;
 		display: flex;
 		background-color: $background-white;
 
-		// img {
-		// 	flex: 1;
-		// }
 		.postImg {
 			max-width: 600px;
 			height: auto;
@@ -58,11 +54,9 @@
 			}
 		}
 		.postDescBody {
-			padding-left: 1rem;
 			flex: 1;
 			display: flex;
 			flex-direction: column;
-			// justify-content: space-between;
 			.comments {
 				flex: 1;
 				padding-top: 2rem;
@@ -85,6 +79,27 @@
 		.postImage {
 			width: 50%;
 			height: 50%;
+		}
+	}
+}
+
+@media screen and (max-width: 735px) {
+	.postModal {
+		.modalContent {
+			display: flex;
+			flex-direction: column;
+			max-width: 80%;
+
+			.postImg {
+				max-width: unset;
+				height: 50%;
+			}
+			.comments {
+				display: none;
+			}
+			header {
+				width: unset;
+			}
 		}
 	}
 }
