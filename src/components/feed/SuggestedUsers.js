@@ -1,13 +1,12 @@
 import { useRef, useState } from "react";
 import useWindowDimensions from "../../utils/windowHook";
-
+import BezierEasing from "bezier-easing";
 import SuggestedUser from "./SuggestedUser";
 
 import "../../styles/feed/suggestedUsers.scss";
 
 const SuggestedUsers = () => {
 	const prevScrollX = useRef(0);
-	const [goingRight, setGoingRight] = useState(false);
 	const [leftArrow, setLeftArrow] = useState(false);
 	const [rightArrow, setRightArrow] = useState(true);
 
@@ -26,13 +25,37 @@ const SuggestedUsers = () => {
 			setRightArrow(false);
 	};
 
-	const handleArrow = () => {
+	let easing = BezierEasing(0.215, 0.61, 0.355, 1);
+
+	const easeScroll = left => {
 		const list = document.getElementById("suggested-list");
-		list.scrollLeft = 0;
-	};
-	const handleRArrow = () => {
-		const list = document.getElementById("suggested-list");
-		list.scrollLeft = 400;
+
+		for (let i = 0; i <= 1.01; i += 0.01) {
+			let scrollPos;
+			let scrollLength = width <= 735 ? 483 : 600;
+			let scrollStart = prevScrollX.current;
+			let eI = easing(i);
+			let eIT = left ? 500 * eI : 700 * eI;
+
+			setTimeout(() => {
+				if (left) {
+					scrollPos = scrollStart - scrollLength * eI;
+				} else {
+					scrollPos = scrollStart + scrollLength * eI;
+				}
+
+				if (eI >= 1) {
+					scrollPos = left
+						? scrollStart - scrollLength
+						: scrollStart + scrollLength;
+				}
+				list.scrollLeft = scrollPos;
+
+				if (eI >= 1) {
+					prevScrollX.current = list.scrollLeft;
+				}
+			}, eIT);
+		}
 	};
 
 	const onScroll = e => {
@@ -41,15 +64,6 @@ const SuggestedUsers = () => {
 		const parentWidth = e.target.offsetWidth;
 
 		setArrows(currentScrollX, totalWidth, parentWidth);
-
-		if (prevScrollX.current < currentScrollX && !goingRight) {
-			setGoingRight(true);
-		}
-		if (prevScrollX.current > currentScrollX && goingRight) {
-			setGoingRight(false);
-		}
-		prevScrollX.current = currentScrollX;
-		// console.log(goingRight, currentScrollX);
 	};
 
 	return (
@@ -83,17 +97,39 @@ const SuggestedUsers = () => {
 					<li className='suggestedUser-container'>
 						<SuggestedUser />
 					</li>
+					<li className='suggestedUser-container'>
+						<SuggestedUser />
+					</li>
+					<li className='suggestedUser-container'>
+						<SuggestedUser />
+					</li>
+					<li className='suggestedUser-container'>
+						<SuggestedUser />
+					</li>
+					<li className='suggestedUser-container'>
+						<SuggestedUser />
+					</li>
+					<li className='suggestedUser-container'>
+						<SuggestedUser />
+					</li>
+					<li className='suggestedUser-container'>
+						<SuggestedUser />
+					</li>
 					<li className='spacing-li'></li>
 				</ul>
 				<button
 					className={`arrowBtn left ${leftArrow ? "" : "hide"}`}
-					onClick={handleArrow}
+					onClick={() => {
+						easeScroll(true);
+					}}
 				>
 					<div className='arrBack'></div>
 				</button>
 				<button
 					className={`arrowBtn right ${rightArrow ? "" : "hide"}`}
-					onClick={handleRArrow}
+					onClick={() => {
+						easeScroll(false);
+					}}
 				>
 					<div className='arrBack rightArr'></div>
 				</button>
