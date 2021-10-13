@@ -22,5 +22,21 @@
 @media screen and (max-width: 425px) {
 	.menu {
 		margin-left: 0;
+
+		.icon {
+			width: 28px;
+			height: 28px;
+		}
+		.link {
+			margin-left: 28px;
+		}
+		.profileIcon {
+			width: 26px !important;
+			height: 26px !important;
+		}
+		.profileActive {
+			width: 30px !important;
+			height: 30px !important;
+		}
 	}
 }
