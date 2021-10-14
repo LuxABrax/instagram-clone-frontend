@@ -6,6 +6,7 @@ import { selectUser } from "../../../redux/authSlice";
 import { selectActivePost, setActivePost } from "../../../redux/postsSlice";
 import useWindowDimensions from "../../../utils/windowHook";
 import axios from "../../../axios";
+import { useDoubleTap } from "use-double-tap";
 
 import ProfileComp from "../../ProfileComp";
 import PostMenu from "../../post/PostMenu";
@@ -46,6 +47,10 @@ const PostModal = props => {
 
 		setSendLiked(true);
 	};
+
+	const bind = useDoubleTap(event => {
+		handleDoubleClick();
+	});
 
 	useEffect(() => {
 		document.body.style.overflow = "hidden";
@@ -118,11 +123,21 @@ const PostModal = props => {
 						<More className='moreBtn' />
 					</header>
 				)}
-				<img
-					className='postImg'
-					src={`http://localhost:5000/uploads/posts/${aPost.photo}`}
-					alt={aPost.description}
-				/>
+				<div className='postImage-container'>
+					<img
+						className='postImg'
+						src={`http://localhost:5000/uploads/posts/${aPost.photo}`}
+						alt={aPost.description}
+						onDoubleClick={handleDoubleClick}
+						{...bind}
+					/>
+					<div className='bigHeart-container'>
+						<div
+							className={`bigHeart ${bigLiked ? "bigLiked" : ""}`}
+							onAnimationEnd={() => setBigLiked(false)}
+						></div>
+					</div>
+				</div>
 				<div className='postDesc'>
 					{width > 735 && (
 						<header>
@@ -136,7 +151,12 @@ const PostModal = props => {
 					)}
 
 					<div className='postDescBody'>
-						<p>{aPost.description}</p>
+						{aPost.description && (
+							<div className='postDescription'>
+								<span>{aPost.name}</span>
+								<p>{aPost.description}</p>
+							</div>
+						)}
 						<div className='comments'>
 							{aPost.comments !== undefined &&
 								aPost.comments.map(comment => {
@@ -176,8 +196,9 @@ const PostModal = props => {
 								</span>
 							</div>
 						)}
-
-						<div className='timePosted'>{hours} HOURS AGO</div>
+						<div className='timeContainer'>
+							<div className='timePosted'>{hours} HOURS AGO</div>
+						</div>
 						<AddComment id={aPost._id} />
 					</div>
 				</div>

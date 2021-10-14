@@ -19,21 +19,22 @@
 	}
 	.modalContent {
 		z-index: 11;
-
-		height: 88%;
 		max-width: 935px;
 		margin: 2rem auto;
 		display: flex;
 		background-color: $background-white;
+		overflow: hidden;
 
-		.postImg {
-			max-width: 600px;
-			height: auto;
-			object-fit: cover;
+		.postImage-container {
+			display: flex;
+			.postImg {
+				max-width: 440px;
+				height: auto;
+				object-fit: contain;
+			}
 		}
 		.postDesc {
 			flex: 1;
-			height: 100%;
 			display: flex;
 			flex-direction: column;
 		}
@@ -57,9 +58,12 @@
 			flex: 1;
 			display: flex;
 			flex-direction: column;
+			font-size: 14px;
 			.comments {
 				flex: 1;
-				padding-top: 2rem;
+				padding-top: 4px;
+				overflow-y: auto;
+				// max-height: 220px;
 			}
 		}
 		.moreBtn {
@@ -83,6 +87,15 @@
 	}
 }
 
+@media screen and (max-width: 800px) {
+	.postModal {
+		.modalContent {
+			.postImage-container .postImg {
+				max-width: 380px;
+			}
+		}
+	}
+}
 @media screen and (max-width: 735px) {
 	.postModal {
 		.modalContent {
@@ -90,15 +103,33 @@
 			flex-direction: column;
 			max-width: 80%;
 
-			.postImg {
-				max-width: unset;
-				height: 50%;
+			.postImage-container .postImg {
+				max-width: 300px;
 			}
-			.comments {
+			.comments,
+			p {
 				display: none;
 			}
 			header {
 				width: unset;
+				padding: 4px 8px;
+				height: 56px;
+			}
+			.likedBy span {
+				margin-left: 4px;
+				margin-bottom: 4px;
+			}
+			.timePosted {
+				padding-bottom: 4px;
+			}
+		}
+	}
+}
+@media screen and (max-width: 425px) {
+	.postModal {
+		.modalContent {
+			.postImage-container .postImg {
+				max-width: 100%;
 			}
 		}
 	}

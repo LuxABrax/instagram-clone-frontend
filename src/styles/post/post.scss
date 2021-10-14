@@ -28,36 +28,37 @@
 			cursor: pointer;
 		}
 	}
-	.postImage-container {
-		position: relative;
-	}
-	.bigHeart-container {
-		width: 100%;
-		z-index: 12;
-		position: absolute;
-		top: 50%;
-		transform: translateY(-64px);
-		pointer-events: none;
-		.bigHeart {
-			background-image: url("../../images/spriteCore.png");
-			background-repeat: no-repeat;
-			background-position: 0 0;
-			height: 128px;
-			width: 128px;
 
-			margin: 0 auto;
-			opacity: 0;
-			transform: scale(0);
-			&.bigLiked {
-				animation-name: like-heart-animation;
-				animation-duration: 1000ms;
-				animation-timing-function: ease-in-out;
-			}
-		}
-	}
 	.postImage {
 		width: 100%;
 		display: block;
+	}
+}
+.postImage-container {
+	position: relative;
+}
+.bigHeart-container {
+	width: 100%;
+	z-index: 12;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-64px);
+	pointer-events: none;
+	.bigHeart {
+		background-image: url("../../images/spriteCore.png");
+		background-repeat: no-repeat;
+		background-position: 0 0;
+		height: 128px;
+		width: 128px;
+
+		margin: 0 auto;
+		opacity: 0;
+		transform: scale(0);
+		&.bigLiked {
+			animation-name: like-heart-animation;
+			animation-duration: 1000ms;
+			animation-timing-function: ease-in-out;
+		}
 	}
 }
 .likedBy {
@@ -78,8 +79,8 @@
 		}
 	}
 	.profileComp {
-		min-height: 36px;
-		transform: translateY(-10px);
+		min-height: 30px;
+		transform: translateY(-5px);
 		.pIconContainer {
 			min-width: 0;
 		}
@@ -134,10 +135,6 @@
 		.postDesc {
 			.addComment {
 				display: none;
-			}
-
-			.timePosted {
-				border: none;
 			}
 		}
 	}

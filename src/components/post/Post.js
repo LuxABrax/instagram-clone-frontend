@@ -5,6 +5,7 @@ import { selectUser } from "../../redux/authSlice";
 import { selectFollowedUsers, selectUserProfile } from "../../redux/usersSlice";
 import { selectPosts } from "../../redux/postsSlice";
 import axios from "../../axios";
+import { useDoubleTap } from "use-double-tap";
 
 import ProfileComp from "../ProfileComp";
 import { ReactComponent as More } from "../../icons/more.svg";
@@ -59,6 +60,10 @@ const Post = props => {
 		setSendLiked(true);
 	};
 
+	const bind = useDoubleTap(event => {
+		handleDoubleClick();
+	});
+
 	useEffect(() => {
 		const getPhoto = async () => {
 			const users = [...fUsers, userProfile, user];
@@ -112,6 +117,7 @@ const Post = props => {
 					src={image}
 					alt='post content'
 					onDoubleClick={handleDoubleClick}
+					{...bind}
 				/>
 				<div className='bigHeart-container'>
 					<div

@@ -24,7 +24,7 @@ const Feed = ({ withStories, onProfile, uId }) => {
 				posts.map((post, index) => {
 					return (
 						<>
-							{index === 3 && <SuggestedUsers />}
+							{index === 3 && !onProfile && <SuggestedUsers />}
 							<Post
 								key={post._id}
 								id={post._id}
