@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import useWindowDimensions from "../../utils/windowHook";
 import BezierEasing from "bezier-easing";
 import SuggestedUser from "./SuggestedUser";
@@ -7,10 +8,18 @@ import "../../styles/feed/suggestedUsers.scss";
 
 const SuggestedUsers = () => {
 	const prevScrollX = useRef(0);
+	const [suggestions, setSuggestions] = useState([]);
 	const [leftArrow, setLeftArrow] = useState(false);
 	const [rightArrow, setRightArrow] = useState(true);
 
+	const users = useSelector(state => state.users.notFollowedUsers);
+
 	const { width } = useWindowDimensions();
+
+	if (users.length > 0 && suggestions.length === 0) {
+		// dispatch(getNotFollowedUsers(user._id));
+		setSuggestions([...users]);
+	}
 
 	const setArrows = (currentScrollX, totalWidth, parentWidth) => {
 		let cardWidth = width <= 735 ? 161 : 200;
@@ -66,57 +75,48 @@ const SuggestedUsers = () => {
 		setArrows(currentScrollX, totalWidth, parentWidth);
 	};
 
+	const removeFromS = id => {
+		if (suggestions.length === 1) {
+			setSuggestions(suggestions.pop());
+		} else {
+			setSuggestions(s => {
+				return s.filter(sU => sU._id !== id);
+			});
+		}
+	};
+
 	return (
 		<div className='suggestedUsers'>
 			<div className='suggested-header'>
 				<span>Suggested for you</span>
 				<button className='text-btn'>See all</button>
 			</div>
+
 			<div className='suggested-list-container'>
 				<ul
 					className='suggested-list scroll'
 					id='suggested-list'
 					onScroll={onScroll}
 				>
-					<li className='spacing-li'></li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='suggestedUser-container'>
-						<SuggestedUser />
-					</li>
-					<li className='spacing-li'></li>
+					<li key='0' className='spacing-li'></li>
+					{suggestions.length > 0 &&
+						suggestions.map((suggestedUser, i) => {
+							return (
+								<li key={suggestedUser._id} className='suggestedUser-container'>
+									<SuggestedUser
+										id={suggestedUser._id}
+										username={suggestedUser.name}
+										name={suggestedUser.fullName}
+										image={suggestedUser.photo}
+										caption={`Followed by ${suggestedUser.followers} followers`}
+										removeFromS={removeFromS}
+									/>
+								</li>
+							);
+						})}
+					<li key='1' className='spacing-li'></li>
 				</ul>
+
 				<button
 					className={`arrowBtn left ${leftArrow ? "" : "hide"}`}
 					onClick={() => {
@@ -125,6 +125,7 @@ const SuggestedUsers = () => {
 				>
 					<div className='arrBack'></div>
 				</button>
+
 				<button
 					className={`arrowBtn right ${rightArrow ? "" : "hide"}`}
 					onClick={() => {
