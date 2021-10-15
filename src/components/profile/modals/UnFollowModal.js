@@ -13,7 +13,7 @@ import axios from "../../../axios";
 
 import Modal from "./Modal";
 
-const UnFollowModal = ({ uid, id, photo, name }) => {
+const UnFollowModal = ({ uid, id, photo, name, setIsFollowing }) => {
 	const dispatch = useDispatch();
 	const unFollowUser = useSelector(selectUnFollowUser);
 
@@ -43,6 +43,7 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 		// console.log(data);
 		if (data.success) {
 			await dispatch(getUserProfile(name));
+			setIsFollowing(false);
 			await dispatch(addToNoFollow({ _id: id, name, photo }));
 			await dispatch(getNotFollowedUsers(uid));
 			dispatch(toggleModal());
@@ -64,7 +65,9 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 						<h2 className='modalTitle'>Remove Follower?</h2>
 					)}
 					<h3
-						className={`modalText ${unFollowUser.remove && !unFollowUser.followerOr ? "rem" : ""}`}
+						className={`modalText ${
+							unFollowUser.remove && !unFollowUser.followerOr ? "rem" : ""
+						}`}
 					>
 						{unFollowUser.remove && !unFollowUser.followerOr
 							? `Instagram wont tell ${unFollowUser.name} they were removed from your followers`
@@ -73,7 +76,9 @@ const UnFollowModal = ({ uid, id, photo, name }) => {
 				</div>
 				<div className='modalBtns'>
 					<button onClick={unFollow}>
-						{unFollowUser.remove && !unFollowUser.followerOr ? "Remove" : "Unfollow"}
+						{unFollowUser.remove && !unFollowUser.followerOr
+							? "Remove"
+							: "Unfollow"}
 					</button>
 					<button onClick={closeModal}>Cancel</button>
 				</div>

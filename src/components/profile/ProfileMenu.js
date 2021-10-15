@@ -1,44 +1,49 @@
-import "../../styles/profile/profMenu.scss";
-import { ReactComponent as ArrDown } from "../../icons/arrDown.svg";
-import { selectUserProfile } from "../../redux/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { selectUserProfile } from "../../redux/usersSlice";
 import { logout, selectUser } from "../../redux/authSlice";
-import FollowButton from "./FollowButton";
-import { toggleModal } from "../../redux/modalSlice";
+import { changeProfileSuggestions, toggleModal } from "../../redux/modalSlice";
 import { useHistory } from "react-router";
 
-const ProfileMenu = ({ id }) => {
+import FollowButton from "./FollowButton";
+import { ReactComponent as ArrDown } from "../../icons/arrDown.svg";
+
+import "../../styles/profile/profMenu.scss";
+
+const ProfileMenu = ({ id, isFollowing, setIsFollowing }) => {
 	const [sameUser, setSameUser] = useState(false);
 	const [arrowUp, setArrowUp] = useState(false);
 
 	const { push } = useHistory();
 	const dispatch = useDispatch();
+
 	const user = useSelector(selectUser);
 	const selectedUser = useSelector(selectUserProfile);
 	const { name } = selectedUser;
 
 	useEffect(() => {
+		dispatch(changeProfileSuggestions(false));
+		setArrowUp(true);
 		if (user.name === name) {
 			setSameUser(true);
 		} else {
 			setSameUser(false);
 		}
-	}, [name, user.name, setSameUser]);
+	}, [dispatch, name, user.name, setSameUser]);
 
 	const changeArrow = () => {
+		if (arrowUp) console.log("arrowUp");
+		dispatch(changeProfileSuggestions(arrowUp));
 		setArrowUp(!arrowUp);
 	};
 
 	const handleEdit = () => {
-		console.log("handle Edit");
 		push("/accounts/edit");
 	};
 	const handleLogout = () => {
 		dispatch(logout());
 	};
 	const handleAddPost = () => {
-		console.log("handle Add post");
 		dispatch(toggleModal("addPost"));
 	};
 	return (
@@ -57,13 +62,20 @@ const ProfileMenu = ({ id }) => {
 				</>
 			) : (
 				<>
-					<FollowButton
-						follower={selectedUser}
-						inMenu={true}
-						isMessage={true}
-					/>
+					{isFollowing && (
+						<FollowButton
+							follower={selectedUser}
+							inMenu={true}
+							isMessage={true}
+						/>
+					)}
 					{selectedUser !== {} && (
-						<FollowButton follower={selectedUser} id={user._id} inMenu={true} />
+						<FollowButton
+							follower={selectedUser}
+							id={user._id}
+							inMenu={true}
+							setIsFollowing={setIsFollowing}
+						/>
 					)}
 					<button className='profBtn flwBtn inMenu arr' onClick={changeArrow}>
 						<ArrDown className={`arr ${arrowUp ? "up" : "down"}`} />

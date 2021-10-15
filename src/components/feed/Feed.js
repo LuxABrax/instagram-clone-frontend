@@ -1,4 +1,6 @@
+import React from "react";
 import { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPosts, selectPosts } from "../../redux/postsSlice";
 
@@ -19,12 +21,12 @@ const Feed = ({ withStories, onProfile, uId }) => {
 
 	return (
 		<div className={`feed ${onProfile ? "onProfile" : ""}`}>
-			{withStories && <Stories />}
+			{withStories && <Stories key='stories' />}
 			{posts.length > 0 &&
 				posts.map((post, index) => {
 					return (
-						<>
-							{index === 3 && !onProfile && <SuggestedUsers />}
+						<React.Fragment key={post._id}>
+							{index === 3 && !onProfile ? <SuggestedUsers key='sug' /> : null}
 							<Post
 								key={post._id}
 								id={post._id}
@@ -37,7 +39,7 @@ const Feed = ({ withStories, onProfile, uId }) => {
 								likes={post.likes}
 								createdAt={post.createdAt}
 							/>
-						</>
+						</React.Fragment>
 					);
 				})}
 		</div>

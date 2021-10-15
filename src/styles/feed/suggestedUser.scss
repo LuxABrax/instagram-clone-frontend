@@ -21,6 +21,8 @@
 	}
 
 	.suggestedImg {
+		min-width: 56px;
+		min-height: 56px;
 		width: 56px;
 		height: 56px;
 		margin-bottom: 20px;
@@ -75,6 +77,8 @@
 		width: 156px;
 		.suggestedImg {
 			margin-bottom: 8px;
+			min-width: 77px;
+			min-height: 77px;
 			width: 77px;
 			height: 77px;
 		}

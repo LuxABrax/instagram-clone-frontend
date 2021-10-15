@@ -5,6 +5,7 @@ export const modalSlice = createSlice({
 	initialState: {
 		modalActive: false,
 		modalName: "",
+		profileSuggestions: false,
 	},
 	reducers: {
 		toggleModal: (state, action) => {
@@ -15,12 +16,17 @@ export const modalSlice = createSlice({
 		changeModalName: (state, action) => {
 			state.modalName = action.payload;
 		},
+		changeProfileSuggestions: (state, action) => {
+			state.profileSuggestions = action.payload;
+		},
 	},
 });
 
-export const { toggleModal, changeModalName } = modalSlice.actions;
+export const { toggleModal, changeModalName, changeProfileSuggestions } =
+	modalSlice.actions;
 
 export const selectModalActive = state => state.modal.modalActive;
 export const selectModalName = state => state.modal.modalName;
+export const selectProfileSuggestions = state => state.modal.profileSuggestions;
 
 export default modalSlice.reducer;

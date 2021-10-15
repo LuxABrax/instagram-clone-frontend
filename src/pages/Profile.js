@@ -6,6 +6,7 @@ import {
 	toggleModal,
 	selectModalActive,
 	selectModalName,
+	selectProfileSuggestions,
 } from "../redux/modalSlice";
 import { selectUser } from "../redux/authSlice";
 import {
@@ -29,9 +30,11 @@ import {
 } from "../components/profile/modals";
 
 import "../styles/pages/profile.scss";
+import SuggestedUsers from "../components/feed/SuggestedUsers";
 
 const Profile = () => {
 	// const [arrSorted, setArrSorted] = useState(false);
+	const [isFollowing, setIsFollowing] = useState(false);
 	const [sortedPosts, setSortedPosts] = useState([]);
 	const [imagesPosts, setImagesPosts] = useState([]);
 
@@ -44,6 +47,7 @@ const Profile = () => {
 	const status = useSelector(state => state.users.status);
 	const user = useSelector(selectUser);
 	const user2 = useSelector(selectUserProfile);
+	const profileSuggestions = useSelector(selectProfileSuggestions);
 
 	let userProfile = {};
 
@@ -85,6 +89,15 @@ const Profile = () => {
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 		dispatch(getUserProfile(pName));
 	}, [activePage, dispatch, modalActive, pId, pName]);
+
+	useEffect(() => {
+		const checkIfFollowing = async (uid, fid) => {
+			const response = await axios.get(`/follow/${uid}/isfollowing/${fid}`);
+			const isF = await response.data.isfollowing;
+			setIsFollowing(isF);
+		};
+		checkIfFollowing(user._id, user2._id);
+	}, [user2._id, user._id, isFollowing, setIsFollowing]);
 
 	useEffect(() => {
 		const getPosts = async () => {
@@ -171,6 +184,7 @@ const Profile = () => {
 					id={userProfile._id}
 					photo={userProfile.photo}
 					name={userProfile.name}
+					setIsFollowing={setIsFollowing}
 				/>
 			)}
 			{modalName === "followers" && modalActive && (
@@ -197,7 +211,10 @@ const Profile = () => {
 				followers={userProfile.followers}
 				following={userProfile.following}
 				changeImg={changeImg}
+				isFollowing={isFollowing}
+				setIsFollowing={setIsFollowing}
 			/>
+			{profileSuggestions && user._id !== user2._id && <SuggestedUsers />}
 			<FeedMenu
 				showSaved={showSaved}
 				showPosts={showPosts}

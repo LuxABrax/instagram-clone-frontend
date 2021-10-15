@@ -46,6 +46,7 @@ const SuggestedUsers = () => {
 			let eI = easing(i);
 			let eIT = left ? 500 * eI : 700 * eI;
 
+			if (list.offsetWidth < 400) scrollLength = 322;
 			setTimeout(() => {
 				if (left) {
 					scrollPos = scrollStart - scrollLength * eI;
@@ -108,7 +109,7 @@ const SuggestedUsers = () => {
 										username={suggestedUser.name}
 										name={suggestedUser.fullName}
 										image={suggestedUser.photo}
-										caption={`Followed by ${suggestedUser.followers} followers`}
+										caption={`Followed by ${suggestedUser.followers} people`}
 										removeFromS={removeFromS}
 									/>
 								</li>
@@ -127,7 +128,9 @@ const SuggestedUsers = () => {
 				</button>
 
 				<button
-					className={`arrowBtn right ${rightArrow ? "" : "hide"}`}
+					className={`arrowBtn right ${
+						rightArrow && suggestions.length > 3 ? "" : "hide"
+					}`}
 					onClick={() => {
 						easeScroll(false);
 					}}

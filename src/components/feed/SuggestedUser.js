@@ -31,6 +31,7 @@ const SuggestedUser = ({ id, username, name, image, caption, removeFromS }) => {
 				<img
 					src={`http://localhost:5000/uploads/${image}`}
 					onClick={gotoProfile}
+					alt={name}
 				/>
 			</div>
 

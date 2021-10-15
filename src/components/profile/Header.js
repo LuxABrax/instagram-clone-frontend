@@ -21,6 +21,8 @@ const Header = props => {
 		followers,
 		following,
 		changeImg,
+		isFollowing,
+		setIsFollowing,
 	} = props;
 	const { width } = useWindowDimensions();
 
@@ -49,7 +51,11 @@ const Header = props => {
 						<>
 							<div className='title'>
 								<h2>{accountName}</h2>
-								<ProfileMenu id={id} />
+								<ProfileMenu
+									id={id}
+									isFollowing={isFollowing}
+									setIsFollowing={setIsFollowing}
+								/>
 								{name === accountName ? (
 									<Cog className='moreIcon' />
 								) : (
@@ -86,7 +92,11 @@ const Header = props => {
 									<More className='moreIcon' />
 								)}
 							</div>
-							<ProfileMenu id={id} />
+							<ProfileMenu
+								id={id}
+								isFollowing={isFollowing}
+								setIsFollowing={setIsFollowing}
+							/>
 						</>
 					)}
 				</div>
@@ -100,7 +110,11 @@ const Header = props => {
 						<div className='description'>{description}</div>
 					</div>
 					<div className='followInfo2'>
-						<FollowInfo posts={postNumber} followers={followers} following={following} />
+						<FollowInfo
+							posts={postNumber}
+							followers={followers}
+							following={following}
+						/>
 					</div>
 				</div>
 			)}

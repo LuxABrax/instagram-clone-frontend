@@ -15,10 +15,9 @@ import AddComment from "../../post/AddComment";
 import { ReactComponent as More } from "../../../icons/more.svg";
 
 import "../../../styles/profile/postModal.scss";
+import TimePassed from "../../post/TimePassed";
 
-const PostModal = props => {
-	const { pId, hours } = props;
-
+const PostModal = ({ pId }) => {
 	const [userImage, setUserImage] = useState("");
 	const [likedUser, setLikedUser] = useState({
 		id: "",
@@ -30,7 +29,7 @@ const PostModal = props => {
 	const [liked, setLiked] = useState(false);
 	const [sendLiked, setSendLiked] = useState(false);
 
-	const { goBack } = useHistory();
+	const { push } = useHistory();
 	const dispatch = useDispatch();
 
 	const user = useSelector(selectUser);
@@ -79,15 +78,20 @@ const PostModal = props => {
 
 	function closeModal() {
 		dispatch(toggleModal());
-		goBack();
-		// push(`/profile/${accountName}`);
+		push(`/profile/${aPost.name}`);
 	}
 
 	useEffect(() => {
 		const getPhotoName = async uId => {
 			if (aPost) {
-				let id = aPost.likes[aPost.likes.length - 1];
-				if (uId !== undefined) id = uId;
+				let id;
+				if (uId !== undefined) {
+					id = uId;
+				} else if (aPost.likes) {
+					id = aPost.likes[aPost.likes.length - 1];
+				} else {
+					return;
+				}
 				const res = await axios.get(`/users/i/${id}`);
 				const data = await res.data;
 				if (!data.success) {
@@ -102,8 +106,8 @@ const PostModal = props => {
 				}
 			}
 		};
+		getPhotoName(aPost.uId);
 		if (aPost.likes !== undefined && aPost.likes.length > 0) {
-			getPhotoName(aPost.uId);
 			getPhotoName();
 		}
 		return () => {};
@@ -163,6 +167,7 @@ const PostModal = props => {
 									return (
 										<Comment
 											key={comment.cId}
+											noPopup
 											accountName={comment.uName}
 											comment={comment.text}
 										/>
@@ -197,7 +202,9 @@ const PostModal = props => {
 							</div>
 						)}
 						<div className='timeContainer'>
-							<div className='timePosted'>{hours} HOURS AGO</div>
+							<div className='timePosted'>
+								<TimePassed createdAt={aPost.createdAt} />
+							</div>
 						</div>
 						<AddComment id={aPost._id} />
 					</div>

@@ -16,7 +16,15 @@ import {
 } from "../../redux/usersSlice";
 import "../../styles/profile/followersItem.scss";
 
-const FollowButton = ({ follower, id, btnType, inMenu, isMessage, fType }) => {
+const FollowButton = ({
+	follower,
+	id,
+	btnType,
+	inMenu,
+	isMessage,
+	fType,
+	setIsFollowing,
+}) => {
 	const [followBtn, setFollowBtn] = useState({ btnType });
 	const [folBtn, setFolBtn] = useState(true);
 
@@ -46,6 +54,7 @@ const FollowButton = ({ follower, id, btnType, inMenu, isMessage, fType }) => {
 				}
 			} else {
 				await dispatch(followUserWithID({ userId: id, followId: _id }));
+				setIsFollowing(true);
 				await dispatch(getUserProfile(profile.name));
 				dispatch(getNotFollowedUsers(id));
 				console.log("remove");
