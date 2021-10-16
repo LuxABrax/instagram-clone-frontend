@@ -1,6 +1,6 @@
 .explore {
 	max-width: 935px;
-	width: calc(100% - 10px);
+	width: calc(100vw - 15px);
 	height: 100%;
 	margin: 0 auto;
 	padding-top: 30px;
@@ -9,8 +9,8 @@
 	flex-direction: column;
 }
 .expRow {
-	max-height: calc(934px * 0.333333 - 2px);
-	height: calc((100vw - 20px) * 0.333333 - 2px);
+	max-height: calc(934px * 0.333333);
+	height: calc((100vw - 15px) * 0.333333);
 
 	.image-container {
 		float: right;
@@ -23,8 +23,9 @@
 	}
 
 	&.withBig {
-		max-height: calc(934px * 0.666666 - 2px);
-		height: calc((100vw - 10px) * 0.666666 - 2px);
+		max-height: calc(934px * 0.666666);
+		height: calc((100vw - 15px) * 0.666666);
+
 		.image-container {
 			height: calc(50% - 2px);
 			&.isBig {
@@ -47,9 +48,6 @@
 
 @media (min-width: 736px) {
 	.expRow {
-		max-height: calc(934px * 0.333333 - 28px);
-		height: calc((100vw - 10px) * 0.333333 - 28px);
-
 		.image-container {
 			width: calc(33.3333% - 28px);
 			height: calc(100% - 28px);
@@ -57,9 +55,6 @@
 			margin-bottom: 28px;
 		}
 		&.withBig {
-			max-height: calc((934px - 56px) * 0.666666);
-			height: calc((100vw - 10px) * 0.666666 - 28px);
-
 			.image-container {
 				height: calc(50% - 28px);
 				&.isBig {
