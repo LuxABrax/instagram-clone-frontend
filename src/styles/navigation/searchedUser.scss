@@ -1,0 +1,23 @@
+.searched-user {
+	display: flex;
+	.profileIcon {
+		position: static;
+		transform: none;
+		margin-right: 10px;
+	}
+	.searched-title {
+		font-size: 14px;
+		line-height: 18px;
+	}
+	.username {
+		color: #262626;
+		font-weight: 600;
+	}
+	.fullName {
+		color: #8e8e8e;
+		font-weight: 400;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}

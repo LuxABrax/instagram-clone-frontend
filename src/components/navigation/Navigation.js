@@ -4,6 +4,7 @@ import { goHome } from "../../redux/navigationSlice";
 import { selectLoggedIn } from "../../redux/authSlice";
 
 import Menu from "./Menu";
+import Search from "./Search";
 
 import "../../styles/navigation/navigation.scss";
 
@@ -28,14 +29,7 @@ const Navigation = () => {
 						alt='instagram logo'
 					/>
 				</div>
-				<div className='search'>
-					<img
-						className='searchIcon'
-						src='/images/search.png'
-						alt='search icon'
-					/>
-					<span className='searchText'>Search</span>
-				</div>
+				<Search />
 				<div className='menuContainer'>
 					<Menu />
 				</div>

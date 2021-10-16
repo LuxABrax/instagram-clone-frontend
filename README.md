@@ -19,13 +19,13 @@ Code is a little bit messy but it works, looks almost identical and it's respons
 - Following / Followers and Suggestions
 - Add, Like and Save Posts
 - Modals, Animations and Popups
+- Search
 
 ### Unfinished
 
+- Explore page
 - Stories
 - Tagging
-- Explore page
-- Search
 - Messages and Notifications with Socket.io
 
 ## Available Scripts

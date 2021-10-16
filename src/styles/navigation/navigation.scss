@@ -30,6 +30,9 @@
 			display: flex;
 			align-items: flex-end;
 			justify-content: flex-start;
+			&:active {
+				opacity: 0.5;
+			}
 		}
 		.menuContainer {
 			flex: 1 9999 0%;
@@ -43,39 +46,9 @@
 				cursor: pointer;
 			}
 		}
-
-		.search {
-			height: 28px;
-			width: 30%;
-			min-width: 125px;
-			max-width: 215px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0.125em 0;
-			border: 1px solid $border-color-grey;
-			border-radius: 3px;
-			background-color: $background-grey;
-
-			.searchIcon {
-				width: 10px;
-				opacity: 0.4;
-				margin-right: 0.3em;
-			}
-			.searchText {
-				color: $font-color-secondary;
-				font-size: 0.85em;
-				font-weight: 300;
-			}
-		}
 	}
 }
 
-@media only screen and (max-width: 500px) {
-	.search {
-		display: none !important;
-	}
-}
 @media only screen and (max-width: 425px) {
 	.navigation {
 		.container {

@@ -1,0 +1,141 @@
+@import "../properties";
+
+.search {
+	height: 28px;
+	width: 30%;
+	min-width: 125px;
+	max-width: 215px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.125em 0;
+	border: 1px solid $border-color-grey;
+	border-radius: 3px;
+	background-color: $background-grey;
+	position: relative;
+
+	.searchIcon {
+		width: 10px;
+		opacity: 0.4;
+		margin-right: 0.3em;
+	}
+	.searchText {
+		color: $font-color-secondary;
+		font-size: 0.85em;
+		font-weight: 300;
+		height: 100%;
+	}
+
+	.backdrop {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background-color: transparent;
+	}
+
+	input {
+		z-index: 2;
+		outline: none;
+		border: none;
+		background-color: transparent;
+		min-width: 44px;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		padding: 3px 10px 3px 26px;
+
+		color: transparent;
+		&::placeholder {
+			color: transparent;
+		}
+
+		&.focused {
+			color: #262626;
+			&::placeholder {
+				color: #8e8e8e;
+			}
+		}
+	}
+	.cancel {
+		position: absolute;
+		right: 5px;
+		top: 4px;
+		z-index: 3;
+		cursor: pointer;
+		background-image: url("../../images/spriteCore.png");
+		background-repeat: no-repeat;
+		background-position: -318px -333px;
+		height: 20px;
+		width: 20px;
+	}
+	.dropdown-container {
+		position: absolute;
+		top: 38px;
+		left: calc(50% - 10px);
+		transform-origin: top center;
+		transition: opacity 250ms linear, transform 100ms ease-out;
+		opacity: 0;
+		transform: translateY(-20px);
+		&.shown {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	.search-dropdown {
+		position: absolute;
+		left: -175px;
+		height: 362px;
+		width: 375px;
+
+		background: #fff;
+		box-shadow: 0 0 5px 1px #2626263b;
+		border-radius: 6px;
+		overflow: hidden;
+		ul {
+			padding-top: 12px;
+			height: 362px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			li {
+				padding: 8px 16px;
+				cursor: pointer;
+				&:hover {
+					background-color: #fafafa;
+				}
+			}
+		}
+	}
+	.triangle {
+		z-index: 12;
+		background: #fff;
+		border: 1px solid #fff;
+		top: -6px;
+		left: 50%;
+		box-shadow: -2px -2px 2px 0px #2626263b;
+		height: 14px;
+		position: absolute;
+		transform: rotate(45deg);
+		width: 14px;
+	}
+	.dropdown-blur {
+		border-radius: 20px;
+		bottom: 0;
+		height: 8px;
+		left: 0;
+		position: absolute;
+		width: 100%;
+		background: linear-gradient(
+			to bottom,
+			rgba(255, 255, 255, 0) 0%,
+			#fff 100%
+		);
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.search {
+		display: none !important;
+	}
+}

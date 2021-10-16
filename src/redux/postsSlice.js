@@ -7,7 +7,6 @@ export const getPosts = createAsyncThunk(
 		const res = await axios.get(`/posts/following/${userId}`);
 		const data = await res.data;
 		if (!data.success) {
-			console.log(data);
 			return rejectWithValue(data.message);
 		}
 		// Parse Comments
@@ -31,7 +30,6 @@ export const getUserPosts = createAsyncThunk(
 		const res = await axios.get(`/posts/profile/${userId}`);
 		const data = await res.data;
 		if (!data.success) {
-			console.log(data);
 			return rejectWithValue(data.message);
 		}
 		// Parse Comments
@@ -44,8 +42,7 @@ export const getUserPosts = createAsyncThunk(
 				}),
 			};
 		});
-		// console.log(data.data, posts);
-		return posts;
+		return posts.reverse();
 	}
 );
 
