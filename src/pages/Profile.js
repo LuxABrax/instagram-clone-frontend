@@ -21,6 +21,7 @@ import axios from "../axios";
 
 import { Header, FeedMenu, NoPosts } from "../components/profile";
 import Feed from "../components/feed/Feed";
+import SuggestedUsers from "../components/feed/SuggestedUsers";
 import {
 	PostModal,
 	AddPostModal,
@@ -30,7 +31,6 @@ import {
 } from "../components/profile/modals";
 
 import "../styles/pages/profile.scss";
-import SuggestedUsers from "../components/feed/SuggestedUsers";
 
 const Profile = () => {
 	// const [arrSorted, setArrSorted] = useState(false);

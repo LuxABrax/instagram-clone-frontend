@@ -14,7 +14,7 @@ Code is a little bit messy but it works, looks almost identical and it's respons
 ## Features
 
 - Registration / Authentication page with error handling
-- Profile and Home Feed page
+- Profile, Home Feed and Explore page
 - Edit profile and change password page
 - Following / Followers and Suggestions
 - Add, Like and Save Posts
@@ -23,7 +23,6 @@ Code is a little bit messy but it works, looks almost identical and it's respons
 
 ### Unfinished
 
-- Explore page
 - Stories
 - Tagging
 - Messages and Notifications with Socket.io

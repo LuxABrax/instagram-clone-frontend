@@ -46,12 +46,35 @@ export const getUserPosts = createAsyncThunk(
 	}
 );
 
+export const getExplorePosts = createAsyncThunk(
+	"posts/getExplorePosts",
+	async (userId, { rejectWithValue }) => {
+		const res = await axios.get(`/posts/explore/${userId}`);
+		const data = await res.data;
+		if (!data.success) {
+			return rejectWithValue(data.message);
+		}
+		// Parse Comments
+		const posts = data.data.map(p => {
+			if (p.comments.length === 0) return p;
+			return {
+				...p,
+				comments: p.comments.map(c => {
+					return JSON.parse(c);
+				}),
+			};
+		});
+		return posts;
+	}
+);
+
 export const postsSlice = createSlice({
 	name: "posts",
 	initialState: {
 		status: "idle",
 		error: "",
 		posts: [],
+		explorePosts: [],
 		activePost: {},
 	},
 	reducers: {
@@ -130,6 +153,18 @@ export const postsSlice = createSlice({
 			console.log(error);
 			state.error = error.message;
 			state.status = "Get User Posts Failed";
+		},
+		[getExplorePosts.pending]: state => {
+			state.status = "Get Explore Posts";
+		},
+		[getExplorePosts.fulfilled]: (state, { payload }) => {
+			state.explorePosts = payload;
+			state.status = "Get Explore Posts Success";
+		},
+		[getExplorePosts.rejected]: (state, { error }) => {
+			console.log(error);
+			state.error = error.message;
+			state.status = "Get Explore Posts Failed";
 		},
 	},
 });

@@ -1,18 +1,25 @@
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Redirect,
+	Route,
+	Switch,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectLoggedIn } from "./redux/authSlice";
 
-import "./styles/App.scss";
 import Navigation from "./components/navigation/Navigation";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import Explore from "./pages/Explore";
 import Settings from "./pages/Settings";
-import { useSelector } from "react-redux";
-import { selectLoggedIn } from "./redux/authSlice";
+
+import "./styles/App.scss";
 
 function App() {
 	const loggedIn = useSelector(selectLoggedIn);
-	// if (!loggedIn) return <Login setLoggedIn={setLoggedIn} />;
 	let routes;
+
 	if (!loggedIn) {
 		routes = (
 			<Switch>
@@ -27,6 +34,9 @@ function App() {
 			<Switch>
 				<Route path='/' exact>
 					<Home />
+				</Route>
+				<Route path='/explore' exact>
+					<Explore />
 				</Route>
 				<Route path='/profile/:pName' exact>
 					<Profile />

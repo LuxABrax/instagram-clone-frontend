@@ -42,7 +42,7 @@ const Navigation = () => {
 					/>
 				)}
 			</Link>
-			<Link to='/' className='link'>
+			<Link to='/explore' className='link'>
 				{activePage === "explore" ? (
 					<ExploreActive className='icon' />
 				) : (
