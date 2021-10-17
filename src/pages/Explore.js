@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../redux/authSlice";
 import { changePage, selectPage } from "../redux/navigationSlice";
 import { getExplorePosts } from "../redux/postsSlice";
+import useSortToRows from "../utils/useSortToRows";
 
 import ExploreImage from "../components/ExploreImage";
 
 import "../styles/pages/explore.scss";
 
 const Explore = () => {
-	const [postRows, setPostRows] = useState([]);
+	const [postRows, setPosts] = useSortToRows();
 
 	const activePage = useSelector(selectPage);
 	const user = useSelector(selectUser);
@@ -26,37 +27,8 @@ const Explore = () => {
 	}, [dispatch, user._id, posts.length]);
 
 	useEffect(() => {
-		const sortPosts = () => {
-			const sPosts = [];
-
-			let len = posts.length;
-			let rowNum = Math.ceil(len / 3);
-			let emptyNum = rowNum * 3 - len;
-			let totalNum = len + emptyNum;
-
-			let arr = [];
-			let j = 0;
-			for (let i = 0; i < totalNum; i++) {
-				if (i < len) {
-					arr.push(posts[i]);
-				} else {
-					arr.push({ _id: `${i}empty`, photo: "empty" });
-				}
-				j++;
-
-				if (j === 3) {
-					sPosts.push(arr);
-					arr = [];
-					j = 0;
-				}
-				if (i === totalNum) sPosts.push(arr);
-			}
-
-			setPostRows(sPosts);
-		};
-
-		if (posts.length > 0) sortPosts();
-	}, [posts]);
+		if (posts.length > 0) setPosts(posts);
+	}, [posts, setPosts]);
 
 	const checkIfBig = index => {
 		return index === 0 || (index + 1) % 6 === 0;

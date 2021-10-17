@@ -32,11 +32,12 @@ import {
 } from "../components/profile/modals";
 
 import "../styles/pages/profile.scss";
+import useSortToRows from "../utils/useSortToRows";
 
 const Profile = () => {
 	// const [arrSorted, setArrSorted] = useState(false);
 	const [isFollowing, setIsFollowing] = useState(false);
-	const [sortedPosts, setSortedPosts] = useState([]);
+	const [postRows, setPosts] = useSortToRows();
 	const [imagesPosts, setImagesPosts] = useState([]);
 
 	let location = useLocation();
@@ -124,38 +125,8 @@ const Profile = () => {
 	}, [dispatch, user, user2, location.pathname]);
 
 	useEffect(() => {
-		const sortPosts = () => {
-			const sPosts = [];
-
-			let len = imagesPosts.length;
-			let rowNum = Math.ceil(len / 3);
-			let emptyNum = rowNum * 3 - len;
-			let totalNum = len + emptyNum;
-
-			let arr = [];
-			let j = 0;
-			for (let i = 0; i < totalNum; i++) {
-				if (i < len) {
-					arr.push(imagesPosts[i]);
-				} else {
-					arr.push({ _id: `${i}empty`, photo: "empty" });
-				}
-				j++;
-
-				if (j === 3) {
-					sPosts.push(arr);
-					arr = [];
-					j = 0;
-				}
-				if (i === totalNum) sPosts.push(arr);
-			}
-			// console.log(sPosts);
-			setSortedPosts(sPosts);
-			// setArrSorted(true);
-		};
-
-		sortPosts();
-	}, [dispatch, imagesPosts]);
+		if (imagesPosts.length > 0) setPosts(imagesPosts);
+	}, [setPosts, imagesPosts]);
 
 	const addImage = image => {
 		const arr = [...imagesPosts];
@@ -226,7 +197,7 @@ const Profile = () => {
 					location.pathname === `/profile/${user2.name}/feed` ? (
 						<Feed onProfile uId={userProfile._id} />
 					) : (
-						sortedPosts?.map((postRow, index) => {
+						postRows?.map((postRow, index) => {
 							return (
 								<div className='pRow' key={index}>
 									{postRow.map((postI, idx) => {
