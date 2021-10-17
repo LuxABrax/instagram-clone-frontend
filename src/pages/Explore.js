@@ -4,6 +4,8 @@ import { selectUser } from "../redux/authSlice";
 import { changePage, selectPage } from "../redux/navigationSlice";
 import { getExplorePosts } from "../redux/postsSlice";
 
+import ExploreImage from "../components/ExploreImage";
+
 import "../styles/pages/explore.scss";
 
 const Explore = () => {
@@ -68,16 +70,14 @@ const Explore = () => {
 						{row.map((post, idx) => {
 							if (post.photo === "empty") return null;
 							return (
-								<div
-									className={`image-container ${
-										checkIfBig(index) && idx === 0 ? "isBig" : ""
-									}`}
-								>
-									<img
-										src={`http://localhost:5000/uploads/posts/${post.photo}`}
-										alt={`${post.description}`}
-									/>
-								</div>
+								<ExploreImage
+									idx={idx}
+									photo={post.photo}
+									id={post._id}
+									likes={post.likes.length}
+									comments={post.comments.length}
+									isBig={checkIfBig(index) && idx === 0}
+								/>
 							);
 						})}
 					</div>
