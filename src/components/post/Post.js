@@ -29,6 +29,7 @@ const Post = props => {
 		createdAt,
 	} = props;
 
+	const [loaded, setLoaded] = useState(false);
 	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [commentsActive, setCommentsActive] = useState(false);
 	const [likedUser, setLikedUser] = useState({
@@ -112,10 +113,15 @@ const Post = props => {
 				<More className='moreBtn' />
 			</header>
 			<div className='postImage-container'>
+				{loaded ? null : <div className='postImage skeleton' />}
 				<img
 					className='postImage'
 					src={image}
 					alt='post content'
+					style={loaded ? {} : { display: "none" }}
+					onLoad={() => {
+						setLoaded(true);
+					}}
 					onDoubleClick={handleDoubleClick}
 					{...bind}
 				/>

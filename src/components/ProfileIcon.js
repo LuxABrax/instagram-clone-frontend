@@ -1,7 +1,10 @@
+import { useState } from "react";
+
 import "../styles/profileIcon.scss";
 
 const ProfileIcon = props => {
 	const { image, iconSize, storyBorder, profileActive, seen, onClick } = props;
+	const [loaded, setLoaded] = useState(false);
 
 	const getRandomInt = (min, max) => {
 		min = Math.ceil(min);
@@ -17,10 +20,13 @@ const ProfileIcon = props => {
 
 	return (
 		<div className='iconContainer'>
+			{loaded ? null : <div className={`skeleton profileIcon ${iconSize}`} />}
 			<img
 				className={`profileIcon ${iconSize}`}
 				src={profileImage}
 				alt='profile'
+				style={loaded ? {} : { display: "none" }}
+				onLoad={() => setLoaded(true)}
 				onClick={onClick}
 			/>
 			{storyBorder && (

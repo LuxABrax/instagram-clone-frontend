@@ -1,0 +1,82 @@
+.postContainer {
+	display: flex;
+	flex: 1;
+	margin-right: 28px;
+	position: relative;
+	&:last-child {
+		margin-right: 0;
+	}
+}
+.overlay {
+	cursor: pointer;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.overlay-list {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 600;
+}
+.overlay-li {
+	display: inline-flex;
+	&:first-child {
+		margin-right: 30px;
+	}
+}
+.o-icon {
+	margin-right: 7px;
+	background-image: url("../../images/spriteCore.png");
+	background-repeat: no-repeat;
+	height: 19px;
+	width: 19px;
+}
+.o-heart {
+	background-position: -340px -333px;
+}
+.o-comment {
+	background-position: -382px -333px;
+}
+
+.gridImg {
+	width: 100%;
+	height: calc(97vw / 3);
+	min-width: 100px;
+	min-height: 100px;
+	max-width: 293px;
+	max-height: 293px;
+	cursor: pointer;
+	user-select: none;
+	object-fit: cover;
+}
+
+@media screen and (max-width: 735px) {
+	.postContainer {
+		margin-right: 3px;
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+	.overlay-list {
+		flex-direction: column;
+	}
+	.overlay-li {
+		&:first-child {
+			margin-right: 0;
+			margin-bottom: 7px;
+		}
+	}
+}

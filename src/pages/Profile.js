@@ -21,6 +21,7 @@ import axios from "../axios";
 
 import { Header, FeedMenu, NoPosts } from "../components/profile";
 import Feed from "../components/feed/Feed";
+import GridImage from "../components/profile/GridImage";
 import SuggestedUsers from "../components/feed/SuggestedUsers";
 import {
 	PostModal,
@@ -233,19 +234,14 @@ const Profile = () => {
 											return <div className='postContainer' key={idx}></div>;
 										} else {
 											return (
-												<div
-													className='postContainer'
-													key={idx}
-													onClick={async () => {
-														openModal(postI._id);
-													}}
-												>
-													<img
-														className='gridImg'
-														src={`http://localhost:5000/uploads/posts/${postI.photo}`}
-														alt=''
-													/>
-												</div>
+												<GridImage
+													id={postI._id}
+													photo={postI.photo}
+													idx={idx}
+													openModal={openModal}
+													likes={postI.likes.length}
+													comments={postI.comments.length}
+												/>
 											);
 										}
 									})}
@@ -254,7 +250,8 @@ const Profile = () => {
 						})
 					)
 				) : (
-					<NoPosts />
+					<p>Loading...</p>
+					// <NoPosts />
 				)}
 			</div>
 		</div>

@@ -13,27 +13,8 @@
 		display: flex;
 		margin-bottom: 28px;
 		user-select: none;
+	}
 
-		.postContainer {
-			display: flex;
-			flex: 1;
-			margin-right: 28px;
-			&:last-child {
-				margin-right: 0;
-			}
-		}
-	}
-	.gridImg {
-		width: 100%;
-		height: calc(97vw / 3);
-		min-width: 100px;
-		min-height: 100px;
-		max-width: 293px;
-		max-height: 293px;
-		cursor: pointer;
-		user-select: none;
-		object-fit: cover;
-	}
 	.feedPost {
 		display: flex;
 		flex: 1;
@@ -50,12 +31,6 @@
 		margin: 0 auto;
 		.pRow {
 			margin-bottom: 3px;
-			.postContainer {
-				margin-right: 3px;
-				&:last-child {
-					margin-right: 0;
-				}
-			}
 		}
 	}
 }
