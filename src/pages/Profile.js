@@ -206,6 +206,7 @@ const Profile = () => {
 										} else {
 											return (
 												<GridImage
+													key={postI._id}
 													id={postI._id}
 													photo={postI.photo}
 													idx={idx}

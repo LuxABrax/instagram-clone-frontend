@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "../axios";
 
 export const getSearches = createAsyncThunk(
 	"searches/getSearches",
@@ -6,14 +7,15 @@ export const getSearches = createAsyncThunk(
 		const response = await axios.get(`/searches/${userId}`);
 
 		const data = response.data;
-		// console.log("response: ", await response.data);
 		if (data.success === false) {
 			dispatch(searchesSlice.actions.setErrMessage(data.message));
 			return rejectWithValue(data.message);
 		} else {
 			dispatch(searchesSlice.actions.setErrMessage(""));
 		}
-		return data.data;
+		const searches = data.data;
+		if (searches[0] === "[]") searches.shift();
+		return searches;
 	}
 );
 
@@ -23,7 +25,7 @@ export const addSearch = createAsyncThunk(
 		const response = await axios.put(`/searches/${userId}/${sId}`);
 
 		const data = response.data;
-		// console.log("response: ", await response.data);
+
 		if (data.success === false) {
 			dispatch(searchesSlice.actions.setErrMessage(data.message));
 			return rejectWithValue(data.message);
@@ -40,10 +42,8 @@ export const removeSearch = createAsyncThunk(
 		const response = await axios.delete(`/searches/${userId}/${sId}`);
 
 		const data = response.data;
-		// console.log("response: ", await response.data);
 		if (data.success === false) {
 			dispatch(searchesSlice.actions.setErrMessage(data.message));
-			// return rejectWithValue(data.message);
 		} else {
 			dispatch(searchesSlice.actions.setErrMessage(""));
 		}
@@ -57,10 +57,8 @@ export const removeSearches = createAsyncThunk(
 		const response = await axios.delete(`/searches/${userId}`);
 
 		const data = response.data;
-		// console.log("response: ", await response.data);
 		if (data.success === false) {
 			dispatch(searchesSlice.actions.setErrMessage(data.message));
-			// return rejectWithValue(data.message);
 		} else {
 			dispatch(searchesSlice.actions.setErrMessage(""));
 		}
@@ -71,7 +69,7 @@ export const removeSearches = createAsyncThunk(
 export const searchesSlice = createSlice({
 	name: "searches",
 	initialState: {
-		status: "",
+		status: "idle",
 		searches: [],
 		error: {
 			message: "",

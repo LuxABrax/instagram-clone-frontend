@@ -8,7 +8,7 @@ export const getUserProfile = createAsyncThunk(
 
 		// console.log("response: ", await response.data);
 		const user = await response.data.data;
-		console.log(user);
+		// console.log(user);
 
 		if (response.data.success === false) {
 			dispatch(usersSlice.actions.setErrMessage(response.data.message));
@@ -44,7 +44,7 @@ export const getNotFollowedUsers = createAsyncThunk(
 		const response = await axios.get(`/follow/${userId}/notfollowed`);
 
 		const data = response.data;
-		console.log("response: ", await response);
+		// console.log("response: ", await response);
 		const users = data.users.sort(() => Math.random() - 0.5);
 
 		if (data.success === false) {
@@ -180,24 +180,24 @@ export const usersSlice = createSlice({
 		},
 
 		[getNotFollowedUsers.pending]: state => {
-			state.status = "getting users not followed";
+			state.status = "getting nfUsers";
 		},
 		[getNotFollowedUsers.fulfilled]: (state, action) => {
 			const arr = action.payload;
 			state.notFollowedUsers = arr.sort(() => Math.random() - 0.5);
-			state.status = "get users success";
+			state.status = "get nfUsers success";
 		},
 		[getNotFollowedUsers.rejected]: (state, { error }) => {
 			state.error.message = error.message;
-			state.status = "get users failed";
+			state.status = "get nfUsers failed";
 		},
 
 		[getFollowedUsers.pending]: state => {
-			state.status = "getting users not followed";
+			state.status = "getting fUsers";
 		},
 		[getFollowedUsers.fulfilled]: (state, action) => {
 			state.followedUsers = action.payload;
-			state.status = "get users success";
+			state.status = "get fUsers success";
 		},
 		[getFollowedUsers.rejected]: (state, { error }) => {
 			state.error.message = error.message;
