@@ -19,7 +19,7 @@ Code is a little bit messy but it works, looks almost identical and it's respons
 - Following / Followers and Suggestions
 - Add, Like and Save Posts
 - Modals, Animations and Popups
-- Search
+- Search with recent searches
 
 ### Unfinished
 
