@@ -1,11 +1,13 @@
-import "../../styles/navigation/menu.scss";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { goHome, changePage, selectPage } from "../../redux/navigationSlice";
+import {
+	changePage,
+	selectPage,
+	setLastPage,
+} from "../../redux/navigationSlice";
 import { logout, selectUser } from "../../redux/authSlice";
-import { selectUserProfile } from "../../redux/usersSlice";
 
-import ProfileIcon from "../ProfileIcon.js";
+import ProfileMenu from "./ProfileMenu.js";
 import { ReactComponent as Home } from "../../icons/home.svg";
 import { ReactComponent as HomeActive } from "../../icons/homeActive.svg";
 import { ReactComponent as Explore } from "../../icons/explore.svg";
@@ -15,13 +17,19 @@ import { ReactComponent as DirectActive } from "../../icons/directActive.svg";
 import { ReactComponent as Notifications } from "../../icons/notifications.svg";
 import { ReactComponent as NotificationsActive } from "../../icons/notificationsActive.svg";
 
-const Navigation = () => {
+import "../../styles/navigation/menu.scss";
+
+const Menu = () => {
 	const activePage = useSelector(selectPage);
 	const user = useSelector(selectUser);
-	const user2 = useSelector(selectUserProfile);
 	const dispatch = useDispatch();
 	// const { push } = useHistory();
 	if (user === undefined) dispatch(logout());
+
+	const changeNavPage = newPage => {
+		dispatch(setLastPage(activePage));
+		dispatch(changePage(newPage));
+	};
 
 	return (
 		<div className='menu'>
@@ -29,27 +37,21 @@ const Navigation = () => {
 				{activePage === "home" ? (
 					<HomeActive className='icon' />
 				) : (
-					<Home className='icon' onClick={() => dispatch(goHome())} />
+					<Home className='icon' onClick={() => changeNavPage("home")} />
 				)}
 			</Link>
 			<Link to='/' className='link'>
 				{activePage === "direct" ? (
 					<DirectActive className='icon' />
 				) : (
-					<Direct
-						className='icon'
-						onClick={() => dispatch(changePage("direct"))}
-					/>
+					<Direct className='icon' onClick={() => changeNavPage("direct")} />
 				)}
 			</Link>
 			<Link to='/explore' className='link'>
 				{activePage === "explore" ? (
 					<ExploreActive className='icon' />
 				) : (
-					<Explore
-						className='icon'
-						onClick={() => dispatch(changePage("explore"))}
-					/>
+					<Explore className='icon' onClick={() => changeNavPage("explore")} />
 				)}
 			</Link>
 			<div className='link'>
@@ -58,11 +60,12 @@ const Navigation = () => {
 				) : (
 					<Notifications
 						className='icon'
-						onClick={() => dispatch(changePage("notifications"))}
+						onClick={() => changeNavPage("notifications")}
 					/>
 				)}
 			</div>
-			<Link
+			<ProfileMenu />
+			{/* <Link
 				to={`/profile/${user.name}`}
 				className='link'
 				onClick={() => {
@@ -74,9 +77,9 @@ const Navigation = () => {
 					iconSize='small'
 					profileActive={activePage === "profile" && user.name === user2.name}
 				/>
-			</Link>
+			</Link> */}
 		</div>
 	);
 };
 
-export default Navigation;
+export default Menu;

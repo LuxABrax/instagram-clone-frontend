@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectUserProfile } from "../../redux/usersSlice";
-import { logout, selectUser } from "../../redux/authSlice";
+import { selectUser } from "../../redux/authSlice";
 import { changeProfileSuggestions, toggleModal } from "../../redux/modalSlice";
 import { useHistory } from "react-router";
 
@@ -40,9 +40,6 @@ const ProfileMenu = ({ id, isFollowing, setIsFollowing }) => {
 	const handleEdit = () => {
 		push("/accounts/edit");
 	};
-	const handleLogout = () => {
-		dispatch(logout());
-	};
 	const handleAddPost = () => {
 		dispatch(toggleModal("addPost"));
 	};
@@ -55,9 +52,6 @@ const ProfileMenu = ({ id, isFollowing, setIsFollowing }) => {
 					</button>
 					<button className='profBtn flwBtn inMenu' onClick={handleEdit}>
 						Edit Profile
-					</button>
-					<button className='profBtn flwBtn inMenu' onClick={handleLogout}>
-						Log Out
 					</button>
 				</>
 			) : (

@@ -1,0 +1,36 @@
+.profile-menu-container {
+	position: relative;
+
+	.backdrop {
+		z-index: 5;
+	}
+	.dropdown-container {
+		top: 37px;
+		left: calc(50% - 7px);
+	}
+	.search-dropdown {
+		right: -40px;
+		height: 186px;
+		width: 230px;
+	}
+	ul {
+		margin: 0 !important;
+	}
+	li {
+		height: 37px;
+		justify-content: flex-start !important;
+		align-items: center;
+		font-size: 14px;
+		color: #262626;
+		font-weight: 400;
+		line-height: 18px;
+		.icon {
+			width: 16px;
+			height: 16px;
+			margin-right: 12px;
+		}
+		&:last-child {
+			border-top: 1px solid #dbdbdb;
+		}
+	}
+}
