@@ -110,7 +110,7 @@ const AddComment = ({ id, p }) => {
 				className='postText'
 				disabled={commentText.length === 0}
 			>
-				POST
+				Post
 			</button>
 		</form>
 	);

@@ -9,6 +9,7 @@
 	min-height: 48px;
 	position: relative;
 	border-top: 1px solid $border-color-grey-secondary;
+
 	.icon {
 		width: 40px;
 		height: 40px;
@@ -38,6 +39,9 @@
 		border: 0;
 		color: #262626;
 		flex: 1;
+		font-family: inherit;
+		font-size: 14px;
+		line-height: 18px;
 		&.empty {
 			color: $font-color-secondary;
 		}
@@ -56,6 +60,10 @@
 	.postText {
 		color: $link-color;
 		cursor: pointer;
+		font-family: inherit;
+		font-size: 14px;
+		line-height: 18px;
+		font-weight: 600;
 		&:disabled {
 			cursor: default;
 			color: $link-color-secondary;

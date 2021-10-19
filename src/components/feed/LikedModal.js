@@ -17,7 +17,7 @@ import "../../styles/profile/modals/followersModal.scss";
 const LikedModal = () => {
 	const [likedUsers, setLikedUsers] = useState([]);
 
-	const { _id: id } = useSelector(selectUser);
+	const user = useSelector(selectUser);
 	const likes = useSelector(selectLikes);
 	const followers = useSelector(selectFollowedUsers);
 	const notFollowed = useSelector(selectNotFollowedUsers);
@@ -30,11 +30,11 @@ const LikedModal = () => {
 
 	useEffect(() => {
 		if (likedUsers.length === 0) {
-			const users = [...followers, ...notFollowed];
+			const users = [user, ...followers, ...notFollowed];
 			const arr = users.filter(u => likes.includes(u._id));
 			setLikedUsers([...arr]);
 		}
-	}, [likedUsers, followers, notFollowed, likes]);
+	}, [likedUsers, followers, notFollowed, likes, user]);
 
 	return (
 		<Modal>
@@ -50,7 +50,7 @@ const LikedModal = () => {
 							<FollowersItem
 								key={idx}
 								follower={el}
-								id={id}
+								id={user._id}
 								btnType={""}
 								fType={"following"}
 							/>

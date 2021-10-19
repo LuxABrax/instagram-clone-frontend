@@ -1,14 +1,18 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { toggleModal } from "../../redux/modalSlice";
+import { selectUser } from "../../redux/authSlice";
+
 import ProfileComp from "../ProfileComp";
-import "../../styles/profile/followersItem.scss";
 import FollowButton from "./FollowButton";
+
+import "../../styles/profile/followersItem.scss";
 
 const FollowersItem = ({ follower, id, btnType, fType }) => {
 	const { _id, name, fullName, photo } = follower;
-	const dispatch = useDispatch();
 
+	const user = useSelector(selectUser);
+	const dispatch = useDispatch();
 	const { push } = useHistory();
 
 	return (
@@ -33,7 +37,14 @@ const FollowersItem = ({ follower, id, btnType, fType }) => {
 					push(`/profile/${name}`);
 				}}
 			/>
-			<FollowButton follower={follower} id={id} btnType={btnType} fType={fType} />
+			{_id !== user._id && (
+				<FollowButton
+					follower={follower}
+					id={id}
+					btnType={btnType}
+					fType={fType}
+				/>
+			)}
 		</li>
 	);
 };
