@@ -54,7 +54,7 @@ const FollowButton = ({
 				}
 			} else {
 				await dispatch(followUserWithID({ userId: id, followId: _id }));
-				setIsFollowing(true);
+				// setIsFollowing(true);
 				await dispatch(getUserProfile(profile.name));
 				dispatch(getNotFollowedUsers(id));
 				console.log("remove");

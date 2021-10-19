@@ -76,10 +76,14 @@ export const postsSlice = createSlice({
 		posts: [],
 		explorePosts: [],
 		activePost: {},
+		likes: [],
 	},
 	reducers: {
 		setPosts: (state, action) => {
 			state.posts = action.payload;
+		},
+		setLikes: (state, action) => {
+			state.likes = action.payload;
 		},
 		setActivePost: (state, action) => {
 			state.activePost = action.payload;
@@ -171,6 +175,7 @@ export const postsSlice = createSlice({
 
 export const {
 	setPosts,
+	setLikes,
 	setActivePost,
 	addLike,
 	removeLike,
@@ -184,6 +189,7 @@ export const {
 } = postsSlice.actions;
 
 export const selectPosts = state => state.posts.posts;
+export const selectLikes = state => state.posts.likes;
 export const selectActivePost = state => state.posts.activePost;
 
 export default postsSlice.reducer;

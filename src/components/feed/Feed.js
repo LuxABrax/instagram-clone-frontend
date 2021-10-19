@@ -3,15 +3,19 @@ import { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getUserPosts, selectPosts } from "../../redux/postsSlice";
+import { selectModalActive, selectModalName } from "../../redux/modalSlice";
 
 import Stories from "./Stories";
 import Post from "../post/Post";
+import SuggestedUsers from "./SuggestedUsers";
+import LikedModal from "./LikedModal";
 
 import "../../styles/feed/feed.scss";
-import SuggestedUsers from "./SuggestedUsers";
 
 const Feed = ({ withStories, onProfile, uId }) => {
 	const posts = useSelector(selectPosts);
+	let modalActive = useSelector(selectModalActive);
+	let modalName = useSelector(selectModalName);
 
 	const dispatch = useDispatch();
 
@@ -22,6 +26,7 @@ const Feed = ({ withStories, onProfile, uId }) => {
 	return (
 		<div className={`feed ${onProfile ? "onProfile" : ""}`}>
 			{withStories && <Stories key='stories' />}
+			{modalName === "likes" && modalActive && <LikedModal />}
 			{posts.length > 0 &&
 				posts.map((post, index) => {
 					return (

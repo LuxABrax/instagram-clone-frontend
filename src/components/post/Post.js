@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
 import { selectFollowedUsers, selectUserProfile } from "../../redux/usersSlice";
-import { selectPosts } from "../../redux/postsSlice";
+import { selectPosts, setLikes } from "../../redux/postsSlice";
+import { toggleModal } from "../../redux/modalSlice";
 import axios from "../../axios";
 import { useDoubleTap } from "use-double-tap";
 
@@ -47,6 +48,7 @@ const Post = props => {
 	const posts = useSelector(selectPosts);
 
 	const { push } = useHistory();
+	const dispatch = useDispatch();
 
 	const handleDoubleClick = async () => {
 		setBigLiked(true);
@@ -64,6 +66,11 @@ const Post = props => {
 	const bind = useDoubleTap(event => {
 		handleDoubleClick();
 	});
+
+	const showLikes = () => {
+		dispatch(setLikes(likes));
+		dispatch(toggleModal("likes"));
+	};
 
 	useEffect(() => {
 		const getPhoto = async () => {
@@ -165,7 +172,9 @@ const Post = props => {
 						{likes.length > 1 && (
 							<>
 								<span>and </span>
-								<span className='link'>{likes.length - 1} others</span>
+								<span className='link' onClick={showLikes}>
+									{likes.length - 1} others
+								</span>
 							</>
 						)}
 					</div>
