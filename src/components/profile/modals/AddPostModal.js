@@ -10,7 +10,6 @@ import { ReactComponent as Close } from "../../../icons/close.svg";
 import axios from "../../../axios";
 
 const AddPostModal = ({ id, addImage }) => {
-	const [image, setImage] = useState(undefined);
 	const [images, setImages] = useState([]);
 	const [imgPosition, setImgPosition] = useState(0);
 
@@ -29,13 +28,22 @@ const AddPostModal = ({ id, addImage }) => {
 		document.getElementById("photoFile").click();
 	}
 
-	function showPhoto() {
-		const image = document.getElementById("photoFile").files[0];
+	function addPhotos() {
 		const imageFiles = document.getElementById("photoFile").files;
-		console.log(imageFiles);
-		const url = URL.createObjectURL(image);
 
-		setImages(i => [...i, url]);
+		const filesArr = Array.prototype.slice.call(imageFiles);
+
+		filesArr.forEach(f => {
+			if (!f.type.match("image.*")) {
+				return;
+			}
+
+			const url = URL.createObjectURL(f);
+
+			setImages(s => [...s, { url: url, file: f }]);
+		});
+
+		console.log(images);
 	}
 
 	async function postPhoto() {
@@ -100,7 +108,8 @@ const AddPostModal = ({ id, addImage }) => {
 						>
 							{images.map((img, idx) => (
 								<img
-									src={img}
+									src={img.url}
+									alt={img.file.name}
 									className={`addImage-image ${
 										idx === imgPosition ? "act" : ""
 									}`}
@@ -134,6 +143,7 @@ const AddPostModal = ({ id, addImage }) => {
 										className={`arrows left-arrow ${
 											imgPosition === 0 ? "hide" : ""
 										}`}
+										title='Move left'
 										onClick={() => {
 											handleMove(true);
 										}}
@@ -151,6 +161,7 @@ const AddPostModal = ({ id, addImage }) => {
 										className={`arrows right-arrow ${
 											imgPosition === images.length - 1 ? "hide" : ""
 										}`}
+										title='Move right'
 										onClick={() => {
 											handleMove(false);
 										}}
@@ -163,9 +174,10 @@ const AddPostModal = ({ id, addImage }) => {
 				<input
 					id='photoFile'
 					type='file'
-					multiple
 					style={{ display: "none" }}
-					onChange={showPhoto}
+					onChange={addPhotos}
+					accept='image/*'
+					multiple
 				/>
 				<div className='modalBody'>
 					<div className='modalTitle'>
@@ -175,16 +187,11 @@ const AddPostModal = ({ id, addImage }) => {
 					<div className='modalBtns'>
 						<div className='photoBtns'>
 							<button className='choose' onClick={choosePhoto}>
-								Add Photo
+								{images.length > 0 ? "Add Photo" : "Chose Photo"}
 							</button>
+
 							<button
-								className={`choose ${image !== undefined ? "" : "hide"}`}
-								onClick={choosePhoto}
-							>
-								Add More
-							</button>
-							<button
-								className={`postBtn ${image !== undefined ? "" : "hide"}`}
+								className={`postBtn ${images.length > 0 ? "" : "hide"}`}
 								onClick={postPhoto}
 							>
 								Post Photo
