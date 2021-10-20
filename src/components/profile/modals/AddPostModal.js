@@ -1,13 +1,14 @@
-import "../../../styles/profile/addPostModal.scss";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleModal } from "../../../redux/modalSlice";
+import axios from "../../../axios";
 
 import Modal from "./Modal";
 import DescriptionInput from "./DescriptionInput";
 import SwipeableViews from "react-swipeable-views";
-import axios from "../../../axios";
 import AddPostControls from "../AddPostControls";
+
+import "../../../styles/profile/addPostModal.scss";
 
 const AddPostModal = ({ id, addImage }) => {
 	const [images, setImages] = useState([]);
@@ -58,7 +59,6 @@ const AddPostModal = ({ id, addImage }) => {
 		});
 		const data = await res.data;
 
-		console.log(data);
 		if (data.success) {
 			addImage(data.data);
 			dispatch(toggleModal());

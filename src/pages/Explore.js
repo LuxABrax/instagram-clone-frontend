@@ -5,7 +5,7 @@ import { changePage, selectPage } from "../redux/navigationSlice";
 import { getExplorePosts } from "../redux/postsSlice";
 import useSortToRows from "../utils/useSortToRows";
 
-import ExploreImage from "../components/ExploreImage";
+import GridImage from "../components/GridImage";
 
 import "../styles/pages/explore.scss";
 
@@ -42,12 +42,9 @@ const Explore = () => {
 						{row.map((post, idx) => {
 							if (post.photo === "empty") return null;
 							return (
-								<ExploreImage
-									idx={idx}
-									photo={post.photo}
-									id={post._id}
-									likes={post.likes.length}
-									comments={post.comments.length}
+								<GridImage
+									post={post}
+									isExplore={true}
 									isBig={checkIfBig(index) && idx === 0}
 								/>
 							);

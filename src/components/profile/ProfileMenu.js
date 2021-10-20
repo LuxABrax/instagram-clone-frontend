@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectUserProfile } from "../../redux/usersSlice";
+import { useHistory } from "react-router";
 import { selectUser } from "../../redux/authSlice";
 import { changeProfileSuggestions, toggleModal } from "../../redux/modalSlice";
-import { useHistory } from "react-router";
 
 import FollowButton from "./FollowButton";
 import { ReactComponent as ArrDown } from "../../icons/arrDown.svg";

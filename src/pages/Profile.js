@@ -18,10 +18,11 @@ import {
 	setUserPosts,
 } from "../redux/usersSlice";
 import axios from "../axios";
+import useSortToRows from "../utils/useSortToRows";
 
 import { Header, FeedMenu, NoPosts } from "../components/profile";
 import Feed from "../components/feed/Feed";
-import GridImage from "../components/profile/GridImage";
+import GridImage from "../components/GridImage";
 import SuggestedUsers from "../components/feed/SuggestedUsers";
 import {
 	PostModal,
@@ -32,10 +33,8 @@ import {
 } from "../components/profile/modals";
 
 import "../styles/pages/profile.scss";
-import useSortToRows from "../utils/useSortToRows";
 
 const Profile = () => {
-	// const [arrSorted, setArrSorted] = useState(false);
 	const [isFollowing, setIsFollowing] = useState(false);
 	const [postRows, setPosts] = useSortToRows();
 	const [imagesPosts, setImagesPosts] = useState([]);
@@ -91,6 +90,10 @@ const Profile = () => {
 		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 		dispatch(getUserProfile(pName));
 	}, [activePage, dispatch, modalActive, pId, pName]);
+
+	useEffect(() => {
+		document.title = `${user2.fullName} (@${pName}) • Instagram Plus`;
+	}, [user2, pName]);
 
 	useEffect(() => {
 		const checkIfFollowing = async (uid, fid) => {
@@ -200,21 +203,11 @@ const Profile = () => {
 						postRows?.map((postRow, index) => {
 							return (
 								<div className='pRow' key={index}>
-									{postRow.map((postI, idx) => {
+									{postRow.map(postI => {
 										if (postI.photo === "empty") {
-											return <div className='postContainer' key={idx}></div>;
+											return <div className='postContainer'></div>;
 										} else {
-											return (
-												<GridImage
-													key={postI._id}
-													id={postI._id}
-													photo={postI.photo}
-													idx={idx}
-													openModal={openModal}
-													likes={postI.likes.length}
-													comments={postI.comments.length}
-												/>
-											);
+											return <GridImage post={postI} openModal={openModal} />;
 										}
 									})}
 								</div>

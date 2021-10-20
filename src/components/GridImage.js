@@ -1,42 +1,49 @@
 import { useState } from "react";
+import { ReactComponent as Carousel } from "../icons/carousel.svg";
 
-import "../../styles/profile/gridImage.scss";
+import "../styles/profile/gridImage.scss";
 
-const GridImage = ({ idx, photo, id, openModal, likes, comments }) => {
+const GridImage = ({ post, openModal, isExplore, isBig }) => {
 	const [loaded, setLoaded] = useState(false);
 	const [overlay, setOverlay] = useState(false);
 
+	const { _id: id, photo, isCarousel, likes, comments, description } = post;
+
 	return (
 		<div
-			className='postContainer'
-			key={idx}
+			className={`${isExplore ? "image-container" : "postContainer"} ${
+				isBig ? "isBig" : ""
+			} ${loaded ? "" : "skeleton"}`}
 			onClick={async () => {
 				openModal(id);
 			}}
 			onPointerOver={() => setOverlay(true)}
 			onPointerLeave={() => setOverlay(false)}
 		>
+			{isCarousel && (
+				<div className='carousel-icon'>
+					<Carousel className='icon' />
+				</div>
+			)}
 			{overlay ? (
 				<div className='overlay'>
 					<ul className='overlay-list'>
 						<li className='overlay-li'>
 							<span className='o-icon o-heart'></span>
-							<span>{likes}</span>
+							<span>{likes.length}</span>
 						</li>
 						<li className='overlay-li'>
 							<span className='o-icon o-comment'></span>
-							<span>{comments}</span>
+							<span>{comments.length}</span>
 						</li>
 					</ul>
 				</div>
 			) : null}
 
-			{loaded ? null : <div className='gridImg skeleton' />}
-
 			<img
-				className='gridImg'
+				className={`${isExplore ? "" : "gridImg"}`}
 				src={`http://localhost:5000/uploads/posts/${photo}`}
-				alt=''
+				alt={description}
 				style={loaded ? {} : { display: "none" }}
 				onLoad={() => setLoaded(true)}
 			/>
