@@ -42,17 +42,14 @@ const AddPostModal = ({ id, addImage }) => {
 
 			setImages(s => [...s, { url: url, file: f }]);
 		});
-
-		console.log(images);
 	}
 
 	async function postPhoto() {
-		const image = document.getElementById("photoFile").files[0];
 		const desc = document.getElementById("description").value;
 
 		const formData = new FormData();
-		formData.append("file", image);
 		formData.append("description", desc);
+		images.forEach(i => formData.append("files", i.file));
 
 		const res = await axios.post(`/posts/post/${id}`, formData, {
 			headers: {
@@ -61,6 +58,7 @@ const AddPostModal = ({ id, addImage }) => {
 		});
 		const data = await res.data;
 
+		console.log(data);
 		if (data.success) {
 			addImage(data.data);
 			dispatch(toggleModal());
@@ -108,6 +106,7 @@ const AddPostModal = ({ id, addImage }) => {
 					accept='image/*'
 					multiple
 				/>
+
 				<div className='modalBody'>
 					<div className='modalTitle'>
 						<h3>Add Photo Post</h3>
