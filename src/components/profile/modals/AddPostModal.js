@@ -6,8 +6,8 @@ import { toggleModal } from "../../../redux/modalSlice";
 import Modal from "./Modal";
 import DescriptionInput from "./DescriptionInput";
 import SwipeableViews from "react-swipeable-views";
-import { ReactComponent as Close } from "../../../icons/close.svg";
 import axios from "../../../axios";
+import AddPostControls from "../AddPostControls";
 
 const AddPostModal = ({ id, addImage }) => {
 	const [images, setImages] = useState([]);
@@ -67,33 +67,8 @@ const AddPostModal = ({ id, addImage }) => {
 		}
 	}
 
-	const handleRemove = () => {
-		setImages(i => i.filter((im, index) => index !== imgPosition));
-		setImgPosition(imgPosition === 0 ? 0 : imgPosition - 1);
-	};
-
 	const handleChangeImgPosition = index => {
 		setImgPosition(index);
-	};
-
-	const handleMove = direction => {
-		if (direction) {
-			setImages(i => [
-				...i.slice(0, imgPosition - 1),
-				i[imgPosition],
-				i[imgPosition - 1],
-				...i.slice(imgPosition + 1),
-			]);
-			setImgPosition(imgPosition - 1);
-		} else {
-			setImages(i => [
-				...i.slice(0, imgPosition),
-				i[imgPosition + 1],
-				i[imgPosition],
-				...i.slice(imgPosition + 2),
-			]);
-			setImgPosition(imgPosition + 1);
-		}
 	};
 
 	return (
@@ -117,58 +92,12 @@ const AddPostModal = ({ id, addImage }) => {
 							))}
 						</SwipeableViews>
 
-						<div className='images-controls'>
-							<button className='remove-image' onClick={handleRemove}>
-								<Close className='close' />
-							</button>
-							<button
-								className={`arrows left-arrow ${
-									imgPosition === 0 ? "hide" : ""
-								}`}
-								onClick={() => {
-									setImgPosition(p => p - 1);
-								}}
-							/>
-							<button
-								className={`arrows right-arrow ${
-									imgPosition === images.length - 1 ? "hide" : ""
-								}`}
-								onClick={() => {
-									setImgPosition(p => p + 1);
-								}}
-							/>
-							{images.length > 1 && (
-								<div className='position-controls'>
-									<button
-										className={`arrows left-arrow ${
-											imgPosition === 0 ? "hide" : ""
-										}`}
-										title='Move left'
-										onClick={() => {
-											handleMove(true);
-										}}
-									/>
-
-									<div className='positions'>
-										{images.map((i, idx) => (
-											<div
-												className={`dot ${idx === imgPosition ? "act" : ""}`}
-												onClick={() => setImgPosition(idx)}
-											/>
-										))}
-									</div>
-									<button
-										className={`arrows right-arrow ${
-											imgPosition === images.length - 1 ? "hide" : ""
-										}`}
-										title='Move right'
-										onClick={() => {
-											handleMove(false);
-										}}
-									/>
-								</div>
-							)}
-						</div>
+						<AddPostControls
+							images={images}
+							setImages={setImages}
+							imgPosition={imgPosition}
+							setImgPosition={setImgPosition}
+						/>
 					</div>
 				)}
 				<input
