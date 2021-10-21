@@ -35,6 +35,7 @@ const ProfileComp = props => {
 		: users[Math.floor(Math.random() * users.length)].username;
 
 	function gotoProfile() {
+		// Close modal if clicked in modal
 		if (onClick !== undefined) dispatch(toggleModal());
 		dispatch(setPopup("close"));
 		push(`/profile/${username}`);

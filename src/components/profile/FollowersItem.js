@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { toggleModal } from "../../redux/modalSlice";
 import { selectUser } from "../../redux/authSlice";
 
 import ProfileComp from "../ProfileComp";
@@ -12,7 +11,6 @@ const FollowersItem = ({ follower, id, btnType, fType }) => {
 	const { _id, name, fullName, photo } = follower;
 
 	const user = useSelector(selectUser);
-	const dispatch = useDispatch();
 	const { push } = useHistory();
 
 	return (
@@ -33,7 +31,6 @@ const FollowersItem = ({ follower, id, btnType, fType }) => {
 				captionSize='small'
 				storyBorder={false}
 				onClick={() => {
-					dispatch(toggleModal());
 					push(`/profile/${name}`);
 				}}
 			/>

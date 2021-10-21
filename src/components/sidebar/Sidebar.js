@@ -1,5 +1,4 @@
 import useWindowDimensions from "../../utils/windowHook";
-import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/authSlice";
 
@@ -12,7 +11,6 @@ const Sidebar = () => {
 	const { width } = useWindowDimensions();
 	let leftOffset = Math.floor((width - 935) / 2 + 604 + 28);
 
-	const { push } = useHistory();
 	const user = useSelector(selectUser);
 
 	if (width >= 1000) {
@@ -24,7 +22,6 @@ const Sidebar = () => {
 					urlText='Switch'
 					iconSize='big'
 					image={`http://localhost:5000/uploads/${user.photo}`}
-					onClick={() => push(`/profile/${user.name}`)}
 				/>
 				<Suggestions />
 				<Footer />
