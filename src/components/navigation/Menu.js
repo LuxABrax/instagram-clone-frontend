@@ -16,8 +16,11 @@ import { ReactComponent as Direct } from "../../icons/direct.svg";
 import { ReactComponent as DirectActive } from "../../icons/directActive.svg";
 import { ReactComponent as Notifications } from "../../icons/notifications.svg";
 import { ReactComponent as NotificationsActive } from "../../icons/notificationsActive.svg";
+import { ReactComponent as NewPost } from "../../icons/newPost.svg";
+import { ReactComponent as NewPostActive } from "../../icons/newPostAct.svg";
 
 import "../../styles/navigation/menu.scss";
+import { toggleModal } from "../../redux/modalSlice";
 
 const Menu = () => {
 	const activePage = useSelector(selectPage);
@@ -47,6 +50,19 @@ const Menu = () => {
 					<Direct className='icon' onClick={() => changeNavPage("direct")} />
 				)}
 			</Link>
+			<div className='link'>
+				{activePage === "newPost" ? (
+					<NewPostActive className='icon' />
+				) : (
+					<NewPost
+						className='icon'
+						onClick={() => {
+							changeNavPage("newPost");
+							dispatch(toggleModal("addPost"));
+						}}
+					/>
+				)}
+			</div>
 			<Link to='/explore' className='link'>
 				{activePage === "explore" ? (
 					<ExploreActive className='icon' />
@@ -64,6 +80,7 @@ const Menu = () => {
 					/>
 				)}
 			</div>
+
 			<ProfileMenu />
 			{/* <Link
 				to={`/profile/${user.name}`}

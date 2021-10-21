@@ -85,11 +85,15 @@ const Profile = () => {
 	}
 
 	useEffect(() => {
-		window.scrollTo(0, 0);
-		if (activePage !== "profile") dispatch(changePage("profile"));
-		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
 		dispatch(getUserProfile(pName));
-	}, [activePage, dispatch, modalActive, pId, pName]);
+	});
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+		if (activePage !== "profile" && modalName !== "addPost")
+			dispatch(changePage("profile"));
+		if (pId !== undefined && modalActive === false) dispatch(toggleModal());
+	}, [activePage, dispatch, modalActive, modalName, pId, pName]);
 
 	useEffect(() => {
 		document.title = `${user2.fullName} (@${pName}) • Instagram Plus`;
