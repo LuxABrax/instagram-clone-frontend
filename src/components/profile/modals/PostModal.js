@@ -11,11 +11,13 @@ import { useDoubleTap } from "use-double-tap";
 import ProfileComp from "../../ProfileComp";
 import PostMenu from "../../post/PostMenu";
 import Comment from "../../post/Comment";
+import TimePassed from "../../post/TimePassed";
 import AddComment from "../../post/AddComment";
 import { ReactComponent as More } from "../../../icons/more.svg";
+import SwipeableViews from "react-swipeable-views";
+import AddPostControls from "../AddPostControls";
 
 import "../../../styles/profile/postModal.scss";
-import TimePassed from "../../post/TimePassed";
 
 const PostModal = ({ pId }) => {
 	const [userImage, setUserImage] = useState("");
@@ -28,6 +30,8 @@ const PostModal = ({ pId }) => {
 	const [bigLiked, setBigLiked] = useState(false);
 	const [liked, setLiked] = useState(false);
 	const [sendLiked, setSendLiked] = useState(false);
+	const [loaded, setLoaded] = useState([false]);
+	const [imgPosition, setImgPosition] = useState(0);
 
 	const { push } = useHistory();
 	const dispatch = useDispatch();
@@ -50,6 +54,15 @@ const PostModal = ({ pId }) => {
 	const bind = useDoubleTap(event => {
 		handleDoubleClick();
 	});
+
+	function closeModal() {
+		dispatch(toggleModal());
+		push(`/profile/${aPost.name}`);
+	}
+
+	const handleChangeImgPosition = index => {
+		setImgPosition(index);
+	};
 
 	useEffect(() => {
 		document.body.style.overflow = "hidden";
@@ -75,11 +88,6 @@ const PostModal = ({ pId }) => {
 			dispatch(setActivePost({ photo: "" }));
 		};
 	}, [dispatch, pId]);
-
-	function closeModal() {
-		dispatch(toggleModal());
-		push(`/profile/${aPost.name}`);
-	}
 
 	useEffect(() => {
 		const getPhotoName = async uId => {
@@ -113,28 +121,84 @@ const PostModal = ({ pId }) => {
 		return () => {};
 	}, [aPost]);
 
+	useEffect(() => {
+		if (aPost.isCarousel && loaded.length === 1) {
+			setLoaded([false, ...new Array(aPost.photos.length).fill(false)]);
+		}
+	}, [aPost, loaded.length]);
+
 	return (
 		<div className='postModal'>
 			<div className='background' onClick={() => closeModal()}></div>
 			<div className='modalContent'>
 				{width <= 735 && (
 					<header>
-						<ProfileComp
-							image={`http://localhost:5000/uploads/${userImage}`}
-							iconSize='medium'
-							username={aPost.name}
-						/>
+						{userImage && (
+							<ProfileComp
+								image={`http://localhost:5000/uploads/${userImage}`}
+								iconSize='medium'
+								username={aPost.name}
+							/>
+						)}
+
 						<More className='moreBtn' />
 					</header>
 				)}
-				<div className='postImage-container'>
-					<img
-						className='postImg'
-						src={`http://localhost:5000/uploads/posts/${aPost.photo}`}
-						alt={aPost.description}
-						onDoubleClick={handleDoubleClick}
-						{...bind}
-					/>
+				<div
+					className={`postImage-container ${
+						loaded.every(l => l === true) ? "" : "skeleton"
+					}
+          ${loaded[0] ? "" : "size"}
+          `}
+				>
+					{aPost.isCarousel ? (
+						<>
+							<AddPostControls
+								imgPosition={imgPosition}
+								setImgPosition={setImgPosition}
+								images={[aPost.photo, ...aPost.photos]}
+								setImages={false}
+								noEdit
+							/>
+							<SwipeableViews
+								index={imgPosition}
+								onChangeIndex={handleChangeImgPosition}
+								enableMouseEvents
+							>
+								{[aPost.photo, ...aPost.photos].map((i, idx) => {
+									return (
+										<img
+											className={`postImg ${loaded[idx] ? "" : "hide"}`}
+											src={`http://localhost:5000/uploads/posts/${i}`}
+											alt={aPost.description}
+											onDoubleClick={handleDoubleClick}
+											onLoad={() =>
+												setLoaded(l => [
+													...l.slice(0, idx),
+													true,
+													...l.slice(idx + 1),
+												])
+											}
+											{...bind}
+										/>
+									);
+								})}
+							</SwipeableViews>
+						</>
+					) : (
+						<>
+							{aPost.photo && (
+								<img
+									className={`postImg ${loaded[0] ? "" : "hide skeleton"}`}
+									src={`http://localhost:5000/uploads/posts/${aPost.photo}`}
+									alt={aPost.description}
+									onDoubleClick={handleDoubleClick}
+									onLoad={() => setLoaded([true])}
+									{...bind}
+								/>
+							)}
+						</>
+					)}
 					<div className='bigHeart-container'>
 						<div
 							className={`bigHeart ${bigLiked ? "bigLiked" : ""}`}
@@ -145,11 +209,13 @@ const PostModal = ({ pId }) => {
 				<div className='postDesc'>
 					{width > 735 && (
 						<header>
-							<ProfileComp
-								image={`http://localhost:5000/uploads/${userImage}`}
-								iconSize='medium'
-								username={aPost.name}
-							/>
+							{userImage && (
+								<ProfileComp
+									image={`http://localhost:5000/uploads/${userImage}`}
+									iconSize='medium'
+									username={aPost.name}
+								/>
+							)}
 							<More className='moreBtn' />
 						</header>
 					)}
@@ -186,11 +252,13 @@ const PostModal = ({ pId }) => {
 						/>
 						{aPost.likes !== undefined && aPost.likes.length > 0 && (
 							<div className='likedBy'>
-								<ProfileComp
-									iconSize='small'
-									hideAccountName={true}
-									image={`http://localhost:5000/uploads/${likedUser.photo}`}
-								/>
+								{likedUser.photo && (
+									<ProfileComp
+										iconSize='small'
+										hideAccountName={true}
+										image={`http://localhost:5000/uploads/${likedUser.photo}`}
+									/>
+								)}
 								<span>
 									Liked by <strong>{likedUser.name}</strong>
 									{aPost.likes.length > 1 && (

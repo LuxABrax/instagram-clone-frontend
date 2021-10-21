@@ -9,6 +9,7 @@
 	z-index: 10;
 	display: flex;
 	align-items: center;
+
 	.background {
 		position: absolute;
 		top: 0;
@@ -22,21 +23,44 @@
 		max-width: 935px;
 		margin: 2rem auto;
 		display: flex;
-		background-color: $background-white;
+		background: transparent;
 		overflow: hidden;
 
 		.postImage-container {
 			display: flex;
+
+			position: relative;
+			max-width: 400px;
+			max-height: 400px;
+			&.size {
+				width: 400px;
+				height: 400px;
+			}
+			background-color: transparent;
+
+			.react-swipeable-view-container {
+				height: 100%;
+				div {
+					width: unset;
+					overflow-y: hidden !important;
+				}
+			}
+
 			.postImg {
-				max-width: 440px;
-				height: auto;
+				height: 100%;
+				width: 100%;
 				object-fit: contain;
+				&.hide {
+					visibility: none;
+					opacity: 0;
+				}
 			}
 		}
 		.postDesc {
 			flex: 1;
 			display: flex;
 			flex-direction: column;
+			background: #fff;
 		}
 		header {
 			display: flex;
@@ -63,7 +87,6 @@
 				flex: 1;
 				padding-top: 4px;
 				overflow-y: auto;
-				// max-height: 220px;
 			}
 		}
 		.moreBtn {
@@ -87,15 +110,6 @@
 	}
 }
 
-@media screen and (max-width: 800px) {
-	.postModal {
-		.modalContent {
-			.postImage-container .postImg {
-				max-width: 380px;
-			}
-		}
-	}
-}
 @media screen and (max-width: 735px) {
 	.postModal {
 		.modalContent {
@@ -103,9 +117,6 @@
 			flex-direction: column;
 			max-width: 80%;
 
-			.postImage-container .postImg {
-				max-width: 300px;
-			}
 			.comments,
 			p {
 				display: none;
@@ -121,15 +132,6 @@
 			}
 			.timePosted {
 				padding-bottom: 4px;
-			}
-		}
-	}
-}
-@media screen and (max-width: 425px) {
-	.postModal {
-		.modalContent {
-			.postImage-container .postImg {
-				max-width: 100%;
 			}
 		}
 	}

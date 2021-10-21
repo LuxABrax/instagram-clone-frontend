@@ -58,7 +58,6 @@ const AddPostModal = ({ id, addImage }) => {
 			},
 		});
 		const data = await res.data;
-
 		if (data.success) {
 			addImage(data.data);
 			dispatch(toggleModal());
@@ -79,14 +78,8 @@ const AddPostModal = ({ id, addImage }) => {
 							onChangeIndex={handleChangeImgPosition}
 							enableMouseEvents
 						>
-							{images.map((img, idx) => (
-								<img
-									src={img.url}
-									alt={img.file.name}
-									className={`addImage-image ${
-										idx === imgPosition ? "act" : ""
-									}`}
-								/>
+							{images.map(img => (
+								<img src={img.url} alt={img.file.name} />
 							))}
 						</SwipeableViews>
 

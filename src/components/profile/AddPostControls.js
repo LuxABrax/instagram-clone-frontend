@@ -7,6 +7,7 @@ const AddPostControls = ({
 	setImages,
 	imgPosition,
 	setImgPosition,
+	noEdit,
 }) => {
 	const handleRemove = () => {
 		setImages(i => i.filter((im, index) => index !== imgPosition));
@@ -35,9 +36,11 @@ const AddPostControls = ({
 
 	return (
 		<div className='images-controls'>
-			<button className='remove-image' onClick={handleRemove} title='Remove'>
-				<Close className='close' />
-			</button>
+			{noEdit === undefined && (
+				<button className='remove-image' onClick={handleRemove} title='Remove'>
+					<Close className='close' />
+				</button>
+			)}
 			<button
 				className={`arrows left-arrow ${imgPosition === 0 ? "hide" : ""}`}
 				onClick={() => {
@@ -54,7 +57,7 @@ const AddPostControls = ({
 				}}
 				title='Show right'
 			/>
-			{images.length > 1 && (
+			{images.length > 1 && noEdit === undefined && (
 				<div className='position-controls'>
 					<button
 						className={`arrows left-arrow ${imgPosition === 0 ? "hide" : ""}`}
