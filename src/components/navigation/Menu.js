@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import {
 	changePage,
 	selectPage,
 	setLastPage,
 } from "../../redux/navigationSlice";
 import { logout, selectUser } from "../../redux/authSlice";
+import { toggleModal } from "../../redux/modalSlice";
 
 import ProfileMenu from "./ProfileMenu.js";
 import { ReactComponent as Home } from "../../icons/home.svg";
@@ -20,13 +22,14 @@ import { ReactComponent as NewPost } from "../../icons/newPost.svg";
 import { ReactComponent as NewPostActive } from "../../icons/newPostAct.svg";
 
 import "../../styles/navigation/menu.scss";
-import { toggleModal } from "../../redux/modalSlice";
 
 const Menu = () => {
 	const activePage = useSelector(selectPage);
 	const user = useSelector(selectUser);
+
 	const dispatch = useDispatch();
-	// const { push } = useHistory();
+	const { push } = useHistory();
+
 	if (user === undefined) dispatch(logout());
 
 	const changeNavPage = newPage => {
@@ -57,6 +60,7 @@ const Menu = () => {
 					<NewPost
 						className='icon'
 						onClick={() => {
+							push(`/profile/${user.name}`);
 							changeNavPage("newPost");
 							dispatch(toggleModal("addPost"));
 						}}
@@ -82,19 +86,6 @@ const Menu = () => {
 			</div>
 
 			<ProfileMenu />
-			{/* <Link
-				to={`/profile/${user.name}`}
-				className='link'
-				onClick={() => {
-					dispatch(changePage("profile"));
-				}}
-			>
-				<ProfileIcon
-					image={`http://localhost:5000/uploads/${user.photo}`}
-					iconSize='small'
-					profileActive={activePage === "profile" && user.name === user2.name}
-				/>
-			</Link> */}
 		</div>
 	);
 };

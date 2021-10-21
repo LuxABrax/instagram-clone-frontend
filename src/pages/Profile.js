@@ -86,7 +86,7 @@ const Profile = () => {
 
 	useEffect(() => {
 		dispatch(getUserProfile(pName));
-	});
+	}, [dispatch, pName]);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
