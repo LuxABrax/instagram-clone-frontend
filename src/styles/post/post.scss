@@ -6,6 +6,11 @@
 	margin-bottom: 2rem;
 	border-radius: 3px;
 
+	.react-swipeable-view-container {
+		div {
+			margin: auto;
+		}
+	}
 	.post-header {
 		display: flex;
 		justify-content: space-between;

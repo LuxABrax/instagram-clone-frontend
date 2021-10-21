@@ -32,18 +32,7 @@ const Feed = ({ withStories, onProfile, uId }) => {
 					return (
 						<React.Fragment key={post._id}>
 							{index === 3 && !onProfile ? <SuggestedUsers key='sug' /> : null}
-							<Post
-								key={post._id}
-								id={post._id}
-								uid={post.uId}
-								accountName={post.name}
-								description={post.description}
-								storyBorder={true}
-								image={`http://localhost:5000/uploads/posts/${post.photo}`}
-								comments={post.comments}
-								likes={post.likes}
-								createdAt={post.createdAt}
-							/>
+							<Post key={post._id} post={post} />
 						</React.Fragment>
 					);
 				})}

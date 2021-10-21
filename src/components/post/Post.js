@@ -17,19 +17,26 @@ import TimePassed from "./TimePassed";
 import PopupTrigger from "../PopupTrigger";
 
 import "../../styles/post/post.scss";
+import AddPostControls from "../profile/AddPostControls";
+import SwipeableViews from "react-swipeable-views";
 
-const Post = props => {
+const Post = ({ post }) => {
 	const {
-		id,
-		accountName,
-		uid,
-		image,
+		_id: id,
+		uId,
+		name,
+		photo,
+		isCarousel,
+		photos: otherPhotos,
 		description,
 		comments,
 		likes,
 		createdAt,
-	} = props;
+	} = post;
+	const image = `http://localhost:5000/uploads/posts/${photo}`;
 
+	const [photos, setPhotos] = useState([]);
+	const [imgPosition, setImgPosition] = useState(0);
 	const [loaded, setLoaded] = useState(false);
 	const [ownerPhoto, setOwnerPhoto] = useState("");
 	const [commentsActive, setCommentsActive] = useState(false);
@@ -72,17 +79,21 @@ const Post = props => {
 		dispatch(toggleModal("likes"));
 	};
 
+	const handleChangeImgPosition = index => {
+		setImgPosition(index);
+	};
+
 	useEffect(() => {
 		const getPhoto = async () => {
 			const users = [...fUsers, userProfile, user];
 			users.filter((u, i) => users.indexOf(u) === i);
 
-			const postUser = users.filter(u => u._id === uid);
+			const postUser = users.filter(u => u._id === uId);
 
 			if (postUser[0] !== undefined) setOwnerPhoto(postUser[0].photo);
 		};
 		if (fUsers.length > 0) getPhoto();
-	}, [fUsers, user, userProfile, uid]);
+	}, [fUsers, user, userProfile, uId]);
 
 	useEffect(() => {
 		const getLikedUser = async () => {
@@ -101,37 +112,79 @@ const Post = props => {
 		}
 	}, [likes]);
 
+	useEffect(() => {
+		if (photos.length === 0) {
+			setPhotos([photo, ...otherPhotos]);
+		}
+	}, [photos, otherPhotos, photo]);
+
 	return (
 		<div className='post'>
 			<header className='post-header'>
-				<ProfileComp
-					key={id}
-					popupKey={id + "p"}
-					id={uid}
-					iconSize='medium'
-					username={accountName}
-					showPopup={true}
-					image={
-						ownerPhoto.length > 0
-							? `http://localhost:5000/uploads/${ownerPhoto}`
-							: ""
-					}
-				/>
+				{ownerPhoto && (
+					<ProfileComp
+						key={id}
+						popupKey={id + "p"}
+						id={uId}
+						iconSize='medium'
+						username={name}
+						showPopup={true}
+						image={`http://localhost:5000/uploads/${ownerPhoto}`}
+					/>
+				)}
 				<More className='moreBtn' />
 			</header>
 			<div className='postImage-container'>
 				{loaded ? null : <div className='postImage skeleton' />}
-				<img
-					className='postImage'
-					src={image}
-					alt='post content'
-					style={loaded ? {} : { display: "none" }}
-					onLoad={() => {
-						setLoaded(true);
-					}}
-					onDoubleClick={handleDoubleClick}
-					{...bind}
-				/>
+				{isCarousel ? (
+					<>
+						<AddPostControls
+							imgPosition={imgPosition}
+							setImgPosition={setImgPosition}
+							images={photos}
+							setImages={false}
+							noEdit
+						/>
+						<SwipeableViews
+							index={imgPosition}
+							onChangeIndex={handleChangeImgPosition}
+							enableMouseEvents
+						>
+							{photos.map(i => {
+								return (
+									<img
+										className='postImage'
+										style={loaded ? {} : { display: "none" }}
+										onLoad={() => {
+											setLoaded(true);
+										}}
+										src={`http://localhost:5000/uploads/posts/${i}`}
+										alt={description}
+										onDoubleClick={handleDoubleClick}
+										{...bind}
+									/>
+								);
+							})}
+						</SwipeableViews>
+					</>
+				) : (
+					<>
+						{image && (
+							<img
+								className='postImage'
+								src={image}
+								alt={description}
+								style={loaded ? {} : { display: "none" }}
+								onLoad={() => {
+									setLoaded(true);
+								}}
+								onDoubleClick={handleDoubleClick}
+								{...bind}
+							/>
+						)}
+					</>
+				)}
+
 				<div className='bigHeart-container'>
 					<div
 						className={`bigHeart ${bigLiked ? "bigLiked" : ""}`}
@@ -142,7 +195,7 @@ const Post = props => {
 			<div className='postDesc'>
 				<PostMenu
 					id={id}
-					name={accountName}
+					name={name}
 					bigLiked={bigLiked}
 					liked={liked}
 					setLiked={setLiked}
@@ -182,12 +235,12 @@ const Post = props => {
 				{description.length > 0 && (
 					<div className='postDescription'>
 						<PopupTrigger
-							username={accountName}
-							uid={uid}
+							username={name}
+							uid={uId}
 							popupKey={id + "des"}
 							hoveredEl={"desc"}
 						>
-							<span>{accountName}</span>
+							<span>{name}</span>
 						</PopupTrigger>
 						{description}
 					</div>
@@ -219,7 +272,7 @@ const Post = props => {
 				<div
 					className='timeContainer'
 					onClick={() => {
-						push(`/profile/${accountName}/p/${id}`);
+						push(`/profile/${name}/p/${id}`);
 					}}
 				>
 					<TimePassed createdAt={createdAt} />
