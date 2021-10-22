@@ -7,6 +7,7 @@ import usersReducer from "./usersSlice";
 import postsReducer from "./postsSlice";
 import popupReducer from "./popupSlice";
 import searchesReducer from "./searchesSlice";
+import storiesReducer from "./storiesSlice";
 
 const rootReducer = combineReducers({
 	auth: authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
 	posts: postsReducer,
 	popup: popupReducer,
 	searches: searchesReducer,
+	stories: storiesReducer,
 });
 
 export default rootReducer;

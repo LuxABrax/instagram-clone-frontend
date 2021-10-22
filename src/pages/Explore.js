@@ -19,7 +19,8 @@ const Explore = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (activePage !== "explore") dispatch(changePage("explore"));
+		if (activePage !== "explore" && activePage !== "profile")
+			dispatch(changePage("explore"));
 	}, [dispatch, activePage]);
 
 	useEffect(() => {
