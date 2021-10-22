@@ -11,6 +11,7 @@ import {
 	getFollowedUsers,
 } from "../redux/usersSlice";
 import { getPosts } from "../redux/postsSlice";
+import { getStories } from "../redux/storiesSlice";
 
 import Feed from "../components/feed/Feed";
 import Sidebar from "../components/sidebar/Sidebar";
@@ -20,6 +21,11 @@ const Home = () => {
 	const user = useSelector(selectUser);
 	const userId = user._id;
 	const nfUsers = useSelector(selectNotFollowedUsers);
+	const {
+		stories,
+		status: storyStatus,
+		lastUpdate,
+	} = useSelector(state => state.stories);
 
 	// const isLoaded = useSelector(state => state.users.loadedUsers);
 	const noUsers = useSelector(state => state.users.noUsersToFollow);
@@ -31,6 +37,13 @@ const Home = () => {
 	// 	if (popupActive) dispatch(setPopup("close"));
 	// 	// remove popup on load
 	// });
+
+	useEffect(() => {
+		if (stories.length === 0) {
+			dispatch(getStories(userId));
+			console.log(stories);
+		}
+	}, [dispatch, stories, storyStatus, userId]);
 
 	useEffect(() => {
 		if (user === undefined) dispatch(logout());
