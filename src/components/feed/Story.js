@@ -1,21 +1,29 @@
-import "../../styles/feed/story.scss";
 import ProfileIcon from "../ProfileIcon";
-import users from "../../data/users.js";
+
+import "../../styles/feed/story.scss";
 
 const Story = props => {
-	let { storyBorder, seen } = props;
-	// console.log(storyBorder);
+	let { storyBorder, seen, accountName, photo } = props;
 
 	if (storyBorder !== false) storyBorder = true;
 
-	let accountName = users[Math.floor(Math.random() * users.length)].username;
 	if (accountName.length > 10) {
 		accountName = accountName.substring(0, 10) + "...";
 	}
 
 	return (
-		<div className='story'>
-			<ProfileIcon iconSize='big' storyBorder={storyBorder} seen={seen} />
+		<div
+			className='story'
+			onClick={() => {
+				console.log("story click");
+			}}
+		>
+			<ProfileIcon
+				image={`http://localhost:5000/uploads/${photo}`}
+				iconSize='big'
+				storyBorder={storyBorder}
+				seen={seen}
+			/>
 			<span className={`accountName ${seen && "seen"}`}>{accountName}</span>
 		</div>
 	);

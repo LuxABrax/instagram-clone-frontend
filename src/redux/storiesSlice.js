@@ -25,6 +25,16 @@ export const storiesSlice = createSlice({
 		stories: [],
 		activeStory: {},
 	},
+	reducers: {
+		setSeen: (state, action) => {
+			const { userIdx, storyIdx } = action.payload;
+			state.stories[userIdx].stories[storyIdx].seen = true;
+		},
+		setUnseen: (state, action) => {
+			const { userIdx } = action.payload;
+			state.stories[userIdx].user.hasUnseen = false;
+		},
+	},
 	extraReducers: {
 		[getStories.pending]: state => {
 			state.status = "Get Stories";
@@ -40,6 +50,8 @@ export const storiesSlice = createSlice({
 		},
 	},
 });
+
+export const { setSeen, setUnseen } = storiesSlice.actions;
 
 export const selectStories = state => state.stories.stories;
 export const selectActiveStory = state => state.stories.activeStory;
