@@ -1,8 +1,7 @@
-import "../styles/pages/home.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../redux/authSlice";
-// import { selectPopup, setPopup } from "../redux/popupSlice";
+
 import {
 	setSuggestions,
 	getNotFollowedUsers,
@@ -11,39 +10,35 @@ import {
 	getFollowedUsers,
 } from "../redux/usersSlice";
 import { getPosts } from "../redux/postsSlice";
-import { getStories } from "../redux/storiesSlice";
+import { getStories, selectStories } from "../redux/storiesSlice";
 
 import Feed from "../components/feed/Feed";
 import Sidebar from "../components/sidebar/Sidebar";
 
+import "../styles/pages/home.scss";
+
 const Home = () => {
-	// const { popupActive } = useSelector(selectPopup);
 	const user = useSelector(selectUser);
 	const userId = user._id;
 	const nfUsers = useSelector(selectNotFollowedUsers);
-	const {
-		stories,
-		status: storyStatus,
-		lastUpdate,
-	} = useSelector(state => state.stories);
-
-	// const isLoaded = useSelector(state => state.users.loadedUsers);
+	const stories = useSelector(selectStories);
 	const noUsers = useSelector(state => state.users.noUsersToFollow);
 	const isCreated = useSelector(state => state.users.isCreated);
 
 	const dispatch = useDispatch();
 
-	// useEffect(() => {
-	// 	if (popupActive) dispatch(setPopup("close"));
-	// 	// remove popup on load
-	// });
-
 	useEffect(() => {
-		if (stories.length === 0) {
-			dispatch(getStories(userId));
-			console.log(stories);
-		}
-	}, [dispatch, stories, storyStatus, userId]);
+		let timer = setTimeout(
+			() => {
+				dispatch(getStories(userId));
+				console.log("timer");
+			},
+			stories.length === 0 ? 1000 : 120000
+		);
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [dispatch, stories.length, userId]);
 
 	useEffect(() => {
 		if (user === undefined) dispatch(logout());

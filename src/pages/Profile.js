@@ -147,10 +147,7 @@ const Profile = () => {
 				<PostModal
 					pId={pId}
 					accountName={userProfile.name}
-					storyBorder={true}
 					image={`http://localhost:5000/uploads/${userProfile.photo}`}
-					// comments={comments[0].comments}
-					hours={2}
 				/>
 			)}
 			{modalName === "addPost" && modalActive && (
@@ -181,14 +178,7 @@ const Profile = () => {
 				/>
 			)}
 			<Header
-				image={`http://localhost:5000/uploads/${userProfile.photo}`}
-				id={userProfile._id}
-				accountName={userProfile.name}
-				fullName={userProfile.fullName}
-				description={userProfile.description}
-				postNumber={userProfile.posts}
-				followers={userProfile.followers}
-				following={userProfile.following}
+				profile={userProfile}
 				changeImg={changeImg}
 				isFollowing={isFollowing}
 				setIsFollowing={setIsFollowing}

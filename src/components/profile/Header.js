@@ -10,20 +10,19 @@ import ProfileMenu from "./ProfileMenu";
 
 import "../../styles/profile/header.scss";
 
-const Header = props => {
+const Header = ({ profile, changeImg, isFollowing, setIsFollowing }) => {
 	const {
-		image,
-		id,
-		accountName,
+		_id: id,
+		name: accountName,
 		fullName,
 		description,
-		postNumber,
+		posts: postNumber,
 		followers,
 		following,
-		changeImg,
-		isFollowing,
-		setIsFollowing,
-	} = props;
+		photo,
+	} = profile;
+	const image = `http://localhost:5000/uploads/${photo}`;
+
 	const { width } = useWindowDimensions();
 
 	const dispatch = useDispatch();
@@ -40,11 +39,13 @@ const Header = props => {
 		<div className='profHeader'>
 			<header>
 				<div className='profIcon'>
-					<ProfileIcon
-						image={image}
-						iconSize={width < 736 ? "xBig" : "xxBig"}
-						onClick={changeImg}
-					/>
+					{photo && (
+						<ProfileIcon
+							image={image}
+							iconSize={width < 736 ? "xBig" : "xxBig"}
+							onClick={changeImg}
+						/>
+					)}
 				</div>
 				<div className='profInfo'>
 					{width >= 736 ? (

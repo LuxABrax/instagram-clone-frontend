@@ -6,12 +6,13 @@ export const getStories = createAsyncThunk(
 	async (userId, { rejectWithValue, dispatch }) => {
 		const res = await axios.get(`/stories/${userId}`);
 		const data = await res.data;
+		console.log(data);
 		if (!data.success) {
 			return rejectWithValue(data.message);
 		}
-		dispatch(storiesSlice.actions.setLastUpdate(Date.now()));
+
 		const stories = await JSON.parse(data.data);
-		console.log(stories);
+
 		return stories;
 	}
 );
@@ -23,12 +24,6 @@ export const storiesSlice = createSlice({
 		error: "",
 		stories: [],
 		activeStory: {},
-		lastUpdate: "",
-	},
-	reducers: {
-		setLastUpdate: (state, { payload }) => {
-			state.lastUpdate = payload;
-		},
 	},
 	extraReducers: {
 		[getStories.pending]: state => {
@@ -45,8 +40,6 @@ export const storiesSlice = createSlice({
 		},
 	},
 });
-
-export const { setLastUpdate } = storiesSlice.actions;
 
 export const selectStories = state => state.stories.stories;
 export const selectActiveStory = state => state.stories.activeStory;
