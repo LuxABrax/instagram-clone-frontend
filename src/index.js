@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./styles/index.scss";
 import App from "./App";
 import { store } from "./redux/store";
@@ -13,7 +14,9 @@ ReactDOM.render(
 	<StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<App />
+				<Router>
+					<App />
+				</Router>
 			</PersistGate>
 		</Provider>
 	</StrictMode>,

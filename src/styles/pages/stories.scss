@@ -1,0 +1,22 @@
+.stories-page {
+	background-color: rgb(87, 87, 87);
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+.stories-top {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	height: 54px;
+}
+.stories-container {
+	max-height: 80vh;
+	width: 100%;
+	margin: auto;
+	overflow: hidden;
+	display: flex;
+}

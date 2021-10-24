@@ -1,11 +1,7 @@
-import {
-	BrowserRouter as Router,
-	Redirect,
-	Route,
-	Switch,
-} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectLoggedIn } from "./redux/authSlice";
+import { useLocation } from "react-router-dom";
 
 import Navigation from "./components/navigation/Navigation";
 import Login from "./pages/Login";
@@ -13,12 +9,15 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Explore from "./pages/Explore";
 import Settings from "./pages/Settings";
+import Stories from "./pages/Stories";
 
 import "./styles/App.scss";
 
 function App() {
 	const loggedIn = useSelector(selectLoggedIn);
 	let routes;
+
+	let location = useLocation();
 
 	if (!loggedIn) {
 		routes = (
@@ -53,6 +52,9 @@ function App() {
 				<Route path='/accounts/:type' exact>
 					<Settings />
 				</Route>
+				<Route path='/stories/:pName/:storyId' exact>
+					<Stories />
+				</Route>
 				<Redirect to='/' />
 			</Switch>
 		);
@@ -60,10 +62,14 @@ function App() {
 
 	return (
 		<div className='App'>
-			<Router>
-				<Navigation />
-				<main>{routes}</main>
-			</Router>
+			<Navigation />
+			<main
+				className={
+					location.pathname.substring(1, 8) === "stories" ? "noMargin" : ""
+				}
+			>
+				{routes}
+			</main>
 		</div>
 	);
 }

@@ -23,6 +23,9 @@ export const storiesSlice = createSlice({
 		status: "idle",
 		error: "",
 		stories: [],
+		filtered: [],
+		seen: false,
+		activeIdx: {},
 		activeStory: {},
 	},
 	reducers: {
@@ -30,9 +33,19 @@ export const storiesSlice = createSlice({
 			const { userIdx, storyIdx } = action.payload;
 			state.stories[userIdx].stories[storyIdx].seen = true;
 		},
+		setActiveStory: (state, action) => {
+			console.log(action.payload);
+			const { story, userIdx, storyIdx, seen } = action.payload;
+			state.seen = seen;
+			state.activeIdx = { userIdx, storyIdx };
+			state.activeStory = story;
+		},
 		setUnseen: (state, action) => {
 			const { userIdx } = action.payload;
 			state.stories[userIdx].user.hasUnseen = false;
+		},
+		setFiltered: (state, { payload }) => {
+			state.filtered = payload;
 		},
 	},
 	extraReducers: {
@@ -51,9 +64,11 @@ export const storiesSlice = createSlice({
 	},
 });
 
-export const { setSeen, setUnseen } = storiesSlice.actions;
+export const { setSeen, setUnseen, setFiltered, setActiveStory } =
+	storiesSlice.actions;
 
 export const selectStories = state => state.stories.stories;
+export const selectFStories = state => state.stories.filtered;
 export const selectActiveStory = state => state.stories.activeStory;
 
 export default storiesSlice.reducer;

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { goHome } from "../../redux/navigationSlice";
 import { selectLoggedIn } from "../../redux/authSlice";
 
@@ -13,13 +13,22 @@ const Navigation = () => {
 	const { push } = useHistory();
 	const navActive = useSelector(selectLoggedIn);
 
+	let location = useLocation();
+
+	console.log(location.pathname.substring(1, 8));
 	return (
-		<div className={`navigation ${!navActive ? "hidden" : ""}`}>
+		<div
+			className={`navigation ${
+				navActive && location.pathname.substring(1, 8) !== "stories"
+					? ""
+					: "hidden"
+			}`}
+		>
 			<div className='container'>
 				<div
 					className='logoContainer'
 					onClick={() => {
-						push("/home");
+						push("/");
 						dispatch(goHome());
 					}}
 				>

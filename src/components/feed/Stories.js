@@ -14,13 +14,14 @@ const Stories = () => {
 
 	useEffect(() => {
 		if (stories.length > 0) setStories(stories);
-	}, [stories]);
+	}, [stories, setStories]);
 
 	return (
 		<div className='stories'>
 			<div className='scroll'>
 				{filteredStories.map(s => (
 					<Story
+						story={s}
 						accountName={s.user.name}
 						photo={s.user.photo}
 						seen={!s.user.hasUnseen}
