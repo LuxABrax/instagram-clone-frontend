@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
+
 import StoryCard from "../components/stories/StoryCard";
 import { ReactComponent as Close } from "../icons/close.svg";
 
@@ -26,9 +27,6 @@ const Stories = () => {
 						alt='instagram logo'
 					/>
 				</div>
-				<p>
-					Stories {pName} {storyId}
-				</p>
 				<button
 					onClick={() => {
 						push("/");
