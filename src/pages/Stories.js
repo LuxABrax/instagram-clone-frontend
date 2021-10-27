@@ -19,6 +19,9 @@ const Stories = () => {
 
 	useEffect(() => {
 		document.title = "Stories • Instagram Plus";
+		return () => {
+			document.title = "Instagram Plus";
+		};
 	}, []);
 
 	return (

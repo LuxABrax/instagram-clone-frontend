@@ -1,6 +1,38 @@
 .story-card {
 	margin: 0 10px;
+	border-left: 48px solid transparent;
+	border-right: 48px solid transparent;
+	position: relative;
 	&.small {
 		transform: scale(0.4);
+	}
+	.story-content {
+		width: 100%;
+		height: 100%;
+		background-color: yellow;
+	}
+	.sArrow {
+		cursor: pointer;
+		position: absolute;
+		top: 50%;
+		transform: translateY(50%);
+		height: 30px;
+		width: 30px;
+		margin: 16px;
+		background-image: url("../../images/spriteCore.png");
+		background-repeat: no-repeat;
+		opacity: 0.2;
+		transition: opacity 0.1s ease-in;
+		&.left {
+			background-position: -130px -98px;
+			left: -58px;
+		}
+		&.right {
+			background-position: -162px -98px;
+			right: -58px;
+		}
+	}
+	&:hover .sArrow {
+		opacity: 1;
 	}
 }

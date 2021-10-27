@@ -80,13 +80,15 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 	return (
 		<div
 			className={`story-card ${active ? "" : "small"}`}
-			style={{ height: cHeight, width: cWidth, backgroundColor: "yellow" }}
+			style={{ height: cHeight, width: cWidth }}
 		>
+			<div className='story-content'>
+				StoryCard {username} {active ? "active" : ""} {getStoryIdx()}
+			</div>
 			{!(idx === 0 && getStoryIdx() === 0) && active && (
-				<button onClick={handlePrev}>Prev</button>
+				<button onClick={handlePrev} className='sArrow left' />
 			)}
-			StoryCard {username} {active ? "active" : ""} {getStoryIdx()}
-			{active && <button onClick={handleNext}>Next</button>}
+			{active && <button onClick={handleNext} className='sArrow right' />}
 		</div>
 	);
 };

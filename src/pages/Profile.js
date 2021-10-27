@@ -97,6 +97,9 @@ const Profile = () => {
 
 	useEffect(() => {
 		document.title = `${user2.fullName} (@${pName}) • Instagram Plus`;
+		return () => {
+			document.title = "Instagram Plus";
+		};
 	}, [user2, pName]);
 
 	useEffect(() => {
