@@ -6,9 +6,11 @@ import useFilterStories from "./useFilterStories";
 import Story from "./Story";
 
 import "../../styles/feed/stories.scss";
+import { selectUser } from "../../redux/authSlice";
 
 const Stories = () => {
 	const stories = useSelector(selectStories);
+	const user = useSelector(selectUser);
 
 	const [filteredStories, setStories] = useFilterStories();
 
@@ -19,6 +21,7 @@ const Stories = () => {
 	return (
 		<div className='stories'>
 			<div className='scroll'>
+				<Story accountName={user.name} photo={user.photo} addStory />
 				{filteredStories.map(s => (
 					<Story
 						story={s}

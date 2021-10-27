@@ -3,7 +3,15 @@ import { useState } from "react";
 import "../styles/profileIcon.scss";
 
 const ProfileIcon = props => {
-	const { image, iconSize, storyBorder, profileActive, seen, onClick } = props;
+	const {
+		image,
+		iconSize,
+		storyBorder,
+		profileActive,
+		seen,
+		onClick,
+		addStory,
+	} = props;
 	const [loaded, setLoaded] = useState(false);
 
 	const getRandomInt = (min, max) => {
@@ -30,7 +38,11 @@ const ProfileIcon = props => {
 				onClick={onClick}
 			/>
 			{storyBorder && (
-				<div className={`storyBorder ${iconSize} ${seen && "seen"}`}></div>
+				<div
+					className={`storyBorder ${iconSize} ${seen ? "seen" : ""} ${
+						addStory ? "hidden" : ""
+					}`}
+				></div>
 			)}
 			{profileActive && <div className='profileActive'></div>}
 		</div>

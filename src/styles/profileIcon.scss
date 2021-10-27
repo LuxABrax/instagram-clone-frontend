@@ -23,6 +23,9 @@
 	&.seen {
 		background: $border-color-grey;
 	}
+	&.hidden {
+		background: transparent;
+	}
 	&.small {
 		height: 26px;
 		width: 26px;

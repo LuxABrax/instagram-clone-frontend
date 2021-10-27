@@ -7,7 +7,7 @@ import { setActiveStory } from "../../redux/storiesSlice";
 import { useDispatch } from "react-redux";
 
 const Story = props => {
-	let { story, storyBorder, seen, accountName, photo } = props;
+	let { story, storyBorder, seen, accountName, photo, addStory } = props;
 
 	if (storyBorder !== false) storyBorder = true;
 
@@ -18,6 +18,7 @@ const Story = props => {
 	const { push } = useHistory();
 
 	const gotoStory = async () => {
+		if (addStory) return;
 		const { userIdx, storyIdx } = story.indexes;
 		const sId = story.stories[story.indexes.storyIdx].id;
 		console.log(story, userIdx, storyIdx, seen);
@@ -31,8 +32,12 @@ const Story = props => {
 				iconSize='big'
 				storyBorder={storyBorder}
 				seen={seen}
+				addStory={addStory}
 			/>
-			<span className={`accountName ${seen && "seen"}`}>{accountName}</span>
+			<span className={`accountName ${seen ? "seen" : ""}`}>
+				{addStory ? "Add Story" : accountName}
+			</span>
+			{addStory && <div className='plus'>+</div>}
 		</div>
 	);
 };
