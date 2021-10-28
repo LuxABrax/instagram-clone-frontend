@@ -30,7 +30,7 @@ const Stories = () => {
 				<div className='logoContainer' onClick={handleClose}>
 					<img
 						className='logo'
-						src='/images/instagram-logo.png'
+						src='/images/instagram-logo-white.png'
 						alt='instagram logo'
 					/>
 				</div>

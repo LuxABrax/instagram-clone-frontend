@@ -11,12 +11,19 @@
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	height: 54px;
+	// height: 54px;
+	div,
+	button {
+		margin: 16px;
+		z-index: 11;
+		cursor: pointer;
+	}
 }
 .stories-container {
-	max-height: 80vh;
+	// max-height: 80vh;
+	height: 90%;
 	width: 100%;
 	margin: auto;
 	overflow: hidden;
-	display: flex;
+	position: relative;
 }

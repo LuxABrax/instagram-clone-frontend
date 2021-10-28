@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import ProfileIcon from "../ProfileIcon";
 
 import "../../styles/feed/story.scss";
-import { setActiveStory } from "../../redux/storiesSlice";
+import { setActiveIdx, setActiveStory } from "../../redux/storiesSlice";
 import { useDispatch } from "react-redux";
 
 const Story = props => {
@@ -20,6 +20,7 @@ const Story = props => {
 	const gotoStory = async () => {
 		if (addStory) return;
 		const { userIdx, storyIdx } = story.indexes;
+		dispatch(setActiveIdx({ storyIdx: storyIdx, userIdx: userIdx }));
 		const sId = story.stories[story.indexes.storyIdx].id;
 		console.log(story, userIdx, storyIdx, seen);
 		await dispatch(setActiveStory({ story, userIdx, storyIdx, seen }));

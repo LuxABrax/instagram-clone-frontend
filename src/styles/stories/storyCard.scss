@@ -1,8 +1,10 @@
 .story-card {
-	margin: 0 10px;
-	border-left: 48px solid transparent;
-	border-right: 48px solid transparent;
-	position: relative;
+	border-left: 46px solid transparent;
+	border-right: 46px solid transparent;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transition: scale 2s 1s ease;
 	&.small {
 		transform: scale(0.4);
 	}
@@ -15,10 +17,11 @@
 		cursor: pointer;
 		position: absolute;
 		top: 50%;
-		transform: translateY(50%);
+		transform: translateY(-50%);
 		height: 30px;
 		width: 30px;
 		margin: 16px;
+		margin-top: -12px;
 		background-image: url("../../images/spriteCore.png");
 		background-repeat: no-repeat;
 		opacity: 0.2;
