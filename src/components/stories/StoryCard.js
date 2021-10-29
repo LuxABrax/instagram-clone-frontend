@@ -8,6 +8,7 @@ import "../../styles/stories/storyCard.scss";
 import Message from "./Message";
 import Story from "../feed/Story";
 import TimePassed from "../post/TimePassed";
+import StoryHeader from "./StoryHeader";
 
 const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const { width, height } = useWindowDimensions();
@@ -216,20 +217,37 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 				idx:{idx}
 				userIdx={activeIdx.userIdx}
 				storyIdx={activeIdx.storyIdx} */}
+				<div className='image-container'>
+					<img
+						className='small-image'
+						src={`http://localhost:5000/uploads/stories/${
+							story.stories[story.indexes.storyIdx].photo
+						}`}
+						alt={story.user.name}
+					/>
+					{!active && <div className='image-filter'></div>}
+				</div>
+				{width <= 425 && (
+					<div className='clickOverlay'>
+						<div className='left cOver' onClick={handlePrev}></div>
+						<div className='right cOver' onClick={handleNext}></div>
+					</div>
+				)}
 				{active ? (
-					<Message name={username} />
+					<>
+						<StoryHeader
+							name={username}
+							photo={`http://localhost:5000/uploads/${story.user.photo}`}
+							time={story.stories[activeIdx.storyIdx].createdAt}
+							lines={story.stories.length}
+							currentLine={activeIdx.storyIdx}
+							sId={storyId}
+							// story={story.stories[activeIdx.storyIdx]}
+						/>
+						<Message name={username} />
+					</>
 				) : (
 					<>
-						<div className='image-container'>
-							<img
-								className='small-image'
-								src={`http://localhost:5000/uploads/stories/${
-									story.stories[story.indexes.storyIdx].photo
-								}`}
-								alt={story.user.name}
-							/>
-							<div className='image-filter'></div>
-						</div>
 						<div className='story-badge'>
 							<Story
 								seen={!story.user.hasUnseen}
@@ -240,12 +258,6 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 							<TimePassed createdAt={story.user.lastStory} isStory />
 						</div>
 					</>
-				)}
-				{width <= 425 && (
-					<div className='clickOverlay'>
-						<div className='left cOver' onClick={handlePrev}></div>
-						<div className='right cOver' onClick={handleNext}></div>
-					</div>
 				)}
 			</div>
 		</div>

@@ -4,13 +4,6 @@
 	height: 100%;
 	position: relative;
 }
-.line {
-	position: absolute;
-	left: 0;
-	height: 100%;
-	width: 1px;
-	background-color: lawngreen;
-}
 .stories-top {
 	position: absolute;
 	top: 0;
@@ -36,5 +29,81 @@
 @media screen and (max-width: 425px) {
 	.stories-top {
 		display: none;
+	}
+}
+
+.story-header {
+	z-index: 40;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	img {
+		position: static;
+		transform: none;
+		z-index: inherit;
+	}
+	background: linear-gradient(
+		180deg,
+		rgba(38, 38, 38, 0.8) 0%,
+		rgba(38, 38, 38, 0) 100%
+	);
+	padding: 28px 16px 32px;
+	display: flex;
+	justify-content: space-between;
+	.lines {
+		position: absolute;
+		top: 16px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 90%;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		.lines-container {
+			flex: 1;
+			display: flex;
+			background-color: #dbdbdb;
+		}
+		.line {
+			flex: 1;
+			margin-right: 2px;
+			height: 2px;
+			background-color: #dbdbdb;
+			&.hide {
+				opacity: 0.4;
+			}
+			&.active {
+				opacity: 1;
+			}
+		}
+	}
+	.title {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		h1 {
+			color: white;
+			font-size: 14px;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		.timePosted {
+			padding-bottom: 0;
+			color: white;
+			font-size: 15px;
+			opacity: 0.8;
+			font-weight: 400;
+			z-index: 100;
+		}
+	}
+	.controls {
+		button {
+			padding: 8px;
+		}
+		.icon {
+			width: 16px;
+			height: 16px;
+		}
 	}
 }

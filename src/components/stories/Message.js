@@ -6,6 +6,7 @@ const Message = ({ name }) => {
 	const [msg, setMsg] = useState("");
 	return (
 		<div className='message-container'>
+			{focus && <div className='background-fade'></div>}
 			{focus && msg.length === 0 && (
 				<div className='emoji-container'>
 					<h4>Quick Reactions</h4>
@@ -23,8 +24,10 @@ const Message = ({ name }) => {
 					</div>
 				</div>
 			)}
+
 			<div className='message-input'>
 				<input
+					className={`${!focus && msg.length === 0 ? "p" : ""}`}
 					type='text'
 					placeholder={`Reply too ${name}...`}
 					onFocus={() => setFocus(true)}
@@ -32,9 +35,11 @@ const Message = ({ name }) => {
 					value={msg}
 					onChange={e => setMsg(e.target.value)}
 				/>
-				{msg.length > 0 && <button className='send'>Send</button>}
+				{msg.length > 0 && (
+					<button className={`send ${!focus ? "fcs" : ""}`}>Send</button>
+				)}
 				{!focus && (
-					<button>
+					<button className='share'>
 						<Share />
 					</button>
 				)}

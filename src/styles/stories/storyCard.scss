@@ -119,6 +119,98 @@
 			z-index: 2;
 		}
 	}
+	.message-container {
+		position: absolute;
+		z-index: 100;
+		bottom: 0;
+		width: 100%;
+		padding: 0 16px 16px;
+	}
+
+	.background-fade {
+		background-color: #262626;
+		bottom: 0;
+		left: 0;
+		opacity: 0.5;
+		position: fixed;
+		z-index: 10;
+		right: 0;
+		top: 0;
+	}
+	.emoji-container {
+		z-index: 100;
+		padding: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		h4 {
+			z-index: inherit;
+			color: white;
+		}
+		.row {
+			display: flex;
+			width: 100%;
+			flex-direction: row;
+			justify-content: center;
+			z-index: inherit;
+
+			p {
+				cursor: pointer;
+				padding: 8px;
+				font-size: 32px;
+				z-index: inherit;
+			}
+		}
+	}
+	.message-input {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+
+		input {
+			z-index: 22;
+			border: 1px solid #dbdbdb;
+			border-radius: 100vh;
+			flex-grow: 1;
+			min-height: 44px;
+			padding-left: 11px;
+			padding-right: 52px;
+			&.p {
+				padding-right: 10px;
+			}
+			background-color: transparent;
+			color: white;
+			outline: none;
+			display: flex;
+			align-items: center;
+			font-size: 14px;
+			width: 100%;
+			&::placeholder {
+				color: white;
+			}
+		}
+		.share {
+			z-index: 22;
+
+			padding: 8px;
+		}
+		.send {
+			z-index: 22;
+
+			position: absolute;
+			right: 16px;
+			bottom: 16px;
+			color: white;
+			font-weight: 600;
+			margin-right: 16px;
+			height: 44px;
+			&.fcs {
+				margin-right: 56px;
+			}
+		}
+	}
 }
 @media screen and (max-width: 736px) {
 	.story-card {
