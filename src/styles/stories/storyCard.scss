@@ -6,13 +6,17 @@
 	left: 0;
 	transition: scale 2s 1s ease;
 	&.small {
-		transform: scale(0.4);
+		border-right-width: 23px;
+		border-left-width: 23px;
 	}
+
 	.story-content {
 		width: 100%;
 		height: 100%;
 		background-color: yellow;
+		position: relative;
 	}
+
 	.sArrow {
 		cursor: pointer;
 		position: absolute;
@@ -28,14 +32,35 @@
 		transition: opacity 0.1s ease-in;
 		&.left {
 			background-position: -130px -98px;
-			left: -58px;
+			left: -50px;
 		}
 		&.right {
 			background-position: -162px -98px;
-			right: -58px;
+			right: -50px;
 		}
 	}
 	&:hover .sArrow {
 		opacity: 1;
+	}
+
+	.clickOverlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10;
+		.cOver {
+			position: absolute;
+			height: 100%;
+			width: 30%;
+
+			&.left {
+				left: 0;
+			}
+			&.right {
+				right: 0;
+			}
+		}
 	}
 }

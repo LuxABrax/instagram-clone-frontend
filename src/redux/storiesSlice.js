@@ -44,9 +44,8 @@ export const storiesSlice = createSlice({
 		},
 		setActiveStory: (state, action) => {
 			console.log(action.payload);
-			const { story, userIdx, storyIdx, seen } = action.payload;
+			const { story, seen } = action.payload;
 			state.seen = seen;
-			// state.activeIdx = { userIdx, storyIdx };
 			state.activeStory = story;
 		},
 		setUnseen: (state, action) => {

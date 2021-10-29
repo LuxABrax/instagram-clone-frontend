@@ -1,11 +1,10 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useWindowDimensions from "../../utils/windowHook";
-
-import "../../styles/stories/storyCard.scss";
+import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStories, setActiveIdx } from "../../redux/storiesSlice";
-import { useHistory, useParams } from "react-router";
+
+import "../../styles/stories/storyCard.scss";
 
 const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 	const { width, height } = useWindowDimensions();
@@ -15,27 +14,36 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 
 	const { activeIdx } = useSelector(state => state.stories);
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		let tempWidth, tempHeight;
 		let ratio = 16 / 9;
 
-		if (width <= 588) {
-			tempWidth = width / 3;
+		if (width <= 425) {
+			tempWidth = width;
+		} else if (width <= 588) {
+			tempWidth = width / 3 + 92;
 		} else if (width <= 768) {
-			tempWidth = width / 2.8;
+			tempWidth = width / 2.8 + 92;
 		} else if (width < 1024) {
-			tempWidth = width / 3.2;
+			tempWidth = width / 3.2 + 92;
 		} else {
-			tempWidth = width / 4;
+			tempWidth = width / 4 + 92;
 		}
+
 		tempHeight = tempWidth * ratio;
+
+		if (tempHeight > height) {
+			tempHeight = 0.95 * height;
+			tempWidth = tempHeight / ratio;
+		}
 
 		if (active) {
 			setCWidth(tempWidth);
 			setCHeight(tempHeight);
 		} else {
-			setCWidth(tempWidth * 0.4);
-			setCHeight(tempHeight * 0.4);
+			setCWidth((tempWidth - 46) * 0.4 - 46);
+			setCHeight((tempWidth - 46) * ratio * 0.4);
 		}
 	}, [width, height, active]);
 
@@ -45,26 +53,48 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 			return;
 		}
 		const diff = activeIdx.userIdx - idx;
-		let tenthWidth = width / 10;
-		let sixthW = width / 6;
-		let offset = width / 4 - cWidth / 2 - 20;
-		if (diff === 1) {
-			// setCardOffset(tenthWidth * 2 - cWidth / 3);
-			setCardOffset(2 * sixthW - cWidth - 46);
-			// } else if (diff === 0) {
-			// 	setCardOffset("-80");
-		} else if (diff === 2) {
-			// setCardOffset(tenthWidth - cWidth);
-			setCardOffset(sixthW - cWidth - 46);
+
+		let twelveW = width / 12;
+		let halfW = cWidth / 2 + 46;
+
+		if (diff === 2) {
+			if (width < 768) {
+				setCardOffset(-300);
+			} else if (width > 1280) {
+				setCardOffset(twelveW - halfW);
+			} else {
+				setCardOffset(-halfW);
+			}
+		} else if (diff === 1) {
+			if (width < 768) {
+				setCardOffset(twelveW - halfW + 20);
+			} else if (width > 1280) {
+				setCardOffset(3 * twelveW - halfW);
+			} else {
+				setCardOffset(2 * twelveW - halfW);
+			}
 		} else if (diff === -1) {
-			setCardOffset(width - 3 * tenthWidth - cWidth / 3);
+			if (width < 768) {
+				setCardOffset(11 * twelveW - halfW - 20);
+			} else if (width > 1280) {
+				setCardOffset(9 * twelveW - halfW);
+			} else {
+				setCardOffset(10 * twelveW - halfW);
+			}
 		} else if (diff === -2) {
-			setCardOffset(width - tenthWidth - cWidth + 23);
+			if (width < 768) {
+				setCardOffset(2000);
+			} else if (width > 1280) {
+				setCardOffset(11 * twelveW - halfW);
+			} else {
+				setCardOffset(12 * twelveW - halfW);
+			}
 		} else if (diff <= -3) {
 			setCardOffset(2000);
 		} else {
 			setCardOffset(-300);
 		}
+		if (width <= 425) setCardOffset(2000);
 	}, [width, cWidth, active, activeIdx, idx]);
 	const stories = useSelector(selectStories);
 
@@ -89,6 +119,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 		push(`/stories/${username}/${clickedId}`);
 	};
 	const handlePrev = () => {
+		if (idx === 0) return;
 		if (getStoryIdx() === 0) {
 			const nextStory = stories[idx - 1];
 			const nextStoryIdx = nextStory.indexes.storyIdx;
@@ -145,7 +176,6 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 				width: cWidth + 92,
 				transform: `translate(${cardOffset}px, -50%) `,
 				zIndex: `${active ? "10" : "5"}`,
-				// transformOrigin: "left center",
 			}}
 		>
 			{!(idx === 0 && getStoryIdx() === 0) && active && (
@@ -169,6 +199,12 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 				idx:{idx}
 				userIdx={activeIdx.userIdx}
 				storyIdx={activeIdx.storyIdx}
+				{width <= 425 && (
+					<div className='clickOverlay'>
+						<div className='left cOver' onClick={handlePrev}></div>
+						<div className='right cOver' onClick={handleNext}></div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
