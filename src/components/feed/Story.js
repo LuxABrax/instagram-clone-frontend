@@ -36,7 +36,11 @@ const Story = props => {
 				seen={seen}
 				addStory={addStory}
 			/>
-			<span className={`accountName ${seen ? "seen" : ""}`}>
+			<span
+				className={`accountName ${seen ? "seen" : ""} ${
+					onStoryCard ? " sCard" : ""
+				}`}
+			>
 				{addStory ? "Add Story" : accountName}
 			</span>
 			{addStory && <div className='plus'>+</div>}

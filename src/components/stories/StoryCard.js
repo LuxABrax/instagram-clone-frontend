@@ -212,21 +212,33 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 				/>
 			)}
 			<div className='story-content' onClick={handleContentClick}>
-				StoryCard {username} {active ? "active" : ""} {getStoryIdx()}
+				{/* StoryCard {username} {active ? "active" : ""} {getStoryIdx()}
 				idx:{idx}
 				userIdx={activeIdx.userIdx}
-				storyIdx={activeIdx.storyIdx}
+				storyIdx={activeIdx.storyIdx} */}
 				{active ? (
 					<Message name={username} />
 				) : (
 					<>
-						<Story
-							seen={!story.user.hasUnseen}
-							photo={story.user.photo}
-							accountName={username}
-							onStoryCard
-						/>
-						<TimePassed createdAt={story.user.lastStory} isStory />
+						<div className='image-container'>
+							<img
+								className='small-image'
+								src={`http://localhost:5000/uploads/stories/${
+									story.stories[story.indexes.storyIdx].photo
+								}`}
+								alt={story.user.name}
+							/>
+							<div className='image-filter'></div>
+						</div>
+						<div className='story-badge'>
+							<Story
+								seen={!story.user.hasUnseen}
+								photo={story.user.photo}
+								accountName={username}
+								onStoryCard={true}
+							/>
+							<TimePassed createdAt={story.user.lastStory} isStory />
+						</div>
 					</>
 				)}
 				{width <= 425 && (
