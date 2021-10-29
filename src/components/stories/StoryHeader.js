@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useHistory } from "react-router";
 import TimePassed from "../post/TimePassed";
 import ProfileIcon from "../ProfileIcon";
@@ -5,11 +6,20 @@ import { ReactComponent as Menu } from "../../icons/menuWhite.svg";
 import { ReactComponent as Audio } from "../../icons/noAudio.svg";
 import { ReactComponent as Play } from "../../icons/play.svg";
 import { ReactComponent as Pause } from "../../icons/pause.svg";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-const StoryHeader = ({ story, sId, name, photo, time, lines, currentLine }) => {
-	const [linePercent, setLinePercent] = useState(0);
+const StoryHeader = ({
+	handleNext,
+	paused,
+	setPaused,
+	name,
+	photo,
+	time,
+	lines,
+	currentLine,
+	linePercent,
+	setLinePercent,
+}) => {
 	const { push } = useHistory();
 	const { activeIdx } = useSelector(state => state.stories);
 	const arr = [];
@@ -22,18 +32,20 @@ const StoryHeader = ({ story, sId, name, photo, time, lines, currentLine }) => {
 		let timer;
 		if (linePercent <= 100) {
 			timer = setTimeout(() => {
-				setLinePercent(l => l + 1);
-				if (linePercent == 100) {
-					setLinePercent(0);
-					push(`/stories/${name}/${sId}`);
+				if (paused) {
+					return;
 				}
-			}, 100);
+				setLinePercent(l => l + 1);
+				if (linePercent === 100) {
+					setLinePercent(0);
+					handleNext();
+				}
+			}, 40);
 		}
 		return () => {
 			clearTimeout(timer);
-			// setLinePercent(0);
 		};
-	}, [linePercent, setLinePercent, name, activeIdx]);
+	}, [linePercent, setLinePercent, name, activeIdx, paused, handleNext]);
 	return (
 		<header className='story-header'>
 			<div className='lines'>
@@ -75,8 +87,8 @@ const StoryHeader = ({ story, sId, name, photo, time, lines, currentLine }) => {
 				<TimePassed createdAt={time} isStory />
 			</div>
 			<div className='controls'>
-				<button>
-					<Play className='icon' />
+				<button onClick={() => setPaused(p => !p)}>
+					{!paused ? <Pause className='icon' /> : <Play className='icon' />}
 				</button>
 
 				<span>

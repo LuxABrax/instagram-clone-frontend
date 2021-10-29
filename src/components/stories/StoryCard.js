@@ -15,7 +15,8 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const [cHeight, setCHeight] = useState(0);
 	const [cWidth, setCWidth] = useState(0);
 	const [cardOffset, setCardOffset] = useState(0);
-
+	const [paused, setPaused] = useState(false);
+	const [linePercent, setLinePercent] = useState(0);
 	const { storyId } = useParams();
 	const { activeIdx } = useSelector(state => state.stories);
 	const stories = useSelector(selectStories);
@@ -127,17 +128,23 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	};
 
 	const handleContentClick = () => {
-		if (active) return;
+		if (active) {
+			return;
+		}
 		const clickedIdx = stories[idx].indexes.storyIdx;
 		const clickedId = stories[idx].stories[clickedIdx].id;
 
 		dispatch(setActiveIdx({ userIdx: idx, storyIdx: clickedIdx }));
+		setLinePercent(0);
 		push(`/stories/${username}/${clickedId}`);
 	};
 
 	const handlePrev = () => {
 		if (idx === 0 && activeIdx.storyIdx === 0) return;
+
 		if (getStoryIdx() === 0) {
+			setLinePercent(0);
+
 			const nextStory = stories[idx - 1];
 			const nextStoryIdx = nextStory.indexes.storyIdx;
 			const nextUser = nextStory.user.name;
@@ -146,8 +153,11 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 
 			push(`/stories/${nextUser}/${nextId}`);
 		} else {
+			setLinePercent(0);
+
 			const currentIdx = getStoryIdx();
 			const nextId = story.stories[currentIdx - 1].id;
+
 			dispatch(setActiveIdx({ userIdx: idx, storyIdx: currentIdx - 1 }));
 
 			push(`/stories/${username}/${nextId}`);
@@ -160,7 +170,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 			push("/");
 			return;
 		}
-
+		setLinePercent(0);
 		if (getStoryIdx() === story.stories.length - 1) {
 			// If last story of the user
 			const nextStory = stories[idx + 1];
@@ -212,7 +222,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 					className='sArrow right'
 				/>
 			)}
-			<div className='story-content' onClick={handleContentClick}>
+			<div className='story-content' onClick={() => handleContentClick()}>
 				{/* StoryCard {username} {active ? "active" : ""} {getStoryIdx()}
 				idx:{idx}
 				userIdx={activeIdx.userIdx}
@@ -224,6 +234,9 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 							story.stories[story.indexes.storyIdx].photo
 						}`}
 						alt={story.user.name}
+						onMouseDown={() => setPaused(true)}
+						onMouseUp={() => setPaused(false)}
+						onMouseLeave={() => setPaused(false)}
 					/>
 					{!active && <div className='image-filter'></div>}
 				</div>
@@ -242,6 +255,11 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 							lines={story.stories.length}
 							currentLine={activeIdx.storyIdx}
 							sId={storyId}
+							handleNext={() => handleNext()}
+							paused={paused}
+							setPaused={setPaused}
+							setLinePercent={setLinePercent}
+							linePercent={linePercent}
 							// story={story.stories[activeIdx.storyIdx]}
 						/>
 						<Message name={username} />
