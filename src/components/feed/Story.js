@@ -7,7 +7,8 @@ import { setActiveIdx, setActiveStory } from "../../redux/storiesSlice";
 import { useDispatch } from "react-redux";
 
 const Story = props => {
-	let { story, storyBorder, seen, accountName, photo, addStory } = props;
+	let { story, storyBorder, seen, accountName, photo, addStory, onStoryCard } =
+		props;
 
 	if (storyBorder !== false) storyBorder = true;
 
@@ -18,7 +19,7 @@ const Story = props => {
 	const { push } = useHistory();
 
 	const gotoStory = async () => {
-		if (addStory) return;
+		if (addStory || onStoryCard) return;
 		const { userIdx, storyIdx } = story.indexes;
 		dispatch(setActiveIdx({ storyIdx: storyIdx, userIdx: userIdx }));
 		const sId = story.stories[story.indexes.storyIdx].id;

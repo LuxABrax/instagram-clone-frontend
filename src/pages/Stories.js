@@ -10,7 +10,7 @@ import "../styles/pages/stories.scss";
 const Stories = () => {
 	const { pName } = useParams();
 
-	const { seen, filtered } = useSelector(state => state.stories);
+	const { seen, filtered, activeIdx } = useSelector(state => state.stories);
 
 	const { push } = useHistory();
 
@@ -40,30 +40,65 @@ const Stories = () => {
 				</button>
 			</div>
 			<div className='stories-container'>
-				{seen
-					? filtered.map((s, idx) => {
-							return (
-								<StoryCard
-									idx={idx}
-									story={s}
-									username={s.user.name}
-									active={s.user.name === pName}
-								/>
-							);
-					  })
-					: filtered.map((s, idx) => {
-							if (s.user.hasUnseen)
-								return (
-									<StoryCard
-										idx={idx}
-										story={s}
-										username={s.user.name}
-										active={s.user.name === pName}
-										onlyUnseen={true}
-									/>
-								);
-							return null;
-					  })}
+				{
+					<>
+						{activeIdx.userIdx - 2 >= 0 && (
+							<StoryCard
+								idx={activeIdx.userIdx - 2}
+								story={filtered[activeIdx.userIdx - 2]}
+								username={filtered[activeIdx.userIdx - 2].user.name}
+								active={filtered[activeIdx.userIdx - 2].user.name === pName}
+								onlyUnseen={!seen}
+							/>
+						)}
+						{activeIdx.userIdx - 1 >= 0 && (
+							<StoryCard
+								idx={activeIdx.userIdx - 1}
+								story={filtered[activeIdx.userIdx - 1]}
+								username={filtered[activeIdx.userIdx - 1].user.name}
+								active={filtered[activeIdx.userIdx - 1].user.name === pName}
+								onlyUnseen={!seen}
+							/>
+						)}
+						<StoryCard
+							idx={activeIdx.userIdx}
+							story={filtered[activeIdx.userIdx]}
+							username={filtered[activeIdx.userIdx].user.name}
+							active={true}
+							onlyUnseen={!seen}
+						/>
+						{activeIdx.userIdx + 2 < filtered.length && (
+							<StoryCard
+								idx={activeIdx.userIdx + 2}
+								story={filtered[activeIdx.userIdx + 2]}
+								username={filtered[activeIdx.userIdx + 2].user.name}
+								active={filtered[activeIdx.userIdx + 2].user.name === pName}
+								onlyUnseen={!seen}
+								hide={
+									filtered[activeIdx.userIdx + 2].user.hasUnseen === false &&
+									!seen
+										? true
+										: false
+								}
+							/>
+						)}
+						{activeIdx.userIdx + 1 < filtered.length && (
+							<StoryCard
+								idx={activeIdx.userIdx + 1}
+								story={filtered[activeIdx.userIdx + 1]}
+								username={filtered[activeIdx.userIdx + 1].user.name}
+								active={filtered[activeIdx.userIdx + 1].user.name === pName}
+								onlyUnseen={!seen}
+								hide={
+									filtered[activeIdx.userIdx + 1].user.hasUnseen === false &&
+									!seen
+										? true
+										: false
+								}
+							/>
+						)}
+					</>
+				}
 			</div>
 		</div>
 	);

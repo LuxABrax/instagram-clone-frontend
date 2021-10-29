@@ -5,16 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectStories, setActiveIdx } from "../../redux/storiesSlice";
 
 import "../../styles/stories/storyCard.scss";
+import Message from "./Message";
+import Story from "../feed/Story";
+import TimePassed from "../post/TimePassed";
 
-const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
+const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const { width, height } = useWindowDimensions();
 	const [cHeight, setCHeight] = useState(0);
 	const [cWidth, setCWidth] = useState(0);
 	const [cardOffset, setCardOffset] = useState(0);
 
+	const { storyId } = useParams();
 	const { activeIdx } = useSelector(state => state.stories);
+	const stories = useSelector(selectStories);
+
+	const { push } = useHistory();
 	const dispatch = useDispatch();
 
+	// Set story width and height
 	useEffect(() => {
 		let tempWidth, tempHeight;
 		let ratio = 16 / 9;
@@ -45,8 +53,18 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 			setCWidth((tempWidth - 46) * 0.4 - 46);
 			setCHeight((tempWidth - 46) * ratio * 0.4);
 		}
+		return () => {
+			if (!active) {
+				setCWidth(tempWidth);
+				setCHeight(tempHeight);
+			} else {
+				setCWidth((tempWidth - 46) * 0.4 - 46);
+				setCHeight((tempWidth - 46) * ratio * 0.4);
+			}
+		};
 	}, [width, height, active]);
 
+	// Set story offset
 	useEffect(() => {
 		if (active) {
 			setCardOffset(width / 2 - cWidth / 2 - 46);
@@ -96,10 +114,6 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 		}
 		if (width <= 425) setCardOffset(2000);
 	}, [width, cWidth, active, activeIdx, idx]);
-	const stories = useSelector(selectStories);
-
-	const { push } = useHistory();
-	const { storyId } = useParams();
 
 	const getStoryIdx = () => {
 		let index = undefined;
@@ -110,6 +124,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 			return index;
 		}
 	};
+
 	const handleContentClick = () => {
 		if (active) return;
 		const clickedIdx = stories[idx].indexes.storyIdx;
@@ -118,8 +133,9 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 		dispatch(setActiveIdx({ userIdx: idx, storyIdx: clickedIdx }));
 		push(`/stories/${username}/${clickedId}`);
 	};
+
 	const handlePrev = () => {
-		if (idx === 0) return;
+		if (idx === 0 && activeIdx.storyIdx === 0) return;
 		if (getStoryIdx() === 0) {
 			const nextStory = stories[idx - 1];
 			const nextStoryIdx = nextStory.indexes.storyIdx;
@@ -136,6 +152,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 			push(`/stories/${username}/${nextId}`);
 		}
 	};
+
 	const handleNext = () => {
 		if (idx + 1 === stories.length) {
 			// If last user
@@ -170,11 +187,11 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 
 	return (
 		<div
-			className={`story-card ${active ? "" : "small"}`}
+			className={`story-card ${active ? "" : "small"} ${hide ? "hide" : ""}`}
 			style={{
+				transform: `translate(${cardOffset}px, -50%) `,
 				height: cHeight,
 				width: cWidth + 92,
-				transform: `translate(${cardOffset}px, -50%) `,
 				zIndex: `${active ? "10" : "5"}`,
 			}}
 		>
@@ -199,6 +216,19 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen }) => {
 				idx:{idx}
 				userIdx={activeIdx.userIdx}
 				storyIdx={activeIdx.storyIdx}
+				{active ? (
+					<Message name={username} />
+				) : (
+					<>
+						<Story
+							seen={!story.user.hasUnseen}
+							photo={story.user.photo}
+							accountName={username}
+							onStoryCard
+						/>
+						<TimePassed createdAt={story.user.lastStory} isStory />
+					</>
+				)}
 				{width <= 425 && (
 					<div className='clickOverlay'>
 						<div className='left cOver' onClick={handlePrev}></div>
