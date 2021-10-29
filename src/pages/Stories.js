@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import useWindowDimensions from "../utils/windowHook";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
@@ -12,7 +11,6 @@ const Stories = () => {
 	const { pName } = useParams();
 
 	const { seen, filtered } = useSelector(state => state.stories);
-	const { width } = useWindowDimensions();
 
 	const { push } = useHistory();
 
@@ -42,14 +40,6 @@ const Stories = () => {
 				</button>
 			</div>
 			<div className='stories-container'>
-				{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => {
-					return (
-						<div
-							className='line'
-							style={{ transform: `translateX(${(width * (n + 1)) / 12}px)` }}
-						></div>
-					);
-				})}
 				{seen
 					? filtered.map((s, idx) => {
 							return (
