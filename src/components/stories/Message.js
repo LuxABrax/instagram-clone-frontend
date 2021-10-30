@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { ReactComponent as Share } from "../../icons/directWhite.svg";
 
-const Message = ({ name }) => {
+import "../../styles/stories/storyMessage.scss";
+
+const Message = ({ name, setPaused }) => {
 	const [focus, setFocus] = useState(false);
 	const [msg, setMsg] = useState("");
+
 	return (
 		<div className='message-container'>
 			{focus && <div className='background-fade'></div>}
@@ -30,8 +33,14 @@ const Message = ({ name }) => {
 					className={`${!focus && msg.length === 0 ? "p" : ""}`}
 					type='text'
 					placeholder={`Reply too ${name}...`}
-					onFocus={() => setFocus(true)}
-					onBlur={() => setFocus(false)}
+					onFocus={() => {
+						setFocus(true);
+						setPaused(true);
+					}}
+					onBlur={() => {
+						setFocus(false);
+						setPaused(false);
+					}}
 					value={msg}
 					onChange={e => setMsg(e.target.value)}
 				/>

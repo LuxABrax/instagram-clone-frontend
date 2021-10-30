@@ -1,0 +1,27 @@
+.sArrow {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	height: 30px;
+	width: 30px;
+	margin: 16px;
+	margin-top: -12px;
+	background-image: url("../../images/spriteCore.png");
+	background-repeat: no-repeat;
+	opacity: 0.2;
+	transition: opacity 0.1s ease-in;
+	&.left {
+		background-position: -130px -98px;
+		left: -50px;
+	}
+	&.right {
+		background-position: -162px -98px;
+		right: -50px;
+	}
+}
+.story-card {
+	&:hover .sArrow {
+		opacity: 1;
+	}
+}

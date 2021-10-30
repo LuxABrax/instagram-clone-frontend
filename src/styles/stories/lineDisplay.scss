@@ -1,0 +1,22 @@
+.line-display {
+	position: absolute;
+	top: 16px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 90%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+	.line-container {
+		background-color: #ffffff35;
+	}
+	.line {
+		flex: 1;
+		margin-right: 2px;
+		height: 2px;
+		background-color: #fff;
+		&.hide {
+			background-color: transparent;
+		}
+	}
+}

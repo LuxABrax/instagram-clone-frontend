@@ -4,12 +4,14 @@ import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStories, setActiveIdx } from "../../redux/storiesSlice";
 
+import StoryImage from "./StoryImage";
 import StoryHeader from "./StoryHeader";
 import Message from "./Message";
-import Story from "../feed/Story";
-import TimePassed from "../post/TimePassed";
+import Overlay from "./Overlay";
+import Badge from "./Badge";
 
 import "../../styles/stories/storyCard.scss";
+import StoryArrows from "./StoryArrows";
 
 const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const { width, height } = useWindowDimensions();
@@ -157,6 +159,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const handlePrev = () => {
 		// If first story of all users
 		if (idx === 0 && activeIdx.storyIdx === 0) return;
+		setLinePercent(0);
 
 		// If first story of the user
 		if (getStoryIdx() === 0) {
@@ -183,6 +186,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 			push("/");
 			return;
 		}
+		setLinePercent(0);
 
 		// If last story of the user
 		if (getStoryIdx() === story.stories.length - 1) {
@@ -220,48 +224,28 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 				zIndex: `${active ? "10" : "5"}`,
 			}}
 		>
-			{!(idx === 0 && getStoryIdx() === 0) && width > 425 && active && (
-				<button
-					onClick={handlePrev}
-					className={`sArrow left ${active ? "act" : ""}`}
-				/>
-			)}
-			{width > 425 && active && (
-				<button onClick={handleNext} className='sArrow right' />
-			)}
+			<StoryArrows
+				active={active}
+				idx={idx}
+				getStoryIdx={getStoryIdx}
+				handlePrev={handlePrev}
+				handleNext={handleNext}
+			/>
 
 			<div className='story-content' onClick={handleContentClick}>
-				<div className='image-container'>
-					<img
-						className='small-image'
-						src={`http://localhost:5000/uploads/stories/${
-							story.stories[story.indexes.storyIdx].photo
-						}`}
-						alt={story.user.name}
-						draggable='false'
-						onPointerDown={() => {
-							setPaused(true);
-						}}
-						onPointerUp={() => {
-							setPaused(false);
-						}}
-					/>
-					{!active && <div className='image-filter'></div>}
-				</div>
+				<StoryImage
+					name={story.user.name}
+					photo={story.stories[story.indexes.storyIdx].photo}
+					active={active}
+					setPaused={setPaused}
+				/>
 
 				{width <= 425 && (
-					<div
-						className='clickOverlay'
-						onPointerDown={() => {
-							setPaused(true);
-						}}
-						onPointerUp={() => {
-							setPaused(false);
-						}}
-					>
-						<div className='left cOver' onClick={handlePrev}></div>
-						<div className='right cOver' onClick={handleNext}></div>
-					</div>
+					<Overlay
+						setPaused={setPaused}
+						handleNext={handleNext}
+						handlePrev={handlePrev}
+					/>
 				)}
 
 				{active ? (
@@ -279,21 +263,10 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 							setLinePercent={setLinePercent}
 							linePercent={linePercent}
 						/>
-						<Message name={username} />
+						<Message name={username} setPaused={setPaused} />
 					</>
 				) : (
-					<>
-						<div className='story-badge'>
-							<Story
-								seen={!story.user.hasUnseen}
-								photo={story.user.photo}
-								accountName={username}
-								onStoryCard={true}
-								iconSize={width < 768 ? "medium" : "big"}
-							/>
-							<TimePassed createdAt={story.user.lastStory} isStory />
-						</div>
-					</>
+					<Badge story={story} username={username} />
 				)}
 			</div>
 		</div>

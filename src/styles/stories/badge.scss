@@ -1,0 +1,54 @@
+.story-badge {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.story:first-child {
+		margin-left: 0;
+	}
+	.timePosted,
+	.accountName {
+		z-index: 10;
+		color: white;
+	}
+	.accountName {
+		font-weight: 600;
+	}
+	.timePosted {
+		margin-top: 4px;
+		font-size: 15px;
+		line-height: 18px;
+		font-weight: 400;
+	}
+
+	.profileIcon {
+		border-width: 2px;
+		border-color: rgba(0, 0, 0, 0.6);
+	}
+	.storyBorder {
+		z-index: 2;
+	}
+}
+
+@media screen and (max-width: 736px) {
+	.story-card {
+		.story-badge {
+			.timePosted {
+				font-size: 14px;
+				line-height: 17px;
+			}
+		}
+	}
+}
+@media screen and (min-width: 769px) {
+	.story-card {
+		.story-badge {
+			.storyBorder {
+				width: 62px;
+				height: 62px;
+			}
+		}
+	}
+}
