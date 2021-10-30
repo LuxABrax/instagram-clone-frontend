@@ -2,16 +2,23 @@ import { useEffect, useState } from "react";
 import useWindowDimensions from "../../utils/windowHook";
 import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { selectStories, setActiveIdx } from "../../redux/storiesSlice";
+import { selectUser } from "../../redux/authSlice";
+import {
+	selectStories,
+	setActiveIdx,
+	setSeen,
+	setUnseen,
+	storySeen,
+} from "../../redux/storiesSlice";
 
 import StoryImage from "./StoryImage";
 import StoryHeader from "./StoryHeader";
 import Message from "./Message";
 import Overlay from "./Overlay";
 import Badge from "./Badge";
+import StoryArrows from "./StoryArrows";
 
 import "../../styles/stories/storyCard.scss";
-import StoryArrows from "./StoryArrows";
 
 const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const { width, height } = useWindowDimensions();
@@ -23,6 +30,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const [linePercent, setLinePercent] = useState(0);
 	const [paused, setPaused] = useState(false);
 
+	const { _id: userId } = useSelector(selectUser);
 	const { storyId } = useParams();
 	const { activeIdx } = useSelector(state => state.stories);
 	const stories = useSelector(selectStories);
@@ -152,11 +160,16 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 		const clickedIdx = stories[idx].indexes.storyIdx;
 		const clickedId = stories[idx].stories[clickedIdx].id;
 
+		dispatch(setSeen({ userIdx: idx, storyIdx: clickedIdx }));
+		dispatch(storySeen({ userId, storyId: clickedId }));
 		dispatch(setActiveIdx({ userIdx: idx, storyIdx: clickedIdx }));
 		push(`/stories/${username}/${clickedId}`);
 	};
 
 	const handlePrev = () => {
+		dispatch(setSeen({ userIdx: idx, storyIdx: activeIdx.storyIdx }));
+		dispatch(storySeen({ userId, storyId }));
+
 		// If first story of all users
 		if (idx === 0 && activeIdx.storyIdx === 0) return;
 		setLinePercent(0);
@@ -181,8 +194,11 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	};
 
 	const handleNext = () => {
+		dispatch(setSeen({ userIdx: idx, storyIdx: activeIdx.storyIdx }));
+		dispatch(storySeen({ userId, storyId }));
 		// If last user
 		if (idx + 1 === stories.length) {
+			dispatch(setUnseen({ userIdx: idx }));
 			push("/");
 			return;
 		}
@@ -191,6 +207,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 		// If last story of the user
 		if (getStoryIdx() === story.stories.length - 1) {
 			const nextStory = stories[idx + 1];
+			dispatch(setUnseen({ userIdx: idx }));
 
 			if (nextStory.user.hasUnseen === false && onlyUnseen) {
 				push("/");

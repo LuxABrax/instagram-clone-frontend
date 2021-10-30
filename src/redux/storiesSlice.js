@@ -16,6 +16,18 @@ export const getStories = createAsyncThunk(
 		return stories;
 	}
 );
+export const storySeen = createAsyncThunk(
+	"stories/storySeen",
+	async ({ userId, storyId }, { rejectWithValue }) => {
+		const res = await axios.put(`/stories/see/${storyId}/${userId}`);
+		const data = await res.data;
+
+		if (!data.success) {
+			return rejectWithValue(data.message);
+		}
+		return data.message;
+	}
+);
 
 export const storiesSlice = createSlice({
 	name: "stories",
@@ -65,6 +77,17 @@ export const storiesSlice = createSlice({
 			state.status = "Get Stories Success";
 		},
 		[getStories.rejected]: (state, { error }) => {
+			console.log(error);
+			state.error = error.message;
+			state.status = "Get Stories Failed";
+		},
+		[storySeen.pending]: state => {
+			state.status = "Get Stories";
+		},
+		[storySeen.fulfilled]: (state, { payload }) => {
+			state.status = "Get Stories Success";
+		},
+		[storySeen.rejected]: (state, { error }) => {
 			console.log(error);
 			state.error = error.message;
 			state.status = "Get Stories Failed";

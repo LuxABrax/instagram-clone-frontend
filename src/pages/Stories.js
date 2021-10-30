@@ -1,17 +1,23 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 
 import StoryCard from "../components/stories/StoryCard";
 import { ReactComponent as Close } from "../icons/close.svg";
+import { selectUser } from "../redux/authSlice";
+import { getStories, setFiltered } from "../redux/storiesSlice";
 
 import "../styles/pages/stories.scss";
 
 const Stories = () => {
 	const { pName } = useParams();
 
-	const { seen, filtered, activeIdx } = useSelector(state => state.stories);
+	const { _id: userId } = useSelector(selectUser);
+	const { seen, stories, filtered, activeIdx } = useSelector(
+		state => state.stories
+	);
 
+	const dispatch = useDispatch();
 	const { push } = useHistory();
 
 	const handleClose = () => {
@@ -24,6 +30,14 @@ const Stories = () => {
 			document.title = "Instagram Plus";
 		};
 	}, []);
+
+	useEffect(() => {
+		if (stories.length === 0) {
+			dispatch(getStories(userId));
+		} else {
+			dispatch(setFiltered(stories));
+		}
+	}, [stories, userId, dispatch]);
 
 	return (
 		<div className='stories-page' style={{ display: "flex" }}>
@@ -40,7 +54,7 @@ const Stories = () => {
 				</button>
 			</div>
 			<div className='stories-container'>
-				{
+				{filtered.length > 0 && (
 					<>
 						{activeIdx.userIdx - 2 >= 0 && (
 							<StoryCard
@@ -98,7 +112,7 @@ const Stories = () => {
 							/>
 						)}
 					</>
-				}
+				)}
 			</div>
 		</div>
 	);
