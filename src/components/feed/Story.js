@@ -15,6 +15,7 @@ const Story = ({
 	addStory,
 	onStoryCard,
 	iconSize,
+	addStoryClick,
 }) => {
 	const dispatch = useDispatch();
 	const { push } = useHistory();
@@ -26,6 +27,7 @@ const Story = ({
 	}
 
 	const gotoStory = () => {
+		if (addStory) addStoryClick();
 		if (addStory || onStoryCard) return;
 		const { userIdx, storyIdx } = story.indexes;
 		dispatch(setActiveIdx({ storyIdx: storyIdx, userIdx: userIdx }));

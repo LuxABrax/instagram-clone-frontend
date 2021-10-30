@@ -16,6 +16,7 @@ import Feed from "../components/feed/Feed";
 import Sidebar from "../components/sidebar/Sidebar";
 
 import "../styles/pages/home.scss";
+import AddStoryModal from "../components/profile/modals/AddStoryModal";
 
 const Home = () => {
 	const user = useSelector(selectUser);
@@ -24,6 +25,7 @@ const Home = () => {
 	const stories = useSelector(selectStories);
 	const noUsers = useSelector(state => state.users.noUsersToFollow);
 	const isCreated = useSelector(state => state.users.isCreated);
+	const { modalActive, modalName } = useSelector(state => state.modal);
 
 	const dispatch = useDispatch();
 
@@ -74,6 +76,9 @@ const Home = () => {
 
 	return (
 		<div className='home'>
+			{modalName === "addStory" && modalActive && (
+				<AddStoryModal id={user._id} />
+			)}
 			<div className='container'>
 				<Feed withStories />
 				<Sidebar />

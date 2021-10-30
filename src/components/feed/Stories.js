@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/authSlice";
 import { selectStories } from "../../redux/storiesSlice";
 import useFilterStories from "./useFilterStories";
 
+import AddStory from "./AddStory";
 import Story from "./Story";
 
 import "../../styles/feed/stories.scss";
-import { selectUser } from "../../redux/authSlice";
 
 const Stories = () => {
 	const stories = useSelector(selectStories);
@@ -21,7 +22,7 @@ const Stories = () => {
 	return (
 		<div className='stories'>
 			<div className='scroll'>
-				<Story accountName={user.name} photo={user.photo} addStory />
+				<AddStory accountName={user.name} photo={user.photo} addStory />
 				{filteredStories.map(s => (
 					<Story
 						story={s}

@@ -144,6 +144,19 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 		}
 	}, [storyId, currentId]);
 
+	// Set story seen
+	useEffect(() => {
+		if (
+			active &&
+			userId !== undefined &&
+			storyId !== undefined &&
+			idx === activeIdx.userIdx
+		) {
+			dispatch(storySeen({ userId, storyId }));
+			dispatch(setSeen({ userIdx: idx, storyIdx: activeIdx.storyIdx }));
+		}
+	}, [active, dispatch, userId, storyId, idx, activeIdx]);
+
 	const getStoryIdx = () => {
 		let index = undefined;
 		story.stories.forEach((s, idx) => {
