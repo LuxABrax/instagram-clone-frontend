@@ -1,37 +1,44 @@
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { setActiveIdx, setActiveStory } from "../../redux/storiesSlice";
 
 import ProfileIcon from "../ProfileIcon";
 
 import "../../styles/feed/story.scss";
-import { setActiveIdx, setActiveStory } from "../../redux/storiesSlice";
-import { useDispatch } from "react-redux";
 
-const Story = props => {
-	let { story, storyBorder, seen, accountName, photo, addStory, onStoryCard } =
-		props;
+const Story = ({
+	story,
+	storyBorder,
+	seen,
+	accountName,
+	photo,
+	addStory,
+	onStoryCard,
+	iconSize,
+}) => {
+	const dispatch = useDispatch();
+	const { push } = useHistory();
 
 	if (storyBorder !== false) storyBorder = true;
 
 	if (accountName.length > 10) {
 		accountName = accountName.substring(0, 10) + "...";
 	}
-	const dispatch = useDispatch();
-	const { push } = useHistory();
 
-	const gotoStory = async () => {
+	const gotoStory = () => {
 		if (addStory || onStoryCard) return;
 		const { userIdx, storyIdx } = story.indexes;
 		dispatch(setActiveIdx({ storyIdx: storyIdx, userIdx: userIdx }));
 		const sId = story.stories[story.indexes.storyIdx].id;
-		console.log(story, userIdx, storyIdx, seen);
-		await dispatch(setActiveStory({ story, userIdx, storyIdx, seen }));
+
+		dispatch(setActiveStory({ story, userIdx, storyIdx, seen }));
 		push(`/stories/${accountName}/${sId}`);
 	};
 	return (
 		<div className='story' onClick={gotoStory}>
 			<ProfileIcon
 				image={`http://localhost:5000/uploads/${photo}`}
-				iconSize='big'
+				iconSize={`${iconSize !== undefined ? iconSize : "big"}`}
 				storyBorder={storyBorder}
 				seen={seen}
 				addStory={addStory}

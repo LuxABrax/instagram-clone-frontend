@@ -42,6 +42,7 @@
 		position: static;
 		transform: none;
 		z-index: inherit;
+		border-color: transparent;
 	}
 	background: linear-gradient(
 		180deg,
@@ -60,21 +61,16 @@
 		margin: 0 auto;
 		display: flex;
 		justify-content: space-between;
-		.lines-container {
-			flex: 1;
-			display: flex;
-			background-color: #dbdbdb;
+		.line-container {
+			background-color: #ffffff35;
 		}
 		.line {
 			flex: 1;
 			margin-right: 2px;
 			height: 2px;
-			background-color: #dbdbdb;
+			background-color: #fff;
 			&.hide {
-				opacity: 0.4;
-			}
-			&.active {
-				opacity: 1;
+				background-color: transparent;
 			}
 		}
 	}

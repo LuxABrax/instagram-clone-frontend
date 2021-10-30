@@ -81,6 +81,8 @@
 		height: 100%;
 		object-fit: cover;
 		border-radius: 8px;
+		user-select: none;
+		-webkit-user-drag: none;
 	}
 	.image-filter {
 		position: absolute;
@@ -115,6 +117,10 @@
 			line-height: 18px;
 			font-weight: 400;
 		}
+		.profileIcon {
+			border-width: 2px;
+			border-color: rgba(0, 0, 0, 0.6);
+		}
 		.storyBorder {
 			z-index: 2;
 		}
@@ -124,7 +130,12 @@
 		z-index: 100;
 		bottom: 0;
 		width: 100%;
-		padding: 0 16px 16px;
+		padding: 8px 16px 16px;
+		background: linear-gradient(
+			0deg,
+			rgba(38, 38, 38, 0.8) 0%,
+			rgba(38, 38, 38, 0) 100%
+		);
 	}
 
 	.background-fade {
@@ -218,6 +229,16 @@
 			.timePosted {
 				font-size: 14px;
 				line-height: 17px;
+			}
+		}
+	}
+}
+@media screen and (min-width: 769px) {
+	.story-card {
+		.story-badge {
+			.storyBorder {
+				width: 62px;
+				height: 62px;
 			}
 		}
 	}

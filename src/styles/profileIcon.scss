@@ -45,6 +45,8 @@
 	border: 2px solid $background-white;
 	display: flex;
 	box-sizing: content-box;
+	user-select: none;
+	-webkit-user-drag: none;
 
 	&:hover {
 		cursor: pointer;

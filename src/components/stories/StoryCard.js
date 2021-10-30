@@ -4,19 +4,23 @@ import { useHistory, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { selectStories, setActiveIdx } from "../../redux/storiesSlice";
 
-import "../../styles/stories/storyCard.scss";
+import StoryHeader from "./StoryHeader";
 import Message from "./Message";
 import Story from "../feed/Story";
 import TimePassed from "../post/TimePassed";
-import StoryHeader from "./StoryHeader";
+
+import "../../styles/stories/storyCard.scss";
 
 const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	const { width, height } = useWindowDimensions();
 	const [cHeight, setCHeight] = useState(0);
 	const [cWidth, setCWidth] = useState(0);
 	const [cardOffset, setCardOffset] = useState(0);
-	const [paused, setPaused] = useState(false);
+
+	const [currentId, setCurrentId] = useState(0);
 	const [linePercent, setLinePercent] = useState(0);
+	const [paused, setPaused] = useState(false);
+
 	const { storyId } = useParams();
 	const { activeIdx } = useSelector(state => state.stories);
 	const stories = useSelector(selectStories);
@@ -78,34 +82,38 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 		let halfW = cWidth / 2 + 46;
 
 		if (diff === 2) {
-			if (width < 768) {
+			if (width <= 768) {
 				setCardOffset(-300);
-			} else if (width > 1280) {
-				setCardOffset(twelveW - halfW);
+			} else if (width >= 1024) {
+				setCardOffset(twelveW - halfW / 2);
 			} else {
 				setCardOffset(-halfW);
 			}
 		} else if (diff === 1) {
-			if (width < 768) {
+			if (width <= 600) {
+				setCardOffset(-halfW);
+			} else if (width <= 768) {
 				setCardOffset(twelveW - halfW + 20);
-			} else if (width > 1280) {
+			} else if (width >= 1024) {
 				setCardOffset(3 * twelveW - halfW);
 			} else {
 				setCardOffset(2 * twelveW - halfW);
 			}
 		} else if (diff === -1) {
-			if (width < 768) {
+			if (width <= 600) {
+				setCardOffset(12 * twelveW - halfW);
+			} else if (width <= 768) {
 				setCardOffset(11 * twelveW - halfW - 20);
-			} else if (width > 1280) {
+			} else if (width >= 1024) {
 				setCardOffset(9 * twelveW - halfW);
 			} else {
 				setCardOffset(10 * twelveW - halfW);
 			}
 		} else if (diff === -2) {
-			if (width < 768) {
+			if (width <= 768) {
 				setCardOffset(2000);
-			} else if (width > 1280) {
-				setCardOffset(11 * twelveW - halfW);
+			} else if (width >= 1024) {
+				setCardOffset(11 * twelveW - 1.5 * halfW);
 			} else {
 				setCardOffset(12 * twelveW - halfW);
 			}
@@ -116,6 +124,15 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 		}
 		if (width <= 425) setCardOffset(2000);
 	}, [width, cWidth, active, activeIdx, idx]);
+
+	// Reset line and unpause when on new story
+	useEffect(() => {
+		if (storyId !== currentId) {
+			setLinePercent(0);
+			setPaused(false);
+			setCurrentId(storyId);
+		}
+	}, [storyId, currentId]);
 
 	const getStoryIdx = () => {
 		let index = undefined;
@@ -128,51 +145,47 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 	};
 
 	const handleContentClick = () => {
-		if (active) {
-			return;
-		}
+		if (active) return;
+
 		const clickedIdx = stories[idx].indexes.storyIdx;
 		const clickedId = stories[idx].stories[clickedIdx].id;
 
 		dispatch(setActiveIdx({ userIdx: idx, storyIdx: clickedIdx }));
-		setLinePercent(0);
 		push(`/stories/${username}/${clickedId}`);
 	};
 
 	const handlePrev = () => {
+		// If first story of all users
 		if (idx === 0 && activeIdx.storyIdx === 0) return;
 
+		// If first story of the user
 		if (getStoryIdx() === 0) {
-			setLinePercent(0);
-
 			const nextStory = stories[idx - 1];
 			const nextStoryIdx = nextStory.indexes.storyIdx;
 			const nextUser = nextStory.user.name;
 			const nextId = nextStory.stories[nextStoryIdx].id;
-			dispatch(setActiveIdx({ userIdx: idx - 1, storyIdx: nextStoryIdx }));
 
+			dispatch(setActiveIdx({ userIdx: idx - 1, storyIdx: nextStoryIdx }));
 			push(`/stories/${nextUser}/${nextId}`);
 		} else {
-			setLinePercent(0);
-
+			// If not first story of the user
 			const currentIdx = getStoryIdx();
 			const nextId = story.stories[currentIdx - 1].id;
 
 			dispatch(setActiveIdx({ userIdx: idx, storyIdx: currentIdx - 1 }));
-
 			push(`/stories/${username}/${nextId}`);
 		}
 	};
 
 	const handleNext = () => {
+		// If last user
 		if (idx + 1 === stories.length) {
-			// If last user
 			push("/");
 			return;
 		}
-		setLinePercent(0);
+
+		// If last story of the user
 		if (getStoryIdx() === story.stories.length - 1) {
-			// If last story of the user
 			const nextStory = stories[idx + 1];
 
 			if (nextStory.user.hasUnseen === false && onlyUnseen) {
@@ -188,10 +201,11 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 
 			push(`/stories/${nextUser}/${nextId}`);
 		} else {
+			// If not last story of the user
 			const currentIdx = getStoryIdx();
 			const nextId = story.stories[currentIdx + 1].id;
-			dispatch(setActiveIdx({ userIdx: idx, storyIdx: currentIdx + 1 }));
 
+			dispatch(setActiveIdx({ userIdx: idx, storyIdx: currentIdx + 1 }));
 			push(`/stories/${username}/${nextId}`);
 		}
 	};
@@ -206,27 +220,17 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 				zIndex: `${active ? "10" : "5"}`,
 			}}
 		>
-			{!(idx === 0 && getStoryIdx() === 0) && active && (
+			{!(idx === 0 && getStoryIdx() === 0) && width > 425 && active && (
 				<button
-					onClick={() => {
-						handlePrev();
-					}}
+					onClick={handlePrev}
 					className={`sArrow left ${active ? "act" : ""}`}
 				/>
 			)}
-			{active && (
-				<button
-					onClick={() => {
-						handleNext();
-					}}
-					className='sArrow right'
-				/>
+			{width > 425 && active && (
+				<button onClick={handleNext} className='sArrow right' />
 			)}
-			<div className='story-content' onClick={() => handleContentClick()}>
-				{/* StoryCard {username} {active ? "active" : ""} {getStoryIdx()}
-				idx:{idx}
-				userIdx={activeIdx.userIdx}
-				storyIdx={activeIdx.storyIdx} */}
+
+			<div className='story-content' onClick={handleContentClick}>
 				<div className='image-container'>
 					<img
 						className='small-image'
@@ -234,18 +238,32 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 							story.stories[story.indexes.storyIdx].photo
 						}`}
 						alt={story.user.name}
-						onMouseDown={() => setPaused(true)}
-						onMouseUp={() => setPaused(false)}
-						onMouseLeave={() => setPaused(false)}
+						draggable='false'
+						onPointerDown={() => {
+							setPaused(true);
+						}}
+						onPointerUp={() => {
+							setPaused(false);
+						}}
 					/>
 					{!active && <div className='image-filter'></div>}
 				</div>
+
 				{width <= 425 && (
-					<div className='clickOverlay'>
+					<div
+						className='clickOverlay'
+						onPointerDown={() => {
+							setPaused(true);
+						}}
+						onPointerUp={() => {
+							setPaused(false);
+						}}
+					>
 						<div className='left cOver' onClick={handlePrev}></div>
 						<div className='right cOver' onClick={handleNext}></div>
 					</div>
 				)}
+
 				{active ? (
 					<>
 						<StoryHeader
@@ -255,12 +273,11 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 							lines={story.stories.length}
 							currentLine={activeIdx.storyIdx}
 							sId={storyId}
-							handleNext={() => handleNext()}
+							handleNext={handleNext}
 							paused={paused}
 							setPaused={setPaused}
 							setLinePercent={setLinePercent}
 							linePercent={linePercent}
-							// story={story.stories[activeIdx.storyIdx]}
 						/>
 						<Message name={username} />
 					</>
@@ -272,6 +289,7 @@ const StoryCard = ({ idx, story, username, active, onlyUnseen, hide }) => {
 								photo={story.user.photo}
 								accountName={username}
 								onStoryCard={true}
+								iconSize={width < 768 ? "medium" : "big"}
 							/>
 							<TimePassed createdAt={story.user.lastStory} isStory />
 						</div>

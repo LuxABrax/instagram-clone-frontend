@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import TimePassed from "../post/TimePassed";
+
 import ProfileIcon from "../ProfileIcon";
+import TimePassed from "../post/TimePassed";
 import { ReactComponent as Menu } from "../../icons/menuWhite.svg";
 import { ReactComponent as Audio } from "../../icons/noAudio.svg";
 import { ReactComponent as Play } from "../../icons/play.svg";
 import { ReactComponent as Pause } from "../../icons/pause.svg";
-import { useSelector } from "react-redux";
 
 const StoryHeader = ({
 	handleNext,
@@ -21,13 +21,14 @@ const StoryHeader = ({
 	setLinePercent,
 }) => {
 	const { push } = useHistory();
-	const { activeIdx } = useSelector(state => state.stories);
+
 	const arr = [];
 	let i = 0;
 	while (i < lines) {
 		arr.push(i);
 		i++;
 	}
+
 	useEffect(() => {
 		let timer;
 		if (linePercent <= 100) {
@@ -35,17 +36,17 @@ const StoryHeader = ({
 				if (paused) {
 					return;
 				}
-				setLinePercent(l => l + 1);
+				setLinePercent(l => l + 0.5);
 				if (linePercent === 100) {
 					setLinePercent(0);
 					handleNext();
 				}
-			}, 40);
+			}, 20);
 		}
 		return () => {
 			clearTimeout(timer);
 		};
-	}, [linePercent, setLinePercent, name, activeIdx, paused, handleNext]);
+	}, [linePercent, setLinePercent, paused, handleNext]);
 	return (
 		<header className='story-header'>
 			<div className='lines'>
@@ -75,8 +76,15 @@ const StoryHeader = ({
 					);
 				})}
 			</div>
+
 			<div className='title'>
-				<ProfileIcon image={photo} iconSize={"medium"} />
+				<ProfileIcon
+					image={photo}
+					iconSize={"medium"}
+					onClick={() => {
+						push(`/profile/${name}`);
+					}}
+				/>
 				<button
 					onClick={() => {
 						push(`/profile/${name}`);
@@ -86,11 +94,11 @@ const StoryHeader = ({
 				</button>
 				<TimePassed createdAt={time} isStory />
 			</div>
+
 			<div className='controls'>
 				<button onClick={() => setPaused(p => !p)}>
 					{!paused ? <Pause className='icon' /> : <Play className='icon' />}
 				</button>
-
 				<span>
 					<Audio className='icon' />
 				</span>
