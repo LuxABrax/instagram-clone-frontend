@@ -20,12 +20,13 @@ Code is a little bit messy but it works, looks almost identical and it's respons
 - Add, Like and Save Posts
 - Modals, Animations and Popups
 - Search with recent searches
+- Add & view Stories
 
 ### Unfinished
 
-- Stories
-- Tagging
 - Messages and Notifications with Socket.io
+- Tagging
+
 
 ## Available Scripts
 
