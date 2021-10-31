@@ -1,0 +1,85 @@
+.messages-page {
+	width: 100%;
+	height: calc(100vh - 54px);
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.messages-container {
+	width: 100%;
+	height: 100%;
+	max-width: 935px;
+	border: 1px solid #dbdbdb;
+	border-radius: 4px;
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+}
+.messages-contacts {
+	width: 350px;
+	background-color: #fff;
+	border-right: 1px solid #dbdbdb;
+	height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+.messages-content {
+	background: #fff;
+
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	.messages-body {
+		padding: 20px 20px 0;
+		overflow-x: hidden;
+		overflow-y: auto;
+		width: 100%;
+		height: 100%;
+		.message-cont {
+			display: flex;
+			.message {
+				padding: 16px;
+				font-size: 14px;
+				border-radius: 22px;
+				max-width: 50%;
+				width: auto;
+				margin-bottom: 8px;
+
+				&.right {
+					background-color: #efefef;
+					margin-left: auto !important;
+					text-align: right;
+				}
+				&.left {
+					border: 1px solid #dbdbdb;
+					margin-right: auto;
+				}
+			}
+		}
+	}
+}
+.contacts-body {
+	padding-top: 8px;
+	overflow-y: scroll;
+}
+
+.messages-content {
+	flex: 1;
+}
+
+@media screen and( max-width:935px) {
+	.messages-page {
+		padding: 0;
+	}
+	.messages-container {
+		border: none;
+	}
+	.messages-contacts {
+		width: 300px;
+	}
+}

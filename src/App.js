@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import Explore from "./pages/Explore";
 import Settings from "./pages/Settings";
 import Stories from "./pages/Stories";
+import Messages from "./pages/Meassages";
 
 import "./styles/App.scss";
 
@@ -33,6 +34,12 @@ function App() {
 			<Switch>
 				<Route path='/' exact>
 					<Home />
+				</Route>
+				<Route path='/direct/inbox' exact>
+					<Messages />
+				</Route>
+				<Route path='/direct/t/:roomId' exact>
+					<Messages />
 				</Route>
 				<Route path='/explore' exact>
 					<Explore />

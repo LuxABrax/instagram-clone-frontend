@@ -46,7 +46,7 @@ const Menu = () => {
 					<Home className='icon' onClick={() => changeNavPage("home")} />
 				)}
 			</Link>
-			<Link to='/' className='link'>
+			<Link to='/direct/inbox' className='link'>
 				{activePage === "direct" ? (
 					<DirectActive className='icon' />
 				) : (

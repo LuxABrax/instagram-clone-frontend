@@ -1,0 +1,53 @@
+.contact-card {
+	padding: 8px 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+	&:active {
+		background-color: #efefef;
+	}
+	.active {
+		cursor: unset;
+		background-color: #efefef;
+	}
+	&:hover {
+		background-color: #fafafa;
+	}
+	.profileIcon {
+		position: static;
+		transform: none;
+		flex-basis: 56px;
+		margin-right: 12px;
+	}
+	.contact-info {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		line-height: 18px;
+		color: #262626;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+			Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		.contact-name {
+		}
+		.contact-last-message {
+			display: flex;
+			.message,
+			.time {
+				color: #8e8e8e;
+			}
+			.dot {
+				margin-left: 4px;
+				margin-right: 4px;
+			}
+		}
+	}
+	.unread {
+		background-color: #0095f6;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+	}
+}
