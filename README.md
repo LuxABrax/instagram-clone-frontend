@@ -13,19 +13,30 @@ Code is a little bit messy but it works, looks almost identical and it's respons
 
 ## Features
 
-- Registration / Authentication page with error handling
-- Profile, Home Feed and Explore page
-- Edit profile and change password page
-- Following / Followers and Suggestions
-- Add, Like and Save Posts
-- Modals, Animations and Popups
-- Search with recent searches
+📖 - Registration / Authentication page with error handling
+
+👪 - Profile, Home Feed and Explore page
+
+✍️ - Edit profile and change password page
+
+🧑‍🤝‍🧑 - Following / Followers and Suggestions
+
+📸 - Add Photos
+
+:heart: - Like and Save Posts
+
+🎬 - Modals, Animations and Popups
+
+:mag_right: - Search with recent searches
+
+📚 - Add & view Stories
 
 ### Unfinished
 
-- Stories
-- Tagging
-- Messages and Notifications with Socket.io
+💬 :bell: - Messages and Notifications with Socket.io
+
+🔖 - Tagging
+
 
 ## Available Scripts
 
