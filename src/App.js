@@ -38,7 +38,7 @@ function App() {
 				<Route path='/direct/inbox' exact>
 					<Messages />
 				</Route>
-				<Route path='/direct/t/:roomId' exact>
+				<Route path='/direct/t/:roomId/:userId' exact>
 					<Messages />
 				</Route>
 				<Route path='/explore' exact>
