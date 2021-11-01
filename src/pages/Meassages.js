@@ -8,6 +8,7 @@ import MessagesContent from "../components/messages/MessagesContent";
 import NewMessageModal from "../components/messages/NewMessageModal";
 
 import "../styles/pages/messages.scss";
+import NoMessages from "../components/messages/NoMessages";
 
 const Messages = () => {
 	const ENDPOINT = "http://localhost:5000";
@@ -33,7 +34,8 @@ const Messages = () => {
 			)}
 			<div className='messages-container'>
 				<Contacts />
-				<MessagesContent />
+				{/* <MessagesContent /> */}
+				<NoMessages />
 			</div>
 		</div>
 	);
