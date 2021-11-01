@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../redux/authSlice";
 
 import Contacts from "../components/messages/Contacts";
+import NoMessages from "../components/messages/NoMessages";
 import MessagesContent from "../components/messages/MessagesContent";
-import NewMessageModal from "../components/messages/NewMessageModal";
+import NewMessageModal from "../components/messages/newMessageModal/NewMessageModal";
 
 import "../styles/pages/messages.scss";
-import NoMessages from "../components/messages/NoMessages";
 
 const Messages = () => {
 	const ENDPOINT = "http://localhost:5000";

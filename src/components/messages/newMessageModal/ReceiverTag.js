@@ -1,4 +1,6 @@
-import { ReactComponent as Close } from "../../icons/close.svg";
+import { ReactComponent as Close } from "../../../icons/close.svg";
+
+import "../../../styles/messages/receiverTag.scss";
 
 const ReceiverTag = ({ r, idx, activeIdx, setActiveIdx, removeReceiver }) => {
 	return (
@@ -16,6 +18,7 @@ const ReceiverTag = ({ r, idx, activeIdx, setActiveIdx, removeReceiver }) => {
 			>
 				{r}
 			</div>
+
 			<div className='removeTag' onClick={() => removeReceiver(r)}>
 				<Close className='icon' />
 			</div>
